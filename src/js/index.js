@@ -70,7 +70,7 @@ function DatePicker(datePickerElement, options) {
     isNextEnabled: true,
     maxDate: options.maxDate || null,
     minDate: options.minDate || new Date(),
-    language: options.language,
+    language: options.language || 'gb',
     focusedDate: new Date(),
     days: [],
   };
@@ -83,10 +83,6 @@ function DatePicker(datePickerElement, options) {
 
   if (!(state.maxDate instanceof Date || state.maxDate === null) || !(state.minDate instanceof Date)) {
     return console.warn('Date picker min and max dates must be of type Date');
-  }
-
-  if (!(Object.keys(content).indexOf(options.language) > -1)) {
-    return console.warn('Date picker does not currently support language ' + options.language);
   }
 
   function getFormattedDate(date) {
@@ -870,3 +866,5 @@ function DatePicker(datePickerElement, options) {
   buildUI();
   registerEventHandlers();
 }
+
+new DatePicker(document.querySelector('.date-picker'), {});
