@@ -1,0 +1,183 @@
+.date-picker {
+  &__container {
+    display: inline-block;
+    position: relative;
+  }
+
+  &__dialog {
+    position: absolute;
+    z-index: 10;
+    right: 0;
+    top: -12px;
+    padding: govuk-spacing(2);
+    border: 4px solid govuk-colour('black');
+    background-color: govuk-colour('white');
+    @include govuk-media-query($from: tablet) {
+      top: -8px;
+      right: auto;
+    }
+  }
+
+  &__reveal--hidden,
+  &__dialog--hidden {
+    display: none;
+  }
+
+  &__header {
+    display: block;
+    text-align: center;
+  }
+
+  &__heading {
+    @include govuk-font($size: 19);
+    font-weight: bold;
+    display: inline-block;
+    margin: govuk-spacing(0);
+  }
+
+  &__date-table {
+    margin: govuk-spacing(2) govuk-spacing(0);
+    border-spacing: 0;
+    border-collapse: collapse;
+    background-color: govuk-colour('light-grey');
+  }
+
+  &__button__close {
+    width: 100%;
+    margin-bottom: 0;
+  }
+
+  &__button__previous-month,
+  &__button__next-month {
+    color: govuk-colour('black');
+    text-indent: -999em;
+    overflow: hidden;
+    width: 20px;
+    height: 20px;
+    @include govuk-media-query($from: tablet) {
+      width: 25px;
+      height: 25px;
+    }
+  }
+
+  &__button__previous-month {
+    float: left;
+    background: url('../images/arrow-circle-left.svg') repeat 0 0;
+  }
+
+  &__button__next-month {
+    float: right;
+    background: url('../images/arrow-circle-right.svg') repeat 0 0;
+  }
+
+  &__button__previous-month,
+  &__button__next-month,
+  &__reveal {
+    @include govuk-font($size: 19);
+    padding: 0;
+    border: 0;
+    background-color: transparent;
+  }
+
+  &__reveal {
+    text-decoration: underline;
+    color: govuk-colour('blue');
+  }
+
+  &__reveal:hover {
+    color: govuk-colour('dark-blue');
+    cursor: pointer;
+  }
+
+  &__reveal:focus {
+    text-decoration: none;
+    background: govuk-colour('yellow');
+    outline: 3px solid transparent;
+    box-shadow: 0 -2px govuk-colour('yellow'), 0 4px govuk-colour('black');
+  }
+
+  &__button__previous-month:hover,
+  &__button__next-month:hover,
+  &__button__previous-month:focus,
+  &__button__next-month:focus {
+    cursor: pointer;
+    color: govuk-colour('black');
+    text-decoration-thickness: 3px;
+    box-shadow: 0 4px govuk-colour('black');
+  }
+
+  &__button--disabled {
+    opacity: .5;
+  }
+
+  &__button--disabled:hover {
+    text-decoration-thickness: 1px;
+    cursor: not-allowed;
+    color: govuk-colour('black');
+    box-shadow: none;
+  }
+}
+
+.date-picker__date-table thead th,
+.date__button {
+  @include govuk-font($size: 19);
+  padding: 5px;
+}
+
+.date__button {
+  width: 100%;
+  margin: govuk-spacing(0);
+  border: 1px solid govuk-colour('mid-grey');
+  color:  govuk-colour('blue');
+  background-color: govuk-colour('white');
+  text-align: center;
+
+  &:focus {
+    outline: 3px solid govuk-colour('yellow');
+    outline-offset: 0;
+    color: govuk-colour('dark-blue');
+    box-shadow: inset 0 0 0 2px;
+    text-decoration-thickness: 3px;
+  }
+
+  &:hover {
+    color: govuk-colour('dark-blue');
+    cursor: pointer;
+    text-decoration: underline;
+  }
+
+  &--inactive,
+  &--inactive:hover {
+    color: govuk-colour('black');
+    background-color: govuk-colour('light-grey');
+  }
+
+  &--disabled {
+    background-color: govuk-colour('light-grey');
+    opacity: .4;
+    color: govuk-colour('black');
+    text-decoration: none;
+  }
+
+  &--disabled:hover {
+    color: govuk-colour('black');
+    text-decoration: none;
+    text-decoration-thickness: 0;
+    cursor: not-allowed;
+  }
+
+  &--today {
+    margin-bottom: -3px;
+    border-bottom: 4px solid govuk-colour('blue');
+  }
+
+  &--selected {
+    background-color: govuk-colour('blue');
+    color: govuk-colour('white');
+  }
+
+  &--selected:hover,
+  &--selected:focus {
+    color: govuk-colour('white');
+  }
+}
