@@ -4,17 +4,26 @@
   "description": "accessible GOV.UK datepicker",
   "scripts": {
     "build": "webpack --mode production",
-    "dev": "webpack --mode development",
+    "serve": "webpack serve",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "James Nelson, Michael Jones",
   "license": "ISC",
   "devDependencies": {
+    "@babel/core": "^7.16.0",
+    "@babel/plugin-proposal-class-properties": "^7.16.0",
+    "@babel/preset-env": "^7.16.0",
+    "babel-loader": "^8.2.3",
+    "clean-webpack-plugin": "^4.0.0",
     "css-loader": "^6.5.1",
     "eslint": "^8.2.0",
+    "html-webpack-plugin": "^5.5.0",
+    "node-sass": "^6.0.1",
     "sass": "^1.43.4",
     "sass-loader": "^12.3.0",
-    "webpack-cli": "^4.9.1"
+    "style-loader": "^3.3.1",
+    "webpack-cli": "^4.9.1",
+    "webpack-dev-server": "^4.4.0"
   },
   "dependencies": {
     "webpack": "^5.63.0"

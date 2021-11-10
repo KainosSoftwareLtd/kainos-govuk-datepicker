@@ -1,3 +1,5 @@
+import '../scss/index.scss'
+
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* Disabled lint rule as linter complained DatePicker was not used in this file */
 function DatePicker(datePickerElement, options) {
