@@ -68,12 +68,12 @@ $govuk-font-family: 'Arial', sans-serif;
 
  &__button__previous-month {
    float: left;
-   //background: url('../images/arrow-circle-left.svg') repeat 0 0;
+   background: url('../images/icon-circle-left.svg') repeat 0 0;
  }
 
  &__button__next-month {
    float: right;
-   //background: url('../images/arrow-circle-right.svg') repeat 0 0;
+   background: url('../images/icon-circle-right.svg') repeat 0 0;
  }
 
  &__button__previous-month,
