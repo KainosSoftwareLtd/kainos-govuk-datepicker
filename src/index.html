@@ -2,10 +2,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title><%= htmlWebpackPlugin.options.title %></title>
+  <title><%= htmlWebpackPlugin.options.title %></title>
 </head>
 
 <body>
-    <main id="main">Webpack works</main>
+<main id="main">
+  <div class="govuk-form-group date-picker">
+    <fieldset class="govuk-fieldset" role="group" aria-describedby="passport-issued-hint">
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+        <h1 class="govuk-fieldset__heading">
+          When was your passport issued?
+        </h1>
+      </legend>
+      <div id="passport-issued-hint" class="govuk-hint">
+        For example, 27 3 2007
+      </div>
+      <div class="govuk-date-input" id="passport-issued">
+        <div class="govuk-date-input__item">
+          <div class="govuk-form-group">
+            <label class="govuk-label govuk-date-input__label" for="passport-issued-day">
+              Day
+            </label>
+            <input class="govuk-input govuk-date-input__input govuk-input--width-2 date-picker-day" id="passport-issued-day" name="passport-issued-day" type="text" pattern="[0-9]*" inputmode="numeric"></div>
+        </div>
+        <div class="govuk-date-input__item">
+          <div class="govuk-form-group">
+            <label class="govuk-label govuk-date-input__label" for="passport-issued-month">
+              Month
+            </label>
+            <input class="govuk-input govuk-date-input__input govuk-input--width-2 date-picker-month" id="passport-issued-month" name="passport-issued-month" type="text" pattern="[0-9]*" inputmode="numeric"></div>
+        </div>
+        <div class="govuk-date-input__item">
+          <div class="govuk-form-group">
+            <label class="govuk-label govuk-date-input__label" for="passport-issued-year">
+              Year
+            </label>
+            <input class="govuk-input govuk-date-input__input govuk-input--width-4 date-picker-year" id="passport-issued-year" name="passport-issued-year" type="text" pattern="[0-9]*" inputmode="numeric"></div>
+        </div>
+      </div>
+
+    </fieldset>
+  </div>
+</main>
 </body>
 </html>
