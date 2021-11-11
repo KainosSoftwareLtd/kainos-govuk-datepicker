@@ -28,6 +28,7 @@
     "webpack-dev-server": "^4.4.0"
   },
   "dependencies": {
+    "govuk-frontend": "^3.14.0",
     "webpack": "^5.63.0",
     "webpack-dev-server": "^4.4.0"
   }
