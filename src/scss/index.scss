@@ -4,6 +4,12 @@ $govuk-font-family: 'Arial', sans-serif;
 @import 'govuk-frontend/govuk/components/date-input/_date-input';
 @import 'govuk-frontend/govuk/components/date-input/_index';
 
+
+.date-picker-demo-container {
+  padding: 30px;
+  display: flex;
+  justify-content: center;
+}
 .date-picker {
  &__container {
    display: inline-block;
