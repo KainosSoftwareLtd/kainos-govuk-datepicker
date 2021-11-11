@@ -1,8 +1,10 @@
-import '../scss/index.scss'
-
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* Disabled lint rule as linter complained DatePicker was not used in this file */
 function DatePicker(datePickerElement, options) {
+  if (!datePickerElement || !options) {
+    throw new Error('Date picker not configured correctly');
+  }
+
   var keyCodes = {
     TAB: 9,
     ENTER: 13,
@@ -77,12 +79,16 @@ function DatePicker(datePickerElement, options) {
 
   content.ni = content.gb;
 
-  if (!datePickerElement || !elements.inputs.month || !elements.inputs.year || !elements.inputs.day || !options) {
-    return console.warn('Date picker not configured correctly');
+  if (!elements.inputs.month || !elements.inputs.year || !elements.inputs.day || !options) {
+    throw new Error('Date picker not configured correctly');
   }
 
   if (!(state.maxDate instanceof Date || state.maxDate === null) || !(state.minDate instanceof Date)) {
-    return console.warn('Date picker min and max dates must be of type Date');
+    throw new Error('Date picker min and max dates must be of type Date');
+  }
+
+  if (!(Object.keys(content).indexOf(state.language) > -1)) {
+    throw new Error('Date picker does not currently support language ' + state.language);
   }
 
   function getFormattedDate(date) {
@@ -867,4 +873,4 @@ function DatePicker(datePickerElement, options) {
   registerEventHandlers();
 }
 
-new DatePicker(document.querySelector('.date-picker'), {});
+module.exports = DatePicker;

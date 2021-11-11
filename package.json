@@ -7,7 +7,7 @@
     "serve": "webpack serve",
     "dev": "webpack --mode development",
     "start": "webpack-dev-server --mode development",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --env=jsdom"
   },
   "author": "James Nelson, Michael Jones",
   "license": "ISC",
@@ -20,6 +20,8 @@
     "css-loader": "^6.5.1",
     "eslint": "^8.2.0",
     "html-webpack-plugin": "^5.5.0",
+    "jest": "^27.3.1",
+    "jquery": "^3.6.0",
     "node-sass": "^6.0.1",
     "sass": "^1.43.4",
     "sass-loader": "^12.3.0",
