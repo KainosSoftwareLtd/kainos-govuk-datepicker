@@ -5,6 +5,8 @@
   "scripts": {
     "build": "webpack --mode production",
     "serve": "webpack serve",
+    "dev": "webpack --mode development",
+    "start": "webpack-dev-server --mode development",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "James Nelson, Michael Jones",
@@ -26,6 +28,7 @@
     "webpack-dev-server": "^4.4.0"
   },
   "dependencies": {
-    "webpack": "^5.63.0"
+    "webpack": "^5.63.0",
+    "webpack-dev-server": "^4.4.0"
   }
 }
