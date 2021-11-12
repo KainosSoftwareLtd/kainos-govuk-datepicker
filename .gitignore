@@ -2,5 +2,4 @@
 dist
 .idea/
 output
-package.lock.json
 .DS_STORE
