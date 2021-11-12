@@ -1,5 +1,6 @@
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const {CleanWebpackPlugin} = require("clean-webpack-plugin");
 const webpack = require("webpack");
 
@@ -12,7 +13,13 @@ module.exports = {
     path: path.resolve(__dirname, './dist'),
     filename: 'bundle.js',
   },
+  optimization: {
+    minimize: true,
+  },
   plugins: [
+    new MiniCssExtractPlugin({
+      filename: 'index.css',
+    }),
     new HtmlWebpackPlugin({
       title: 'Date picker',
       template: path.resolve(__dirname, './src/index.html'),
@@ -33,8 +40,12 @@ module.exports = {
         type: 'asset/resource',
       },
       {
-        test: /\.(scss|css)$/,
-        use: ['style-loader', 'css-loader', 'sass-loader'],
+        test: /\.(sa|sc|c)ss$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+          'sass-loader',
+        ]
       }
     ]
   }
