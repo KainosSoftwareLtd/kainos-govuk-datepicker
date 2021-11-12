@@ -8,7 +8,8 @@
     "start": "node ./server",
     "start:dev": "npm run build & npm run start",
     "test": "jest --env=jsdom",
-    "test:e2e": "npm run build & npm run start & npx codeceptjs run"
+    "test:e2e": "npm run build & npm run start & npx codeceptjs run",
+    "heroku-prebuild": "npm install --only=dev"
   },
   "author": "James Nelson, Michael Jones",
   "license": "ISC",
