@@ -115,7 +115,7 @@ describe('Date picker', () => {
 
       expect(dialog.classList.contains('date-picker__dialog--hidden')).toBeTruthy();
 
-      $(revealButton).click();
+      $(revealButton).trigger('click');
 
       expect(dialog.classList.contains('date-picker__dialog--hidden')).toBeFalsy();
     });
@@ -128,11 +128,11 @@ describe('Date picker', () => {
 
       expect(dialog.classList.contains('date-picker__dialog--hidden')).toBeTruthy();
 
-      $(revealButton).click();
+      $(revealButton).trigger('click');
 
       expect(dialog.classList.contains('date-picker__dialog--hidden')).toBeFalsy();
 
-      $(closeButton).click();
+      $(closeButton).trigger('click');
 
       expect(dialog.classList.contains('date-picker__dialog--hidden')).toBeTruthy();
     });
@@ -154,7 +154,7 @@ describe('Date picker', () => {
       const revealButton = document.querySelector('.date-picker__reveal');
       const previousMonth = document.querySelector('.date-picker__button__previous-month');
 
-      $(revealButton).click();
+      $(revealButton).trigger('click');
 
       expect($(heading).text()).toEqual(todayAsFormattedMonthYear);
       expect(previousMonth.classList.contains('date-picker__button--disabled')).toBeTruthy();
@@ -167,7 +167,8 @@ describe('Date picker', () => {
       const revealButton = document.querySelector('.date-picker__reveal');
       const nextMonth = document.querySelector('.date-picker__button__next-month');
 
-      $(revealButton).click();
+      $(revealButton).trigger('click');
+
 
       expect($(heading).text()).toEqual(todayAsFormattedMonthYear);
       expect(nextMonth.classList.contains('date-picker__button--disabled')).toBeFalsy();
@@ -181,17 +182,17 @@ describe('Date picker', () => {
       const previousMonth = document.querySelector('.date-picker__button__previous-month');
       const nextMonth = document.querySelector('.date-picker__button__next-month');
 
-      $(revealButton).click();
+      $(revealButton).trigger('click');
 
       expect($(heading).text()).toEqual(todayAsFormattedMonthYear);
       expect(previousMonth.classList.contains('date-picker__button--disabled')).toBeTruthy();
 
-      $(nextMonth).click();
+      $(nextMonth).trigger('click');
 
       expect($(heading).text()).toEqual(nextMonthAsFormattedMonthYear);
       expect(previousMonth.classList.contains('date-picker__button--disabled')).toBeFalsy();
 
-      $(previousMonth).click();
+      $(previousMonth).trigger('click');
 
       expect($(heading).text()).toEqual(todayAsFormattedMonthYear);
       expect(previousMonth.classList.contains('date-picker__button--disabled')).toBeTruthy();
@@ -203,7 +204,7 @@ describe('Date picker', () => {
       new DatePicker(document.querySelector('.date-picker'), {});
       const revealButton = document.querySelector('.date-picker__reveal');
 
-      $(revealButton).click();
+      $(revealButton).trigger('click');
 
       const todayDateButton = document.querySelector(`[data-test-id="${today.toLocaleDateString()}"]`);
 
@@ -218,11 +219,12 @@ describe('Date picker', () => {
       const monthInput = document.querySelector('.date-picker-month');
       const yearInput = document.querySelector('.date-picker-year');
 
-      $(revealButton).click();
+      $(revealButton).trigger('click');
+
 
       const todayDateButton = document.querySelector(`[data-test-id="${today.toLocaleDateString()}"]`);
 
-      $(todayDateButton).click();
+      $(todayDateButton).trigger('click');
 
       expect(parseInt($(dayInput).val())).toEqual(today.getDate());
       expect(parseInt($(monthInput).val())).toEqual(today.getMonth() + 1);
@@ -243,7 +245,8 @@ describe('Date picker', () => {
       $(monthInput).val(tomorrow.getMonth() + 1);
       $(yearInput).val(tomorrow.getFullYear());
 
-      $(revealButton).click();
+      $(revealButton).trigger('click');
+
 
       const tomorrowButton = document.querySelector(`[data-test-id="${tomorrow.toLocaleDateString()}"]`);
 
@@ -265,7 +268,8 @@ describe('Date picker', () => {
       $(monthInput).val(nextMonth.getMonth() + 1);
       $(yearInput).val(nextMonth.getFullYear());
 
-      $(revealButton).click();
+      $(revealButton).trigger('click');
+
 
       const nextMonthButton = document.querySelector(`[data-test-id="${nextMonth.toLocaleDateString()}"]`);
 
@@ -287,7 +291,7 @@ describe('Date picker', () => {
       $(monthInput).val(nextYear.getMonth() + 1);
       $(yearInput).val(nextYear.getFullYear());
 
-      $(revealButton).click();
+      $(revealButton).trigger('click');
 
       const nextYearButton = document.querySelector(`[data-test-id="${nextYear.toLocaleDateString()}"]`);
 
@@ -305,7 +309,7 @@ describe('Date picker', () => {
       $(monthInput).val(today.getMonth() + 1);
       $(yearInput).val(today.getFullYear());
 
-      $(revealButton).click();
+      $(revealButton).trigger('click');
 
       const todayDateButton = document.querySelector(`[data-test-id="${today.toLocaleDateString()}"]`);
 
@@ -326,7 +330,7 @@ describe('Date picker', () => {
       const monthInput = document.querySelector('.date-picker-month');
       const yearInput = document.querySelector('.date-picker-year');
 
-      $(revealButton).click();
+      $(revealButton).trigger('click');
 
       const yesterdayButton = document.querySelector(`[data-test-id="${yesterday.toLocaleDateString()}"]`);
 
@@ -334,7 +338,7 @@ describe('Date picker', () => {
       expect(yesterdayButton.getAttribute('aria-disabled')).toBeTruthy();
       expect(yesterdayButton.classList.contains('date__button--disabled')).toBeTruthy();
 
-      $(yesterdayButton).click();
+      $(yesterdayButton).trigger('click');
 
       expect($(dayInput).val()).toEqual('');
       expect($(monthInput).val()).toEqual('');
@@ -356,8 +360,8 @@ describe('Date picker', () => {
       const yearInput = document.querySelector('.date-picker-year');
       const nextMonthButton = document.querySelector('.date-picker__button__next-month');
 
-      $(revealButton).click();
-      $(nextMonthButton).click();
+      $(revealButton).trigger('click');
+      $(nextMonthButton).trigger('click');
 
       const disabledButton = document.querySelector(`[data-test-id="${maxDatePlusDay.toLocaleDateString()}"]`);
 
@@ -365,7 +369,7 @@ describe('Date picker', () => {
       expect(disabledButton.getAttribute('aria-disabled')).toBeTruthy();
       expect(disabledButton.classList.contains('date__button--disabled')).toBeTruthy();
 
-      $(disabledButton).click();
+      $(disabledButton).trigger('click');
 
       expect($(dayInput).val()).toEqual('');
       expect($(monthInput).val()).toEqual('');
@@ -383,7 +387,7 @@ describe('Date picker', () => {
       $(monthInput).val(yesterday.getDate());
       $(yearInput).val(yesterday.getFullYear());
 
-      $(revealButton).click();
+      $(revealButton).trigger('click');
 
       const todayButton = document.querySelector(`[data-test-id="${today.toLocaleDateString()}"]`);
 
@@ -406,7 +410,7 @@ describe('Date picker', () => {
       $(monthInput).val(maxDate.getMonth() + 1);
       $(yearInput).val(maxDate.getFullYear());
 
-      $(revealButton).click();
+      $(revealButton).trigger('click');
 
       const maxDateButton = document.querySelector(`[data-test-id="${maxDate.toLocaleDateString()}"]`);
 
