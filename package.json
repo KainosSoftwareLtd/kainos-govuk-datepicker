@@ -3,11 +3,10 @@
   "version": "0.0.1",
   "description": "accessible GOV.UK datepicker",
   "scripts": {
-    "build": "webpack --mode production",
-    "serve": "webpack-dev-server --mode development",
-    "start": "npm run build & npm run serve",
+    "build": "webpack --mode development",
+    "start": "node ./server",
     "test": "jest --env=jsdom",
-    "test:e2e": "npm run serve & npx codeceptjs run"
+    "test:e2e": "npm run build & npm run start & npx codeceptjs run"
   },
   "author": "James Nelson, Michael Jones",
   "license": "ISC",
@@ -20,6 +19,7 @@
     "codeceptjs": "^3.2.1",
     "css-loader": "^6.5.1",
     "eslint": "^8.2.0",
+    "express": "^4.17.1",
     "html-webpack-plugin": "^5.5.0",
     "jest": "^27.3.1",
     "jquery": "^3.6.0",
@@ -29,13 +29,14 @@
     "sass-loader": "^12.3.0",
     "style-loader": "^3.3.1",
     "webpack": "^5.63.0",
-    "webpack-dev-server": "^4.4.0",
     "webpack-cli": "^4.9.1"
   },
   "dependencies": {
     "govuk-frontend": "^3.14.0"
   },
   "jest": {
-    "testPathIgnorePatterns": ["e2e"]
+    "testPathIgnorePatterns": [
+      "e2e"
+    ]
   }
 }
