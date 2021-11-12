@@ -5,7 +5,7 @@
   "scripts": {
     "build": "webpack --mode production",
     "serve": "webpack serve",
-    "start": "npm run build && npm run serve",
+    "start": "npm run build & npm run serve",
     "test": "jest --env=jsdom",
     "test:e2e": "npm run serve & npx codeceptjs run"
   },
