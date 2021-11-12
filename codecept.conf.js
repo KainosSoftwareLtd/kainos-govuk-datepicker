@@ -1,3 +1,5 @@
+const path = require('path');
+const fs = require('fs');
 const { setHeadlessWhen } = require('@codeceptjs/configure');
 
 // turn on headless mode when running with HEADLESS=true environment variable
@@ -14,7 +16,9 @@ exports.config = {
       windowSize: '1200x900'
     }
   },
-  bootstrap: null,
+  async bootstrap() {
+    await holdBeforeFileExists(path.resolve(__dirname, './dist'));
+  },
   mocha: {},
   name: 'date-picker',
   plugins: {
@@ -29,4 +33,20 @@ exports.config = {
       enabled: true
     }
   }
+}
+
+function holdBeforeFileExists(filePath, timeout = 5000) {
+  return new Promise((resolve)=>{
+    var timer = setTimeout(function () {
+      resolve();
+    },timeout);
+
+    var inter = setInterval(function () {
+      if(fs.existsSync(filePath) && fs.lstatSync(filePath).isFile()){
+        clearInterval(inter);
+        clearTimeout(timer);
+        resolve();
+      }
+    }, 100);
+  });
 }
