@@ -30,9 +30,9 @@ Files & locations:
 
 Importing the library if you're using it in Node:
 ```javascript
-import Datepicker from 'accessible-date-picker';
+import datepicker from 'accessible-date-picker';
 // or
-const Datepicker = require('accessible-date-picker');
+const datepicker = require('accessible-date-picker');
 ```
 
 Add a class of 'date-picker' to your HTML form wrapper. Ensure day, month and year inputs have a class of 'date-picker-day', 'date-picker-month', 'date-picker-year'.
@@ -75,11 +75,6 @@ Add a class of 'date-picker' to your HTML form wrapper. Ensure day, month and ye
 </div>
 ```
 
-Using it in your code:
-```javascript
-new Datepicker(selector, options);
-```
-
 Importing the styles into your project using Node:
 ```javascript
 // From within a scss file,
@@ -88,6 +83,11 @@ Importing the styles into your project using Node:
 
 // or import datepickers css file.
 @import '~accessible-date-picker/dist/accessible-date-picker.min.css';
+```
+
+Using it in your code:
+```javascript
+datepicker(selector, options);
 ```
 
 Datepicker takes 2 arguments:
@@ -109,8 +109,8 @@ Supports English (gb) and Welsh (cy). Defaults to English if not specified.
 
 Using it in your code:
 ```javascript
-new Datepicker(selector, {
-  language: 'gb' // 'cy'
+datepicker(selector, {
+  language: 'gb', // 'cy'
 });
 ```
 
@@ -122,8 +122,8 @@ The minimum date the user can select. Defaults to yesterday.
 
 Using it in your code:
 ```javascript
-new Datepicker(selector, {
-  minDate: new Date()
+datepicker(selector, {
+  minDate: new Date(),
 });
 ```
 
@@ -135,8 +135,8 @@ The maxinum date the user can select. Null by default.
 
 Using it in your code:
 ```javascript
-new Datepicker(selector, {
-  maxDate: new Date()
+datepicker(selector, {
+  maxDate: new Date(),
 });
 ```
 
