@@ -3,13 +3,12 @@
   "version": "0.0.1",
   "description": "accessible GOV.UK datepicker",
   "scripts": {
-    "build": "webpack --mode production",
+    "build": "webpack --mode development NODE-ENV=development",
     "build:prod": "webpack --mode production",
     "start": "node ./server",
     "start:dev": "npm run build & npm run start",
     "test": "jest --env=jsdom",
     "test:e2e": "npm run build & npm run start & npx codeceptjs run",
-    "heroku-postbuild": "export NPM_CONFIG_PRODUCTION=true; export NODE_ENV=production; npm install --only=dev --dev"
   },
   "author": "James Nelson, Michael Jones",
   "license": "ISC",
