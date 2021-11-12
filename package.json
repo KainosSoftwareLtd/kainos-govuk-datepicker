@@ -9,7 +9,8 @@
     "start:dev": "npm run build & npm run start",
     "test": "jest --env=jsdom",
     "test:e2e": "npm run build & npm run start & npx codeceptjs run",
-    "heroku-prebuild": "npm install --only=dev"
+    "heroku-prebuild": "export NPM_CONFIG_PRODUCTION=false; export NODE_ENV=; NPM_CONFIG_PRODUCTION=false NODE_ENV=development npm install --only=dev --dev",
+    "heroku-postbuild": "export NPM_CONFIG_PRODUCTION=true; export NODE_ENV=production;"
   },
   "author": "James Nelson, Michael Jones",
   "license": "ISC",
@@ -24,9 +25,10 @@
     "eslint": "^8.2.0",
     "express": "^4.17.1",
     "html-webpack-plugin": "^5.5.0",
-    "mini-css-extract-plugin": "^2.4.4",
+    "image-loader": "^0.0.1",
     "jest": "^27.3.1",
     "jquery": "^3.6.0",
+    "mini-css-extract-plugin": "^2.4.4",
     "node-sass": "^6.0.1",
     "puppeteer": "^11.0.0",
     "sass": "^1.43.4",
