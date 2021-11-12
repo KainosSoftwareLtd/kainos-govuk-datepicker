@@ -3,12 +3,12 @@
   "version": "0.0.1",
   "description": "accessible GOV.UK datepicker",
   "scripts": {
-    "build": "webpack --mode development",
+    "build": "NODE_ENV=development webpack --mode development",
     "build:prod": "webpack --mode production",
     "start": "node ./server",
     "start:dev": "npm run build & npm run start",
     "test": "jest --env=jsdom",
-    "test:e2e": "npm run build & npm run start & npx codeceptjs run",
+    "test:e2e": "npm run build & npm run start & npx codeceptjs run"
   },
   "author": "James Nelson, Michael Jones",
   "license": "ISC",
