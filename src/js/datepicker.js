@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* Disabled lint rule as linter complained DatePicker was not used in this file */
-function DatePicker(datePickerElement, options) {
-  if (!datePickerElement || !options) {
+function DatePicker(datePickerElement, options = {}) {
+  if (!datePickerElement) {
     throw new Error('Date picker not configured correctly');
   }
 
@@ -71,7 +71,7 @@ function DatePicker(datePickerElement, options) {
     isPreviousEnabled: false,
     isNextEnabled: true,
     maxDate: options.maxDate || null,
-    minDate: options.minDate || new Date(),
+    minDate: options.minDate || null,
     language: options.language || 'gb',
     focusedDate: new Date(),
     days: [],
@@ -83,7 +83,8 @@ function DatePicker(datePickerElement, options) {
     throw new Error('Date picker not configured correctly');
   }
 
-  if (!(state.maxDate instanceof Date || state.maxDate === null) || !(state.minDate instanceof Date)) {
+  if (!(state.maxDate instanceof Date || state.maxDate === null)
+    || !(state.minDate instanceof Date || state.minDate === null)) {
     throw new Error('Date picker min and max dates must be of type Date');
   }
 
@@ -400,7 +401,6 @@ function DatePicker(datePickerElement, options) {
   }
 
   function registerEventHandlers() {
-    document.addEventListener('focus', handleDocumentFocus, true);
     document.body.addEventListener('mousedown', handleDocumentBodyMouseDown, true);
     elements.dialog.addEventListener('keydown', handleDialogKeydown, true);
     elements.buttons.revealButton.addEventListener('click', handleRevealButtonInteraction, true);
@@ -417,18 +417,6 @@ function DatePicker(datePickerElement, options) {
     if (state.isOpen && event.target !== elements.dialog && !elements.dialog.contains(event.target)) {
       hideCalender();
       event.preventDefault();
-    }
-  }
-
-  function handleDocumentFocus(event) {
-    var sessionTimeout = document.body.querySelector('.timeout-dialog');
-    if (state.isOpen && event.target !== elements.dialog && !elements.dialog.contains(event.target)
-      && event.target !== sessionTimeout) {
-      event.stopPropagation();
-      elements.dialog.focus();
-    } else if (event.target === sessionTimeout) {
-      document.removeEventListener('focus', handleDocumentFocus, true);
-      hideCalender();
     }
   }
 
@@ -593,7 +581,11 @@ function DatePicker(datePickerElement, options) {
       if (!date.isDisabled) {
         setInputDate(date.date);
         hideCalender();
-      } else {
+      } else if (date.isDisabled && date.isAfterMaxDate) {
+        removeAriaLiveMessage();
+        setAriaLiveMessage(content[state.language].aria.dayInPast + ' ' + getFormattedDate(state.maxDate));
+        elements.dialog.focus();
+      } else if (date.isDisabled && date.isBeforeMinDate) {
         removeAriaLiveMessage();
         setAriaLiveMessage(content[state.language].aria.dayInPast + ' ' + getFormattedDate(state.minDate));
         elements.dialog.focus();
@@ -793,6 +785,8 @@ function DatePicker(datePickerElement, options) {
       isInCurrentMonth: false,
       isInPreviousMonth: false,
       isInNextMonth: false,
+      isAfterMaxDate: false,
+      isBeforeMinDate: false,
     };
 
     props.element.setAttribute('type', 'button');
@@ -819,10 +813,22 @@ function DatePicker(datePickerElement, options) {
       }
     }
 
-    if ((state.maxDate && isDateAfterMaxDate(props.date)) || (state.minDate && isDateBeforeMinDate(props.date))) {
-      props.isDisabled = true;
-      props.element.classList.add('date__button--disabled');
-      props.element.setAttribute('aria-disabled', 'true');
+    if (state.maxDate || state.minDate) {
+      if (state.maxDate && isDateAfterMaxDate(props.date)) {
+        props.isDisabled = true;
+        props.isAfterMaxDate = true;
+        props.element.classList.add('date__button--disabled');
+        props.element.setAttribute('aria-disabled', 'true');
+      } else if (state.minDate && isDateBeforeMinDate(props.date)) {
+        props.isDisabled = true;
+        props.isBeforeMinDate = true;
+        props.element.classList.add('date__button--disabled');
+        props.element.setAttribute('aria-disabled', 'true');
+      } else {
+        props.isDisabled = false;
+        props.element.classList.remove('date__button--disabled');
+        props.element.removeAttribute('aria-disabled', 'true');
+      }
     } else {
       props.isDisabled = false;
       props.element.classList.remove('date__button--disabled');
