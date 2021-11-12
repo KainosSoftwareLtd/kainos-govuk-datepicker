@@ -797,6 +797,7 @@ function DatePicker(datePickerElement, options) {
 
     props.element.setAttribute('type', 'button');
     props.element.setAttribute('tabindex', '-1');
+    props.element.setAttribute('data-test-id', props.date.toLocaleDateString());
 
     props.element.innerHTML = props.date.getDate();
     props.element.classList.add('date__button');
