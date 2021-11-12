@@ -169,7 +169,6 @@ describe('Date picker', () => {
 
       $(revealButton).trigger('click');
 
-
       expect($(heading).text()).toEqual(todayAsFormattedMonthYear);
       expect(nextMonth.classList.contains('date-picker__button--disabled')).toBeFalsy();
     });
@@ -221,7 +220,6 @@ describe('Date picker', () => {
 
       $(revealButton).trigger('click');
 
-
       const todayDateButton = document.querySelector(`[data-test-id="${today.toLocaleDateString()}"]`);
 
       $(todayDateButton).trigger('click');
@@ -247,7 +245,6 @@ describe('Date picker', () => {
 
       $(revealButton).trigger('click');
 
-
       const tomorrowButton = document.querySelector(`[data-test-id="${tomorrow.toLocaleDateString()}"]`);
 
       expect(tomorrowButton.tabIndex).toEqual(0);
@@ -269,7 +266,6 @@ describe('Date picker', () => {
       $(yearInput).val(nextMonth.getFullYear());
 
       $(revealButton).trigger('click');
-
 
       const nextMonthButton = document.querySelector(`[data-test-id="${nextMonth.toLocaleDateString()}"]`);
 
