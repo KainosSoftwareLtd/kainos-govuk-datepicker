@@ -68,7 +68,7 @@ function DatePicker(datePickerElement, options = {}) {
   };
   var state = {
     isOpen: false,
-    isPreviousEnabled: false,
+    isPreviousEnabled: true,
     isNextEnabled: true,
     maxDate: options.maxDate || null,
     minDate: options.minDate || null,

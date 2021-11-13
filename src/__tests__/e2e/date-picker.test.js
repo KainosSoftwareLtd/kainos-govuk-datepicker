@@ -36,6 +36,41 @@ Scenario('it should allow navigation & selection of a date using keyboard only',
   I.seeInField('passport-issued-year', selectedDate.getFullYear().toString());
 });
 
+Scenario('it should allow for navigation to the previous month using arrow keys only', async ({ I }) => {
+  const previousMonth = new Date();
+  previousMonth.setMonth(today.getMonth() - 1);
+
+  I.amOnPage('');
+
+  await I.seeElement('#passport-issued-day');
+  await I.fillField('#passport-issued-day', '1');
+  await I.fillField('#passport-issued-month', today.getMonth() + 1);
+  await I.fillField('#passport-issued-year', today.getFullYear());
+
+  I.click('Choose date');
+  I.see(getFormattedMonthAndYear(today));
+  I.pressKey('ArrowLeft');
+  I.see(getFormattedMonthAndYear(previousMonth));
+});
+
+Scenario('it should allow for navigation to the next month using arrow keys only', async ({ I }) => {
+  const lastDayOfMonth = new Date(today.getFullYear(), today.getMonth()+1, 0);
+  const nextMonth = new Date();
+  nextMonth.setMonth(today.getMonth() + 1);
+
+  I.amOnPage('');
+
+  await I.seeElement('#passport-issued-day');
+  await I.fillField('#passport-issued-day', lastDayOfMonth.getDate());
+  await I.fillField('#passport-issued-month', today.getMonth() + 1);
+  await I.fillField('#passport-issued-year', today.getFullYear());
+
+  I.click('Choose date');
+  I.see(getFormattedMonthAndYear(today));
+  I.pressKey('ArrowRight');
+  I.see(getFormattedMonthAndYear(nextMonth));
+});
+
 const getFormattedMonthAndYear = date => {
   const month = months[date.getMonth()];
   const year = date.getFullYear();

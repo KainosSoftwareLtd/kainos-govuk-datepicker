@@ -10,7 +10,15 @@ nextMonth.setMonth(today.getMonth() + 1);
 const yesterday = new Date();
 yesterday.setDate(today.getDate() - 1);
 
-const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+const monthsEnglish = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+const monthsWelsh = ['Ionawr', 'Chwefror', 'Mawrth', 'Ebrill', 'Mai', 'Mehefin', 'Gorffennaf', 'Awst', 'Medi', 'Hydref',
+  'Tachwedd', 'Rhagfyr'];
+
+const getFormattedMonthAndYear = (date, months = monthsEnglish) => {
+  const month = months[date.getMonth()];
+  const year = date.getFullYear();
+  return `${month} ${year}`;
+};
 
 describe('Date picker', () => {
   beforeEach(() => {
@@ -155,12 +163,6 @@ describe('Date picker', () => {
   });
 
   describe('Previous / next month button', () => {
-    const getFormattedMonthAndYear = date => {
-      const month = months[date.getMonth()];
-      const year = date.getFullYear();
-      return `${month} ${year}`;
-    }
-
     const todayAsFormattedMonthYear = getFormattedMonthAndYear(today);
     const nextMonthAsFormattedMonthYear = getFormattedMonthAndYear(nextMonth);
 
@@ -207,7 +209,7 @@ describe('Date picker', () => {
       expect(nextMonthButton.classList.contains('date-picker__button--disabled')).toBeFalsy();
     });
 
-    it('should disable next month button when max date is reached', () => {
+    it('should disable next month button when max date is within this month', () => {
       DatePicker(document.querySelector('.date-picker'), {
         maxDate: nextMonth,
       });
@@ -251,6 +253,30 @@ describe('Date picker', () => {
       expect(previousMonthButton.tabIndex).toEqual(0);
       expect(previousMonthButton.classList.contains('date-picker__button--disabled')).toBeFalsy();
     });
+
+    it('should keep focus on previous month button when clicked', () => {
+      DatePicker(document.querySelector('.date-picker'), {});
+
+      const previousMonthButton = document.querySelector('.date-picker__button__previous-month');
+      const revealButton = document.querySelector('.date-picker__reveal');
+
+      $(revealButton).trigger('click');
+      $(previousMonthButton).trigger('click');
+
+      expect(previousMonthButton === document.activeElement).toBeTruthy();
+    });
+
+    it('should keep focus on next month button when clicked', () => {
+      DatePicker(document.querySelector('.date-picker'), {});
+
+      const nextMonthButtonButton = document.querySelector('.date-picker__button__next-month');
+      const revealButton = document.querySelector('.date-picker__reveal');
+
+      $(revealButton).trigger('click');
+      $(nextMonthButtonButton).trigger('click');
+
+      expect(nextMonthButtonButton === document.activeElement).toBeTruthy();
+    });
   });
 
   describe('Date selection', () => {
@@ -263,6 +289,7 @@ describe('Date picker', () => {
       const todayDateButton = document.querySelector(`[data-test-id="${today.toLocaleDateString()}"]`);
 
       expect(todayDateButton.tabIndex).toEqual(0);
+      expect(todayDateButton === document.activeElement).toBeTruthy();
       expect(todayDateButton.classList.contains('date__button--today')).toBeTruthy();
     });
 
@@ -303,6 +330,7 @@ describe('Date picker', () => {
 
       const tomorrowButton = document.querySelector(`[data-test-id="${tomorrow.toLocaleDateString()}"]`);
 
+      expect(tomorrowButton === document.activeElement).toBeTruthy();
       expect(tomorrowButton.tabIndex).toEqual(0);
     });
 
@@ -322,6 +350,7 @@ describe('Date picker', () => {
 
       const yesterdayButton = document.querySelector(`[data-test-id="${yesterday.toLocaleDateString()}"]`);
 
+      expect(yesterdayButton === document.activeElement).toBeTruthy();
       expect(yesterdayButton.tabIndex).toEqual(0);
     });
 
@@ -344,6 +373,7 @@ describe('Date picker', () => {
 
       const nextMonthButton = document.querySelector(`[data-test-id="${nextMonth.toLocaleDateString()}"]`);
 
+      expect(nextMonthButton === document.activeElement).toBeTruthy();
       expect(nextMonthButton.tabIndex).toEqual(0);
     });
 
@@ -366,6 +396,7 @@ describe('Date picker', () => {
 
       const previousMonthButton = document.querySelector(`[data-test-id="${previousMonth.toLocaleDateString()}"]`);
 
+      expect(previousMonthButton === document.activeElement).toBeTruthy();
       expect(previousMonthButton.tabIndex).toEqual(0);
     });
 
@@ -388,6 +419,7 @@ describe('Date picker', () => {
 
       const nextYearButton = document.querySelector(`[data-test-id="${nextYear.toLocaleDateString()}"]`);
 
+      expect(nextYearButton === document.activeElement).toBeTruthy();
       expect(nextYearButton.tabIndex).toEqual(0);
     });
 
@@ -410,6 +442,7 @@ describe('Date picker', () => {
 
       const previousYearButton = document.querySelector(`[data-test-id="${previousYear.toLocaleDateString()}"]`);
 
+      expect(previousYearButton === document.activeElement).toBeTruthy();
       expect(previousYearButton.tabIndex).toEqual(0);
     });
 
@@ -428,6 +461,7 @@ describe('Date picker', () => {
 
       const todayDateButton = document.querySelector(`[data-test-id="${today.toLocaleDateString()}"]`);
 
+      expect(todayDateButton === document.activeElement).toBeTruthy();
       expect(todayDateButton.tabIndex).toEqual(0);
       expect(todayDateButton.classList.contains('date__button--today')).toBeTruthy();
     });
@@ -505,7 +539,7 @@ describe('Date picker', () => {
       const yearInput = document.querySelector('.date-picker-year');
 
       $(dayInput).val(yesterday.getDate());
-      $(monthInput).val(yesterday.getDate());
+      $(monthInput).val(yesterday.getMonth() + 1);
       $(yearInput).val(yesterday.getFullYear());
 
       $(revealButton).trigger('click');
@@ -513,6 +547,7 @@ describe('Date picker', () => {
       const todayButton = document.querySelector(`[data-test-id="${today.toLocaleDateString()}"]`);
 
       expect(todayButton.tabIndex).toEqual(0);
+      expect(todayButton === document.activeElement).toBeTruthy();
       expect(todayButton.getAttribute('aria-disabled')).toBeFalsy();
       expect(todayButton.classList.contains('date__button--disabled')).toBeFalsy();
     });
@@ -536,8 +571,72 @@ describe('Date picker', () => {
       const maxDateButton = document.querySelector(`[data-test-id="${maxDate.toLocaleDateString()}"]`);
 
       expect(maxDateButton.tabIndex).toEqual(0);
+      expect(maxDateButton === document.activeElement).toBeTruthy();
       expect(maxDateButton.getAttribute('aria-disabled')).toBeFalsy();
       expect(maxDateButton.classList.contains('date__button--disabled')).toBeFalsy();
+    });
+
+    it('should display days outside of current month', () => {
+      const nov19_2021 = new Date('November 19, 2021 23:15:30');
+      const oct31_2021 = new Date('October 31, 2021 23:15:30');
+      const dec01_2021 = new Date('October 31, 2021 23:15:30');
+      const dec02_2021 = new Date('October 31, 2021 23:15:30');
+      const dec03_2021 = new Date('October 31, 2021 23:15:30');
+      const dec04_2021 = new Date('October 31, 2021 23:15:30');
+
+      DatePicker(document.querySelector('.date-picker'), {});
+
+      const revealButton = document.querySelector('.date-picker__reveal');
+      const dayInput = document.querySelector('.date-picker-day');
+      const monthInput = document.querySelector('.date-picker-month');
+      const yearInput = document.querySelector('.date-picker-year');
+
+      $(dayInput).val(nov19_2021.getDate());
+      $(monthInput).val(nov19_2021.getMonth() + 1);
+      $(yearInput).val(nov19_2021.getFullYear());
+
+      $(revealButton).trigger('click');
+
+      const oct31_2021Button = document.querySelector(`[data-test-id="${oct31_2021.toLocaleDateString()}"]`);
+      const dec01_2021Button = document.querySelector(`[data-test-id="${dec01_2021.toLocaleDateString()}"]`);
+      const dec02_2021Button = document.querySelector(`[data-test-id="${dec02_2021.toLocaleDateString()}"]`);
+      const dec03_2021Button = document.querySelector(`[data-test-id="${dec03_2021.toLocaleDateString()}"]`);
+      const dec04_2021Button = document.querySelector(`[data-test-id="${dec04_2021.toLocaleDateString()}"]`);
+
+      const dateButtons = [oct31_2021Button, dec01_2021Button, dec02_2021Button, dec03_2021Button, dec04_2021Button];
+
+      dateButtons.forEach(dateButton => {
+        expect(dateButton.tabIndex).toEqual(-1);
+        expect(dateButton.getAttribute('aria-disabled')).toBeFalsy();
+        expect(dateButton.classList.contains('date__button--inactive')).toBeTruthy();
+      });
+    });
+
+    describe('English / Welsh translations', () => {
+      it('should render in English', () => {
+        DatePicker(document.querySelector('.date-picker'), {});
+
+        const revealButton = document.querySelector('.date-picker__reveal');
+        const heading = document.querySelector('.date-picker__heading');
+
+        $(revealButton).trigger('click');
+
+        expect(heading.textContent.includes(getFormattedMonthAndYear(today))).toBeTruthy();
+      });
+
+      it('should render in Welsh', () => {
+        DatePicker(document.querySelector('.date-picker'), {
+          language: 'cy'
+        });
+
+        const revealButton = document.querySelector('.date-picker__reveal');
+        const heading = document.querySelector('.date-picker__heading');
+
+        $(revealButton).trigger('click');
+
+        expect(heading.textContent.includes(getFormattedMonthAndYear(today, monthsWelsh))).toBeTruthy();
+      });
+
     });
   });
 });
