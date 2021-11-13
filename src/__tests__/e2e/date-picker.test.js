@@ -3,11 +3,19 @@ const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 
 
 Feature('Date picker');
 
-Scenario('it should close date picker dialog on press of the ESC key', ({ I }) => {
+Scenario('it should close calendar on press of the ESC key', ({ I }) => {
   I.amOnPage('');
   I.click('Choose date');
   I.seeElement('.date-picker__dialog');
   I.pressKey('Escape');
+  I.dontSeeElement('.date-picker__dialog');
+});
+
+Scenario('it close the calendar when DOM elements outside of the calendar are clicked', async ({ I }) => {
+  I.amOnPage('');
+  I.click('Choose date');
+  I.seeElement('.date-picker__dialog');
+  I.click('#passport-issued-day');
   I.dontSeeElement('.date-picker__dialog');
 });
 

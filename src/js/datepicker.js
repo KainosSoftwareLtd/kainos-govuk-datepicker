@@ -401,6 +401,7 @@ function DatePicker(datePickerElement, options = {}) {
   }
 
   function registerEventHandlers() {
+    document.addEventListener('focus', handleDocumentFocus, true);
     document.body.addEventListener('mousedown', handleDocumentBodyMouseDown, true);
     elements.dialog.addEventListener('keydown', handleDialogKeydown, true);
     elements.buttons.revealButton.addEventListener('click', handleRevealButtonInteraction, true);
@@ -413,10 +414,17 @@ function DatePicker(datePickerElement, options = {}) {
     elements.buttons.closeButton.addEventListener('keydown', handleCloseButtonInteraction, true);
   }
 
+  function handleDocumentFocus(event) {
+    if (state.isOpen && event.target !== elements.dialog && !elements.dialog.contains(event.target)) {
+      event.stopPropagation();
+      elements.dialog.focus();
+    }
+  }
+
   function handleDocumentBodyMouseDown(event) {
     if (state.isOpen && event.target !== elements.dialog && !elements.dialog.contains(event.target)) {
-      hideCalender();
-      event.preventDefault();
+      state.isOpen = false;
+      elements.dialog.classList.add('date-picker__dialog--hidden');
     }
   }
 

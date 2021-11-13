@@ -159,6 +159,7 @@ describe('Date picker', () => {
       $(closeButton).trigger('click');
 
       expect(dialog.classList.contains('date-picker__dialog--hidden')).toBeTruthy();
+      expect(revealButton === document.activeElement).toBeTruthy();
     });
   });
 
