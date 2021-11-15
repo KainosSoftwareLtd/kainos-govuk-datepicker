@@ -1,6 +1,7 @@
 {
   "name": "accessible-date-picker-gov-uk",
-  "version": "0.0.3",
+  "main": "dist/*.*",
+  "version": "0.0.4",
   "description": "accessible GOV.UK datepicker",
   "scripts": {
     "build": "webpack --mode development",
