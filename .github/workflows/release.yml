@@ -7,15 +7,11 @@ on:
       - "main"
 
 jobs:
-  pre-release:
-    name: "Pre Release"
+  release:
+    name: "Release"
     runs-on: "ubuntu-latest"
-
     steps:
       - uses: "marvinpinto/action-automatic-releases@latest"
-      - name: "Build & test"
-      - run: npm ci
-      - run: npm run build:prod
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           automatic_release_tag: "latest"
