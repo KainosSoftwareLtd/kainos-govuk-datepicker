@@ -55,7 +55,11 @@
       "e2e"
     ]
   },
-  "pre-commit": "npm run lint",
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
   "lint-staged": {
     "*.js": [ "prettier --write",
       "eslint --fix src/",
