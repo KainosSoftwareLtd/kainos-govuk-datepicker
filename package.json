@@ -60,7 +60,7 @@
     }
   },
   "lint-staged": {
-    "*.{js}": ["eslint", "git add"]
+    "*.{js}": ["npm run lint", "git add"]
   },
   "prepublishOnly": "webpack --mode=production"
 }
