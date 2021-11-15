@@ -61,7 +61,7 @@
     }
   },
   "lint-staged": {
-    "*.{js}": ["npm run lint", "npm run prettier", "git add"]
+    "*.{js}": ["npm run lint", "npm run prettier"]
   },
   "prepublishOnly": "webpack --mode=production"
 }
