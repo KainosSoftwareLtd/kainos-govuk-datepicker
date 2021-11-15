@@ -7,22 +7,29 @@ on:
       - "main"
 
 jobs:
-  release:
-    name: "Release"
+  build:
+    "name": "Build"
     runs-on: ubuntu-latest
     strategy:
       matrix:
         node-version: [14.x]
     steps:
       - uses: actions/checkout@v2
-      - with:
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
       - run: npm ci
-      - run: npm run build:prod
+      - run: npm run build --prod
+  release:
+    needs: "build"
+    name: "Release"
+    runs-on: "ubuntu-latest"
+    steps:
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           automatic_release_tag: "latest"
           prerelease: false
-          files: dist/*
+          files: ./dist/*
