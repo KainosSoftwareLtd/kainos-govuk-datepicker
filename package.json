@@ -61,7 +61,10 @@
     }
   },
   "lint-staged": {
-    "*.{js}": ["npm run lint", "npm run prettier"]
+    "*.{js}": [ "prettier --write",
+      "eslint --fix src/",
+      "tslint --fix --project .",
+      "git add"]
   },
   "prepublishOnly": "webpack --mode=production"
 }
