@@ -12,7 +12,8 @@
     "start:dev": "npm run build & npm run start",
     "test": "jest --env=jsdom",
     "test:e2e": "npm run build & npm run start & npx codeceptjs run",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "prettier": "prettier '**/*.{js}' --write"
   },
   "author": "James Nelson, Michael Jones",
   "license": "ISC",
@@ -60,7 +61,7 @@
     }
   },
   "lint-staged": {
-    "*.{js}": ["npm run lint", "git add"]
+    "*.{js}": ["npm run lint", "npm run prettier", "git add"]
   },
   "prepublishOnly": "webpack --mode=production"
 }
