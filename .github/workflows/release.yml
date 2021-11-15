@@ -8,12 +8,18 @@ on:
 
 jobs:
   release:
-    name: "Release"
-    runs-on: "ubuntu-latest"
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.x]
     steps:
-      - uses: "marvinpinto/action-automatic-releases@latest"
+      - uses: actions/checkout@v2
+      - with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
       - run: npm ci
       - run: npm run build:prod
+      - uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           automatic_release_tag: "latest"
