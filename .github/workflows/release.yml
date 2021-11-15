@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    "name": "Build"
+    name: "Build"
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -35,5 +35,3 @@ jobs:
           prerelease: false
           files: |
             /dist
-      - run: npm ci
-      - run: npm run build:prod
