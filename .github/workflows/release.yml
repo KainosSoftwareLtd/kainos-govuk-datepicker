@@ -11,14 +11,6 @@ jobs:
     name: "Release"
     runs-on: "ubuntu-latest"
     steps:
-      - uses: "actions/checkout@v2"
-      - uses: "actions/setup-node@v2"
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'npm'
-      - run: "rm .gitignore"
-      - run: "npm ci"
-      - run: "npm run build:prod"
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
