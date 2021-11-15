@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    name: "Build"
+    "name": "Build"
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -20,18 +20,18 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
+      - run: rm .gitignore
       - run: npm ci
-      - run: npm run lint
-      - run: npm test
+      - run: npm run build:prod
   release:
     needs: "build"
     name: "Release"
     runs-on: "ubuntu-latest"
     steps:
       - uses: "marvinpinto/action-automatic-releases@latest"
-      - with:
+        with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           automatic_release_tag: "latest"
           prerelease: false
           files: |
-            /dist
+            /dist/*
