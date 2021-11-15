@@ -13,7 +13,6 @@
     "test": "jest --env=jsdom",
     "test:e2e": "npm run build & npm run start & npx codeceptjs run",
     "lint": "eslint .",
-    "prettier": "prettier '**/*.js' --write",
     "prepare": "husky install"
   },
   "author": "James Nelson, Michael Jones",
