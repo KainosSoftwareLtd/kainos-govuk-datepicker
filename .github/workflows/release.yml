@@ -16,6 +16,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
+      - run: "rm .gitignore"
       - run: "npm ci"
       - run: "npm run build:prod"
       - uses: "marvinpinto/action-automatic-releases@latest"
