@@ -55,7 +55,7 @@
       "e2e"
     ]
   },
-  "pre-commit": "lint-staged",
+  "pre-commit": "npm run lint",
   "lint-staged": {
     "*.{js}": [ "prettier --write",
       "eslint --fix src/",
