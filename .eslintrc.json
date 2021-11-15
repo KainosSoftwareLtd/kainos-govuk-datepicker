@@ -1,0 +1,56 @@
+{
+    "env": {
+        "browser": true,
+        "commonjs": true,
+        "es2021": true,
+        "jest/globals": true,
+        "codeceptjs/codeceptjs": true
+    },
+    "extends": [
+        "airbnb-base"
+    ],
+    "parserOptions": {
+        "ecmaVersion": 12
+    },
+    "rules": {
+        "no-plusplus": "off",
+        "no-use-before-define": "off"
+    },
+    "overrides": [
+        {
+            "files": [
+                "src/js/datepicker.js"
+            ],
+            "rules": {
+                "@typescript-eslint/no-explicit-any": "off",
+                "@typescript-eslint/restrict-plus-operands": "off",
+                "@typescript-eslint/no-this-alias": "off",
+                "no-var": "off",
+                "func-names": "off",
+                "consistent-return": "off",
+                "object-shorthand": "off",
+                "security/detect-object-injection": "off",
+                "prefer-template": "off",
+                "prefer-arrow-callback": "off",
+                "prefer-destructuring": "off"
+            },
+            "env": {
+                "browser": true
+            }
+        },
+        {
+            "files": [
+                "./codecept.conf.js",
+                "./server.js"
+            ],
+            "rules": {
+                "import/no-extraneous-dependencies": "off",
+                "no-console": "off"
+            }
+        }
+    ],
+    "plugins": [
+        "jest",
+        "codeceptjs"
+    ]
+}

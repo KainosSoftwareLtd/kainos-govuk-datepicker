@@ -1,6 +1,12 @@
 const today = new Date();
 const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
+const getFormattedMonthAndYear = (date) => {
+  const month = months[date.getMonth()];
+  const year = date.getFullYear();
+  return `${month} ${year}`;
+};
+
 Feature('Date picker');
 
 Scenario('it should close calendar on press of the ESC key', ({ I }) => {
@@ -62,7 +68,7 @@ Scenario('it should allow for navigation to the previous month using arrow keys 
 });
 
 Scenario('it should allow for navigation to the next month using arrow keys only', async ({ I }) => {
-  const lastDayOfMonth = new Date(today.getFullYear(), today.getMonth()+1, 0);
+  const lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
   const nextMonth = new Date();
   nextMonth.setMonth(today.getMonth() + 1);
 
@@ -78,9 +84,3 @@ Scenario('it should allow for navigation to the next month using arrow keys only
   I.pressKey('ArrowRight');
   I.see(getFormattedMonthAndYear(nextMonth));
 });
-
-const getFormattedMonthAndYear = date => {
-  const month = months[date.getMonth()];
-  const year = date.getFullYear();
-  return `${month} ${year}`;
-};

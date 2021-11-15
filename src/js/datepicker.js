@@ -1,11 +1,14 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* Disabled lint rule as linter complained DatePicker was not used in this file */
 function DatePicker(datePickerElement, options = {}) {
+  var keyCodes;
+  var content;
+  var elements;
+  var state;
+
   if (!datePickerElement) {
     throw new Error('Date picker not configured correctly');
   }
 
-  var keyCodes = {
+  keyCodes = {
     TAB: 9,
     ENTER: 13,
     ESC: 27,
@@ -15,7 +18,7 @@ function DatePicker(datePickerElement, options = {}) {
     RIGHT: 39,
     DOWN: 40,
   };
-  var content = {
+  content = {
     gb: {
       days: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
       dayAbbr: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
@@ -53,7 +56,7 @@ function DatePicker(datePickerElement, options = {}) {
       },
     },
   };
-  var elements = {
+  elements = {
     container: datePickerElement,
     buttons: {},
     table: {},
@@ -66,7 +69,7 @@ function DatePicker(datePickerElement, options = {}) {
     heading: {},
     dialog: {},
   };
-  var state = {
+  state = {
     isOpen: false,
     isPreviousEnabled: true,
     isNextEnabled: true,
@@ -209,9 +212,17 @@ function DatePicker(datePickerElement, options = {}) {
 
   function setFocusDay(date) {
     if (state.minDate && isDateBeforeMinDate(date)) {
-      state.focusedDate = new Date(state.minDate.getFullYear(), state.minDate.getMonth(), state.minDate.getDate());
+      state.focusedDate = new Date(
+        state.minDate.getFullYear(),
+        state.minDate.getMonth(),
+        state.minDate.getDate(),
+      );
     } else if (state.maxDate && isDateAfterMaxDate(date)) {
-      state.focusedDate = new Date(state.maxDate.getFullYear(), state.maxDate.getMonth(), state.maxDate.getDate());
+      state.focusedDate = new Date(
+        state.maxDate.getFullYear(),
+        state.maxDate.getMonth(),
+        state.maxDate.getDate(),
+      );
     } else {
       state.focusedDate = date;
     }
@@ -227,19 +238,24 @@ function DatePicker(datePickerElement, options = {}) {
   }
 
   function setDays() {
-    var currentMonthLastDay = new Date(state.focusedDate.getFullYear(), state.focusedDate.getMonth() + 1, 0)
-      .getDate();
+    var currentMonthLastDay = new Date(
+      state.focusedDate.getFullYear(),
+      state.focusedDate.getMonth() + 1,
+      0,
+    ).getDate();
 
     var previousMonthLastDay = new Date(
       state.previousMonth.getFullYear(),
       state.previousMonth.getMonth() + 1,
-      /* eslint-disable @typescript-eslint/comma-dangle */
-      0
+      0,
     ).getDate();
 
     var firstDayOfMonthIndex = new Date(new Date(state.focusedDate).setDate(1)).getDay() + 1;
-    var lastDayOfMonthIndex = new Date(state.focusedDate.getFullYear(), state.focusedDate.getMonth() + 1, 0)
-      .getDay();
+    var lastDayOfMonthIndex = new Date(
+      state.focusedDate.getFullYear(),
+      state.focusedDate.getMonth() + 1,
+      0,
+    ).getDay();
 
     var nextMonthDays = 7 - lastDayOfMonthIndex - 1;
     var i;
@@ -296,7 +312,11 @@ function DatePicker(datePickerElement, options = {}) {
   }
 
   function decrementFocusMonth() {
-    state.focusedDate = new Date(state.previousMonth.getFullYear(), state.previousMonth.getMonth() + 1, 0);
+    state.focusedDate = new Date(
+      state.previousMonth.getFullYear(),
+      state.previousMonth.getMonth() + 1,
+      0,
+    );
     state.nextMonth = getNextMonth();
     state.previousMonth = getPreviousMonth();
   }
@@ -338,19 +358,19 @@ function DatePicker(datePickerElement, options = {}) {
     });
 
     previousMonthButton = createElement('button', {
-      type: 'button', class: 'date-picker__button__previous-month', 'aria-labelledby': labelId
+      type: 'button', class: 'date-picker__button__previous-month', 'aria-labelledby': labelId,
     });
     container = createElement('div', { class: 'date-picker__container' });
     revealButton = createElement('button', { class: 'govuk-link date-picker__reveal', type: 'button' });
     headerContainer = createElement('div', { class: 'date-picker__header govuk-clearfix' });
     nextMonthButton = createElement('button', {
-      type: 'button', class: 'date-picker__button__next-month', 'aria-labelledby': labelId
+      type: 'button', class: 'date-picker__button__next-month', 'aria-labelledby': labelId,
     });
     heading = createElement('h2', {
       id: labelId, class: 'date-picker__heading', 'aria-live': 'assertive', 'aria-atomic': true,
     });
     table = createElement('table', {
-      class: 'date-picker__date-table', role: 'grid', 'aria-labelledby': labelId
+      class: 'date-picker__date-table', role: 'grid', 'aria-labelledby': labelId,
     });
     thead = createElement('thead');
     tbody = createElement('tbody');
@@ -415,14 +435,16 @@ function DatePicker(datePickerElement, options = {}) {
   }
 
   function handleDocumentFocus(event) {
-    if (state.isOpen && event.target !== elements.dialog && !elements.dialog.contains(event.target)) {
+    if (state.isOpen && event.target !== elements.dialog
+      && !elements.dialog.contains(event.target)) {
       event.stopPropagation();
       elements.dialog.focus();
     }
   }
 
   function handleDocumentBodyMouseDown(event) {
-    if (state.isOpen && event.target !== elements.dialog && !elements.dialog.contains(event.target)) {
+    if (state.isOpen && event.target !== elements.dialog
+      && !elements.dialog.contains(event.target)) {
       state.isOpen = false;
       elements.dialog.classList.add('date-picker__dialog--hidden');
     }
