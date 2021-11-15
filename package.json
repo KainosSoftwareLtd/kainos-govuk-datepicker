@@ -61,9 +61,11 @@
     }
   },
   "lint-staged": {
-    "*.js": [ "prettier --write",
+    "*.js": [
+      "prettier --write",
       "eslint --fix src/",
-      "tslint --fix --project ."]
+      "tslint --fix --project ."
+    ]
   },
   "prepublishOnly": "webpack --mode=production"
 }
