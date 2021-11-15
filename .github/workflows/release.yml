@@ -28,11 +28,11 @@ jobs:
     runs-on: "ubuntu-latest"
     steps:
       - uses: "marvinpinto/action-automatic-releases@latest"
-      - run: npm ci
-      - run: npm run build:prod
-        with:
+      - with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           automatic_release_tag: "latest"
           prerelease: false
           files: |
             /dist
+      - run: npm ci
+      - run: npm run build:prod
