@@ -1,6 +1,5 @@
 {
   "name": "accessible-date-picker-gov-uk",
-  "main": "dist/",
   "version": "0.0.2",
   "description": "accessible GOV.UK datepicker",
   "scripts": {
