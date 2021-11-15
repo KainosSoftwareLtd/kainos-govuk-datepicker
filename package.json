@@ -1,10 +1,9 @@
 {
   "name": "accessible-date-picker-gov-uk",
-  "main": "dist/date-picker.js",
   "files": [
     "dist"
   ],
-  "version": "0.0.10",
+  "version": "0.0.1",
   "description": "accessible GOV.UK datepicker",
   "scripts": {
     "build": "webpack --mode development",
@@ -48,7 +47,6 @@
     "webpack-cli": "^4.9.1"
   },
   "dependencies": {
-    "accessible-date-picker-gov-uk": "^0.0.9",
     "govuk-frontend": "^3.14.0"
   },
   "jest": {
