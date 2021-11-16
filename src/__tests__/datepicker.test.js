@@ -12,6 +12,9 @@ nextMonth.setMonth(today.getMonth() + 1);
 const yesterday = new Date();
 yesterday.setDate(today.getDate() - 1);
 
+const tomorrow = new Date();
+tomorrow.setDate(today.getDate() + 1);
+
 const monthsEnglish = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 const monthsWelsh = ['Ionawr', 'Chwefror', 'Mawrth', 'Ebrill', 'Mai', 'Mehefin', 'Gorffennaf', 'Awst', 'Medi', 'Hydref',
   'Tachwedd', 'Rhagfyr'];
@@ -316,9 +319,6 @@ describe('Date picker', () => {
     });
 
     it('should allow for selection of tomorrow', () => {
-      const tomorrow = new Date();
-      tomorrow.setDate(today.getDate() + 1);
-
       DatePicker(document.querySelector('.date-picker'), {});
 
       const revealButton = document.querySelector('.date-picker__reveal');
@@ -638,6 +638,48 @@ describe('Date picker', () => {
         expect(heading.textContent.includes(
           getFormattedMonthAndYear(today, monthsWelsh),
         )).toBeTruthy();
+      });
+    });
+
+    describe('Aria message', () => {
+      it('should inform the user they cannot select a day in the past', () => {
+        DatePicker(document.querySelector('.date-picker'), {
+          maxDate: today,
+        });
+
+        const revealButton = document.querySelector('.date-picker__reveal');
+
+        $(revealButton).trigger('click');
+
+        const dateButton = document.querySelector(`[data-test-id="${tomorrow.toLocaleDateString()}"]`);
+
+        $(dateButton).trigger('click');
+        const dialog = document.querySelector('.date-picker__dialog');
+
+        const ariaLiveMessage = dialog.querySelector('.aria-live-message');
+
+        expect(ariaLiveMessage.getAttribute('aria-live')).toEqual('assertive');
+        expect(ariaLiveMessage.innerText).toContain('You cannot select a day after');
+      });
+
+      it('should inform the user they cannot select a day in the future', () => {
+        DatePicker(document.querySelector('.date-picker'), {
+          maxDate: today,
+        });
+
+        const revealButton = document.querySelector('.date-picker__reveal');
+
+        $(revealButton).trigger('click');
+
+        const dateButton = document.querySelector(`[data-test-id="${tomorrow.toLocaleDateString()}"]`);
+
+        $(dateButton).trigger('click');
+        const dialog = document.querySelector('.date-picker__dialog');
+
+        const ariaLiveMessage = dialog.querySelector('.aria-live-message');
+
+        expect(ariaLiveMessage.getAttribute('aria-live')).toEqual('assertive');
+        expect(ariaLiveMessage.innerText).toContain('You cannot select a day after');
       });
     });
 
