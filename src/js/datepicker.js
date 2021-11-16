@@ -184,7 +184,7 @@ function DatePicker(datePickerElement, options = {}) {
     var x;
 
     if (elements.ariaLiveMessage) {
-      elms = document.querySelectorAll('.aria-live-message');
+      elms = elements.dialog.querySelectorAll('.aria-live-message');
       for (x = 0; x < elms.length; x++) {
         elements.dialog.removeChild(elms[x]);
       }
@@ -613,7 +613,7 @@ function DatePicker(datePickerElement, options = {}) {
         hideCalender();
       } else if (date.isDisabled && date.isAfterMaxDate) {
         removeAriaLiveMessage();
-        setAriaLiveMessage(content[state.language].aria.dayInPast + ' ' + getFormattedDate(state.maxDate));
+        setAriaLiveMessage(content[state.language].aria.dayInFuture + ' ' + getFormattedDate(state.maxDate));
         elements.dialog.focus();
       } else if (date.isDisabled && date.isBeforeMinDate) {
         removeAriaLiveMessage();

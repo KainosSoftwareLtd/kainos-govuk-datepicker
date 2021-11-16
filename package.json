@@ -6,14 +6,13 @@
   "version": "0.0.1",
   "description": "accessible GOV.UK datepicker",
   "scripts": {
-    "build": "webpack --mode development",
-    "build:prod": "webpack --mode production",
+    "build": "webpack --mode production",
+    "build:dev": "webpack --mode development",
     "start": "node ./server",
     "start:dev": "npm run build & npm run start",
     "test": "jest --env=jsdom",
     "test:e2e": "npm run build & npm run start & npx codeceptjs run",
     "lint": "eslint .",
-    "prettier": "prettier '**/*.{js}' --write",
     "prepare": "husky install"
   },
   "author": "James Nelson, Michael Jones",
@@ -53,7 +52,8 @@
   },
   "jest": {
     "testPathIgnorePatterns": [
-      "e2e"
+      "e2e",
+      "fixtures"
     ]
   },
   "prepublishOnly": "webpack --mode=production"
