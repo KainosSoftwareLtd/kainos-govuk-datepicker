@@ -52,7 +52,8 @@
   },
   "jest": {
     "testPathIgnorePatterns": [
-      "e2e"
+      "e2e",
+      "fixtures"
     ]
   },
   "prepublishOnly": "webpack --mode=production"
