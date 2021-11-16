@@ -22,9 +22,8 @@ Files & locations:
 
 |        File        |             Folder              |               Description               |
 | ------------------ | ------------------------------- | --------------------------------------- |
-| datepicker.min.js  | node_modules/js-datepicker/dist | production build - (ES5, 5.9kb gzipped) |
-| datepicker.min.css | node_modules/js-datepicker/dist | production stylesheet                   |
-| datepicker.scss    | node_modules/js-datepicker/src  | Scss file. Use it in your own builds.   |
+| datepicker.min.js  | node_modules/js-datepicker/     | production build - (ES5, 5.9kb gzipped) |
+| datepicker.min.css | node_modules/js-datepicker/     | production stylesheet                   |
 
 ## Basic Usage
 
@@ -35,7 +34,9 @@ import datepicker from 'accessible-date-picker';
 const datepicker = require('accessible-date-picker');
 ```
 
-Add a class of 'date-picker' to your HTML form wrapper. Ensure day, month and year inputs have a class of 'date-picker-day', 'date-picker-month', 'date-picker-year'.
+Add a class of `.date-picker` to your HTML form wrapper. Ensure day, month and year inputs have a class of `.date-picker-day`, `.date-picker-month`, `.date-picker-year`.
+
+See recommended HTML structure below - 
 
 ```html
 <div class="govuk-form-group">
@@ -46,7 +47,7 @@ Add a class of 'date-picker' to your HTML form wrapper. Ensure day, month and ye
     </h1>
    </legend>
    <div id="passport-issued-hint" class="govuk-hint">
-     For example, 27 3 2007<
+     For example, 27 3 2007
    </div>
    <div class="govuk-date-input date-picker" id="passport-issued">
     <div class="govuk-date-input__item">
@@ -77,11 +78,7 @@ Add a class of 'date-picker' to your HTML form wrapper. Ensure day, month and ye
 
 Importing the styles into your project using Node:
 ```javascript
-// From within a scss file,
-// import datepickers scss file...
-@import '~accessible-date-picker/src/accessible-date-picker';
-
-// or import datepickers css file.
+// Import datepickers css file.
 @import '~accessible-date-picker/dist/accessible-date-picker.min.css';
 ```
 
@@ -92,10 +89,8 @@ datepicker(selector, options);
 
 Datepicker takes 2 arguments:
 
-1. `selector` - two possibilities:
-    1. `string` - a CSS selector, such as `'.my-class'`, `'#my-id'`, or `'div'`.
-    2. `DOM node` - provide a DOM node, such as `document.querySelector('#my-id')`.
-2. (optional) A configuration object (see below).
+1. `selector` - DOM node, such as `document.querySelector('#my-id')`.
+2. `options` - (optional) - A configuration object (see below).
 
 ## Options
 
@@ -103,7 +98,7 @@ The date picker currently supports the following configuration options:
 
 ### language
 
-Type: String
+Type: String | `gb` or `cy`
 
 Supports English (gb) and Welsh (cy). Defaults to English if not specified.
 
@@ -114,11 +109,11 @@ datepicker(selector, {
 });
 ```
 
-### min date
+### minDate
 
 Type: Date
 
-The minimum date the user can select. Defaults to yesterday.
+The minimum date the user can select. Null by default.
 
 Using it in your code:
 ```javascript
@@ -127,11 +122,11 @@ datepicker(selector, {
 });
 ```
 
-### max date
+### maxDate
 
 Type: Date
 
-The maxinum date the user can select. Null by default.
+The maximum date the user can select. Null by default.
 
 Using it in your code:
 ```javascript
