@@ -98,14 +98,14 @@ The date picker currently supports the following configuration options:
 
 ### language
 
-Type: String | `gb` or `cy`
+Type: String | `en` or `cy`
 
-Supports English (gb) and Welsh (cy). Defaults to English if not specified.
+Supports English `en` and Welsh `cy`. Defaults to English if not specified.
 
 Using it in your code:
 ```javascript
 datepicker(selector, {
-  language: 'gb', // 'cy'
+  language: 'en', // 'cy'
 });
 ```
 
