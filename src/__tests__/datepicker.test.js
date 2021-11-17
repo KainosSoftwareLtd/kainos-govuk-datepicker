@@ -459,24 +459,58 @@ describe('Date picker', () => {
       expect(previousYearButton.tabIndex).toEqual(0);
     });
 
-    it('should set focus on today when date inputs are incorrectly formatted', () => {
+    it('should set focus on nearest date when day input is incorrectly formatted', () => {
       DatePicker(document.querySelector('.date-picker'), {});
       const revealButton = document.querySelector('.date-picker__reveal');
       const dayInput = document.querySelector('.date-picker-day');
       const monthInput = document.querySelector('.date-picker-month');
       const yearInput = document.querySelector('.date-picker-year');
 
-      $(dayInput).val(40);
-      $(monthInput).val(today.getMonth() + 1);
-      $(yearInput).val(today.getFullYear());
+      $(dayInput).val('40');
+      $(monthInput).val('11');
+      $(yearInput).val('2021');
 
       $(revealButton).trigger('click');
 
-      const todayDateButton = document.querySelector(`[data-test-id="${today.toLocaleDateString()}"]`);
+      const nearestDateButton = document.querySelector('[data-test-id="30/11/2021"]');
+      expect(nearestDateButton === document.activeElement).toBeTruthy();
+      expect(nearestDateButton.tabIndex).toEqual(0);
+    });
 
-      expect(todayDateButton === document.activeElement).toBeTruthy();
-      expect(todayDateButton.tabIndex).toEqual(0);
-      expect(todayDateButton.classList.contains('date__button--today')).toBeTruthy();
+    it('should set focus on nearest date when month input is incorrectly formatted', () => {
+      DatePicker(document.querySelector('.date-picker'), {});
+      const revealButton = document.querySelector('.date-picker__reveal');
+      const dayInput = document.querySelector('.date-picker-day');
+      const monthInput = document.querySelector('.date-picker-month');
+      const yearInput = document.querySelector('.date-picker-year');
+
+      $(dayInput).val('15');
+      $(monthInput).val('13');
+      $(yearInput).val('2021');
+
+      $(revealButton).trigger('click');
+
+      const nearestDateButton = document.querySelector('[data-test-id="15/12/2021"]');
+      expect(nearestDateButton === document.activeElement).toBeTruthy();
+      expect(nearestDateButton.tabIndex).toEqual(0);
+    });
+
+    it('should set focus on 31st December when day and month input is incorrectly formatted', () => {
+      DatePicker(document.querySelector('.date-picker'), {});
+      const revealButton = document.querySelector('.date-picker__reveal');
+      const dayInput = document.querySelector('.date-picker-day');
+      const monthInput = document.querySelector('.date-picker-month');
+      const yearInput = document.querySelector('.date-picker-year');
+
+      $(dayInput).val('32');
+      $(monthInput).val('13');
+      $(yearInput).val('2022');
+
+      $(revealButton).trigger('click');
+
+      const nearestDateButton = document.querySelector('[data-test-id="31/12/2022"]');
+      expect(nearestDateButton === document.activeElement).toBeTruthy();
+      expect(nearestDateButton.tabIndex).toEqual(0);
     });
   });
 
@@ -624,128 +658,148 @@ describe('Date picker', () => {
       });
     });
 
-    describe('English / Welsh translations', () => {
-      it('should render in English', () => {
-        DatePicker(document.querySelector('.date-picker'), {});
-
-        const revealButton = document.querySelector('.date-picker__reveal');
-        const heading = document.querySelector('.date-picker__heading');
-
-        $(revealButton).trigger('click');
-
-        expect(heading.textContent.includes(getFormattedMonthAndYear(today))).toBeTruthy();
+    it('should set focus on maxDate when day and month input is incorrectly formatted beyond maxDate', () => {
+      DatePicker(document.querySelector('.date-picker'), {
+        maxDate: new Date('2022-06-15'),
       });
+      const revealButton = document.querySelector('.date-picker__reveal');
+      const dayInput = document.querySelector('.date-picker-day');
+      const monthInput = document.querySelector('.date-picker-month');
+      const yearInput = document.querySelector('.date-picker-year');
 
-      it('should render in Welsh', () => {
-        DatePicker(document.querySelector('.date-picker'), {
-          language: 'cy',
-        });
+      $(dayInput).val('32');
+      $(monthInput).val('13');
+      $(yearInput).val('2022');
 
-        const revealButton = document.querySelector('.date-picker__reveal');
-        const heading = document.querySelector('.date-picker__heading');
+      $(revealButton).trigger('click');
 
-        $(revealButton).trigger('click');
+      const nearestDateButton = document.querySelector('[data-test-id="15/06/2022"]');
+      expect(nearestDateButton === document.activeElement).toBeTruthy();
+      expect(nearestDateButton.tabIndex).toEqual(0);
+    });
+  });
 
-        expect(heading.textContent.includes(
-          getFormattedMonthAndYear(today, monthsWelsh),
-        )).toBeTruthy();
-      });
+  describe('English / Welsh translations', () => {
+    it('should render in English', () => {
+      DatePicker(document.querySelector('.date-picker'), {});
+
+      const revealButton = document.querySelector('.date-picker__reveal');
+      const heading = document.querySelector('.date-picker__heading');
+
+      $(revealButton).trigger('click');
+
+      expect(heading.textContent.includes(getFormattedMonthAndYear(today))).toBeTruthy();
     });
 
-    describe('Aria message', () => {
-      it('should inform the user they cannot select a day in the past', () => {
-        DatePicker(document.querySelector('.date-picker'), {
-          maxDate: today,
-        });
-
-        const revealButton = document.querySelector('.date-picker__reveal');
-
-        $(revealButton).trigger('click');
-
-        const dateButton = document.querySelector(`[data-test-id="${tomorrow.toLocaleDateString()}"]`);
-
-        $(dateButton).trigger('click');
-        const dialog = document.querySelector('.date-picker__dialog');
-
-        const ariaLiveMessage = dialog.querySelector('.aria-live-message');
-
-        expect(ariaLiveMessage.getAttribute('aria-live')).toEqual('assertive');
-        expect(ariaLiveMessage.innerText).toContain('You cannot select a day after');
+    it('should render in Welsh', () => {
+      DatePicker(document.querySelector('.date-picker'), {
+        language: 'cy',
       });
 
-      it('should inform the user they cannot select a day in the future', () => {
-        DatePicker(document.querySelector('.date-picker'), {
-          maxDate: today,
-        });
+      const revealButton = document.querySelector('.date-picker__reveal');
+      const heading = document.querySelector('.date-picker__heading');
 
-        const revealButton = document.querySelector('.date-picker__reveal');
+      $(revealButton).trigger('click');
 
-        $(revealButton).trigger('click');
+      expect(heading.textContent.includes(
+        getFormattedMonthAndYear(today, monthsWelsh),
+      )).toBeTruthy();
+    });
+  });
 
-        const dateButton = document.querySelector(`[data-test-id="${tomorrow.toLocaleDateString()}"]`);
-
-        $(dateButton).trigger('click');
-        const dialog = document.querySelector('.date-picker__dialog');
-
-        const ariaLiveMessage = dialog.querySelector('.aria-live-message');
-
-        expect(ariaLiveMessage.getAttribute('aria-live')).toEqual('assertive');
-        expect(ariaLiveMessage.innerText).toContain('You cannot select a day after');
+  describe('Aria message', () => {
+    it('should inform the user they cannot select a day in the past', () => {
+      DatePicker(document.querySelector('.date-picker'), {
+        maxDate: today,
       });
+
+      const revealButton = document.querySelector('.date-picker__reveal');
+
+      $(revealButton).trigger('click');
+
+      const dateButton = document.querySelector(`[data-test-id="${tomorrow.toLocaleDateString()}"]`);
+
+      $(dateButton).trigger('click');
+      const dialog = document.querySelector('.date-picker__dialog');
+
+      const ariaLiveMessage = dialog.querySelector('.aria-live-message');
+
+      expect(ariaLiveMessage.getAttribute('aria-live')).toEqual('assertive');
+      expect(ariaLiveMessage.innerText).toContain('You cannot select a day after');
     });
 
-    describe('Date grid', () => {
-      const getDateFromString = (date) => {
-        const day = date.split('/', 1)[0];
-        const month = date.split('/', 2)[1];
-        const year = date.split('/', 3)[2];
-
-        return new Date(year, (month - 1), day);
-      };
-
-      const assertGrid = (fixture) => {
-        DatePicker(document.querySelector('.date-picker'), {});
-
-        const revealButton = document.querySelector('.date-picker__reveal');
-        const dayInput = document.querySelector('.date-picker-day');
-        const monthInput = document.querySelector('.date-picker-month');
-        const yearInput = document.querySelector('.date-picker-year');
-        const heading = document.querySelector('.date-picker__heading');
-
-        $(dayInput).val(fixture.dateInputs.day);
-        $(monthInput).val(fixture.dateInputs.month);
-        $(yearInput).val(fixture.dateInputs.year);
-
-        $(revealButton).trigger('click');
-
-        expect($(heading).text()).toEqual(fixture.heading);
-
-        let button;
-        fixture.dates.forEach((date) => {
-          button = document.querySelector(`[data-test-id="${getDateFromString(date).toLocaleDateString()}"]`);
-          expect(button).toBeTruthy();
-        });
-      };
-
-      it('should render expected dates (Dec 2021)', () => {
-        assertGrid(dateFixtures.dec2021);
+    it('should inform the user they cannot select a day in the future', () => {
+      DatePicker(document.querySelector('.date-picker'), {
+        maxDate: today,
       });
 
-      it('should render expected dates (Jan 2022)', () => {
-        assertGrid(dateFixtures.jan2022);
-      });
+      const revealButton = document.querySelector('.date-picker__reveal');
 
-      it('should render expected dates (May 2022)', () => {
-        assertGrid(dateFixtures.may2022);
-      });
+      $(revealButton).trigger('click');
 
-      it('should render expected dates (June 2022)', () => {
-        assertGrid(dateFixtures.june2022);
-      });
+      const dateButton = document.querySelector(`[data-test-id="${tomorrow.toLocaleDateString()}"]`);
 
-      it('should render expected dates (Feb 2022)', () => {
-        assertGrid(dateFixtures.feb2022);
+      $(dateButton).trigger('click');
+      const dialog = document.querySelector('.date-picker__dialog');
+
+      const ariaLiveMessage = dialog.querySelector('.aria-live-message');
+
+      expect(ariaLiveMessage.getAttribute('aria-live')).toEqual('assertive');
+      expect(ariaLiveMessage.innerText).toContain('You cannot select a day after');
+    });
+  });
+
+  describe('Date grid', () => {
+    const getDateFromString = (date) => {
+      const day = date.split('/', 1)[0];
+      const month = date.split('/', 2)[1];
+      const year = date.split('/', 3)[2];
+
+      return new Date(year, (month - 1), day);
+    };
+
+    const assertGrid = (fixture) => {
+      DatePicker(document.querySelector('.date-picker'), {});
+
+      const revealButton = document.querySelector('.date-picker__reveal');
+      const dayInput = document.querySelector('.date-picker-day');
+      const monthInput = document.querySelector('.date-picker-month');
+      const yearInput = document.querySelector('.date-picker-year');
+      const heading = document.querySelector('.date-picker__heading');
+
+      $(dayInput).val(fixture.dateInputs.day);
+      $(monthInput).val(fixture.dateInputs.month);
+      $(yearInput).val(fixture.dateInputs.year);
+
+      $(revealButton).trigger('click');
+
+      expect($(heading).text()).toEqual(fixture.heading);
+
+      let button;
+      fixture.dates.forEach((date) => {
+        button = document.querySelector(`[data-test-id="${getDateFromString(date).toLocaleDateString()}"]`);
+        expect(button).toBeTruthy();
       });
+    };
+
+    it('should render expected dates (Dec 2021)', () => {
+      assertGrid(dateFixtures.dec2021);
+    });
+
+    it('should render expected dates (Jan 2022)', () => {
+      assertGrid(dateFixtures.jan2022);
+    });
+
+    it('should render expected dates (May 2022)', () => {
+      assertGrid(dateFixtures.may2022);
+    });
+
+    it('should render expected dates (June 2022)', () => {
+      assertGrid(dateFixtures.june2022);
+    });
+
+    it('should render expected dates (Feb 2024)', () => {
+      assertGrid(dateFixtures.feb2024);
     });
   });
 });

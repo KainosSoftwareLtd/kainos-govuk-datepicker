@@ -120,24 +120,25 @@ function DatePicker(datePickerElement, options = {}) {
   }
 
   function getDateFromInputs() {
+    var tempDate;
     var inputDates = {
       day: elements.inputs.day.value,
       month: elements.inputs.month.value,
       year: elements.inputs.year.value,
     };
 
-    function dateExists() {
-      if (inputDates.day > 31 || inputDates.month > 12) {
-        return false;
-      }
-      return inputDates.day <= new Date(inputDates.year, inputDates.month, 0).getDate();
-    }
-
     if (parseInt(inputDates.day, 10) && parseInt(inputDates.month, 10)
-      && parseInt(inputDates.year, 10) && dateExists()) {
+      && parseInt(inputDates.year, 10)) {
+      tempDate = new Date(inputDates.year, inputDates.month, 0);
+      if (inputDates.month > 12 && inputDates.day > tempDate.getDate()) {
+        return new Date(inputDates.year, 11, 31);
+      } else if (inputDates.month > 12) {
+        return new Date(inputDates.year, 11, inputDates.day);
+      } else if (inputDates.day > tempDate.getDate()) {
+        return tempDate;
+      }
       return new Date(inputDates.year, inputDates.month - 1, inputDates.day);
     }
-
     return new Date();
   }
 
