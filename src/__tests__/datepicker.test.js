@@ -472,7 +472,9 @@ describe('Date picker', () => {
 
       $(revealButton).trigger('click');
 
-      const nearestDateButton = document.querySelector('[data-test-id="30/11/2021"]');
+      const nearestDate = new Date('2021-11-30');
+      const nearestDateButton = document.querySelector(`[data-test-id="${nearestDate.toLocaleDateString()}"]`);
+
       expect(nearestDateButton === document.activeElement).toBeTruthy();
       expect(nearestDateButton.tabIndex).toEqual(0);
     });
@@ -490,7 +492,9 @@ describe('Date picker', () => {
 
       $(revealButton).trigger('click');
 
-      const nearestDateButton = document.querySelector('[data-test-id="15/12/2021"]');
+      const nearestDate = new Date('2021-12-15');
+      const nearestDateButton = document.querySelector(`[data-test-id="${nearestDate.toLocaleDateString()}"]`);
+
       expect(nearestDateButton === document.activeElement).toBeTruthy();
       expect(nearestDateButton.tabIndex).toEqual(0);
     });
@@ -508,7 +512,9 @@ describe('Date picker', () => {
 
       $(revealButton).trigger('click');
 
-      const nearestDateButton = document.querySelector('[data-test-id="31/12/2022"]');
+      const nearestDate = new Date('2022-12-31');
+      const nearestDateButton = document.querySelector(`[data-test-id="${nearestDate.toLocaleDateString()}"]`);
+
       expect(nearestDateButton === document.activeElement).toBeTruthy();
       expect(nearestDateButton.tabIndex).toEqual(0);
     });
@@ -672,8 +678,9 @@ describe('Date picker', () => {
       $(yearInput).val('2022');
 
       $(revealButton).trigger('click');
+      const nearestDate = new Date('2022-06-15');
+      const nearestDateButton = document.querySelector(`[data-test-id="${nearestDate.toLocaleDateString()}"]`);
 
-      const nearestDateButton = document.querySelector('[data-test-id="15/06/2022"]');
       expect(nearestDateButton === document.activeElement).toBeTruthy();
       expect(nearestDateButton.tabIndex).toEqual(0);
     });
