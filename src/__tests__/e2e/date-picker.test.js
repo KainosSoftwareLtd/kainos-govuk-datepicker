@@ -1,4 +1,3 @@
-const today = new Date();
 const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
 const getFormattedMonthAndYear = (date) => {
@@ -25,15 +24,21 @@ Scenario('it close the calendar when DOM elements outside of the calendar are cl
   I.dontSeeElement('.date-picker__dialog');
 });
 
-Scenario('it should allow navigation & selection of a date using keyboard only', ({ I }) => {
-  const selectedDate = new Date();
-  selectedDate.setDate(today.getDate() + 7); // Simulates DOWN keypress
-  selectedDate.setDate(today.getDate() + 1); // Simulates RIGHT keypress
-  selectedDate.setDate(today.getDate() - 1); // Simulates LEFT keypress
-  selectedDate.setDate(today.getDate() + 7); // Simulates DOWN keypress
-  selectedDate.setDate(today.getDate() + 7); // Simulates UP keypress
+Scenario('it should allow navigation & selection of a date using keyboard only', async ({ I }) => {
+  const selectedDate = new Date('2021-11-15');
+  selectedDate.setDate(selectedDate.getDate() + 7); // Simulates DOWN keypress
+  selectedDate.setDate(selectedDate.getDate() + 1); // Simulates RIGHT keypress
+  selectedDate.setDate(selectedDate.getDate() - 1); // Simulates LEFT keypress
+  selectedDate.setDate(selectedDate.getDate() + 7); // Simulates DOWN keypress
+  selectedDate.setDate(selectedDate.getDate() - 7); // Simulates UP keypress
 
   I.amOnPage('');
+
+  await I.seeElement('#passport-issued-day');
+  await I.fillField('#passport-issued-day', '15');
+  await I.fillField('#passport-issued-month', '11');
+  await I.fillField('#passport-issued-year', '2021');
+
   I.click('Choose date');
   I.pressKey('ArrowDown');
   I.pressKey('ArrowRight');
@@ -50,37 +55,90 @@ Scenario('it should allow navigation & selection of a date using keyboard only',
   I.seeInField('passport-issued-year', selectedDate.getFullYear().toString());
 });
 
-Scenario('it should allow for navigation to the previous month using arrow keys only', async ({ I }) => {
-  const previousMonth = new Date();
-  previousMonth.setMonth(today.getMonth() - 1);
-
+Scenario('it should allow for navigation to the previous month using left arrow key only', async ({ I }) => {
+  const currentMonth = new Date('2021-11-01');
+  const previousMonth = new Date('2021-10-31');
   I.amOnPage('');
 
   await I.seeElement('#passport-issued-day');
   await I.fillField('#passport-issued-day', '1');
-  await I.fillField('#passport-issued-month', today.getMonth() + 1);
-  await I.fillField('#passport-issued-year', today.getFullYear());
+  await I.fillField('#passport-issued-month', '11');
+  await I.fillField('#passport-issued-year', '2021');
 
   I.click('Choose date');
-  I.see(getFormattedMonthAndYear(today));
+  I.see(getFormattedMonthAndYear(currentMonth));
   I.pressKey('ArrowLeft');
   I.see(getFormattedMonthAndYear(previousMonth));
+
+  I.pressKey('Enter');
+
+  I.seeInField('passport-issued-day', '31');
+  I.seeInField('passport-issued-month', '10');
+  I.seeInField('passport-issued-year', '2021');
 });
 
-Scenario('it should allow for navigation to the next month using arrow keys only', async ({ I }) => {
-  const lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
-  const nextMonth = new Date();
-  nextMonth.setMonth(today.getMonth() + 1);
-
+Scenario('it should allow for navigation to the previous month using up arrow key only', async ({ I }) => {
+  const currentMonth = new Date('2021-11-01');
+  const previousMonth = new Date('2021-10-31');
   I.amOnPage('');
 
   await I.seeElement('#passport-issued-day');
-  await I.fillField('#passport-issued-day', lastDayOfMonth.getDate());
-  await I.fillField('#passport-issued-month', today.getMonth() + 1);
-  await I.fillField('#passport-issued-year', today.getFullYear());
+  await I.fillField('#passport-issued-day', '1');
+  await I.fillField('#passport-issued-month', '11');
+  await I.fillField('#passport-issued-year', '2021');
 
   I.click('Choose date');
-  I.see(getFormattedMonthAndYear(today));
+  I.see(getFormattedMonthAndYear(currentMonth));
+  I.pressKey('ArrowUp');
+  I.see(getFormattedMonthAndYear(previousMonth));
+
+  I.pressKey('Enter');
+
+  I.seeInField('passport-issued-day', '31');
+  I.seeInField('passport-issued-month', '10');
+  I.seeInField('passport-issued-year', '2021');
+});
+
+Scenario('it should allow for navigation to the next month using right key only', async ({ I }) => {
+  const currentMonth = new Date('2021-10-31');
+  const nextMonth = new Date('2021-11-01');
+  I.amOnPage('');
+
+  await I.seeElement('#passport-issued-day');
+  await I.fillField('#passport-issued-day', '31');
+  await I.fillField('#passport-issued-month', '10');
+  await I.fillField('#passport-issued-year', '2021');
+
+  I.click('Choose date');
+  I.see(getFormattedMonthAndYear(currentMonth));
   I.pressKey('ArrowRight');
   I.see(getFormattedMonthAndYear(nextMonth));
+
+  I.pressKey('Enter');
+
+  I.seeInField('passport-issued-day', '01');
+  I.seeInField('passport-issued-month', '11');
+  I.seeInField('passport-issued-year', '2021');
+});
+
+Scenario('it should allow for navigation to the next month using down arrow key only', async ({ I }) => {
+  const currentMonth = new Date('2021-10-31');
+  const nextMonth = new Date('2021-11-01');
+  I.amOnPage('');
+
+  await I.seeElement('#passport-issued-day');
+  await I.fillField('#passport-issued-day', '31');
+  await I.fillField('#passport-issued-month', '10');
+  await I.fillField('#passport-issued-year', '2021');
+
+  I.click('Choose date');
+  I.see(getFormattedMonthAndYear(currentMonth));
+  I.pressKey('ArrowDown');
+  I.see(getFormattedMonthAndYear(nextMonth));
+
+  I.pressKey('Enter');
+
+  I.seeInField('passport-issued-day', '01');
+  I.seeInField('passport-issued-month', '11');
+  I.seeInField('passport-issued-year', '2021');
 });

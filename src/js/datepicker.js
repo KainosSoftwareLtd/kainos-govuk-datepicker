@@ -19,7 +19,7 @@ function DatePicker(datePickerElement, options = {}) {
     DOWN: 40,
   };
   content = {
-    gb: {
+    en: {
       days: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
       dayAbbr: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
       months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October',
@@ -75,12 +75,12 @@ function DatePicker(datePickerElement, options = {}) {
     isNextEnabled: true,
     maxDate: options.maxDate || null,
     minDate: options.minDate || null,
-    language: options.language || 'gb',
+    language: options.language || 'en',
     focusedDate: new Date(),
     days: [],
   };
 
-  content.ni = content.gb;
+  content.ni = content.en;
 
   if (!elements.inputs.month || !elements.inputs.year || !elements.inputs.day || !options) {
     throw new Error('Date picker not configured correctly');
@@ -89,6 +89,10 @@ function DatePicker(datePickerElement, options = {}) {
   if (!(state.maxDate instanceof Date || state.maxDate === null)
     || !(state.minDate instanceof Date || state.minDate === null)) {
     throw new Error('Date picker min and max dates must be of type Date');
+  }
+
+  if (state.minDate && state.maxDate && state.minDate >= state.maxDate) {
+    throw new Error('Date picker min date cannot be greater than max date');
   }
 
   if (!(Object.keys(content).indexOf(state.language) > -1)) {
@@ -907,6 +911,7 @@ function DatePicker(datePickerElement, options = {}) {
   }
 
   buildUI();
+  renderHeading();
   registerEventHandlers();
 }
 

@@ -90,8 +90,8 @@ describe('Date picker', () => {
     it('it should render with full configuration options', () => {
       DatePicker(document.querySelector('.date-picker'), {
         language: 'cy',
-        minDate: new Date(),
-        maxDate: new Date(),
+        minDate: yesterday,
+        maxDate: tomorrow,
       });
 
       assertRender();
@@ -127,6 +127,15 @@ describe('Date picker', () => {
           maxDate: '12/10/2050',
         });
       }).toThrow('Date picker min and max dates must be of type Date');
+    });
+
+    it('it should throw an error when min date is greater than max date', () => {
+      expect(() => {
+        DatePicker(document.querySelector('.date-picker'), {
+          minDate: tomorrow,
+          maxDate: yesterday,
+        });
+      }).toThrow('Date picker min date cannot be greater than max date');
     });
   });
 
@@ -532,7 +541,7 @@ describe('Date picker', () => {
 
     it('should default focus day to min date when input dates are before min date', () => {
       DatePicker(document.querySelector('.date-picker'), {
-        minDate: today,
+        minDate: yesterday,
       });
 
       const revealButton = document.querySelector('.date-picker__reveal');
@@ -540,22 +549,24 @@ describe('Date picker', () => {
       const monthInput = document.querySelector('.date-picker-month');
       const yearInput = document.querySelector('.date-picker-year');
 
-      $(dayInput).val(yesterday.getDate());
+      $(dayInput).val(yesterday.getDate() - 3);
       $(monthInput).val(yesterday.getMonth() + 1);
       $(yearInput).val(yesterday.getFullYear());
 
       $(revealButton).trigger('click');
 
-      const todayButton = document.querySelector(`[data-test-id="${today.toLocaleDateString()}"]`);
+      const yesterdayButton = document.querySelector(`[data-test-id="${yesterday.toLocaleDateString()}"]`);
 
-      expect(todayButton.tabIndex).toEqual(0);
-      expect(todayButton === document.activeElement).toBeTruthy();
-      expect(todayButton.getAttribute('aria-disabled')).toBeFalsy();
-      expect(todayButton.classList.contains('date__button--disabled')).toBeFalsy();
+      expect(yesterdayButton.tabIndex).toEqual(0);
+      expect(yesterdayButton === document.activeElement).toBeTruthy();
+      expect(yesterdayButton.getAttribute('aria-disabled')).toBeFalsy();
+      expect(yesterdayButton.classList.contains('date__button--disabled')).toBeFalsy();
     });
 
     it('should default focus day to max date when input dates exceed max date', () => {
-      DatePicker(document.querySelector('.date-picker'), { maxDate });
+      DatePicker(document.querySelector('.date-picker'), {
+        maxDate,
+      });
 
       const revealButton = document.querySelector('.date-picker__reveal');
       const dayInput = document.querySelector('.date-picker-day');
@@ -730,6 +741,10 @@ describe('Date picker', () => {
 
       it('should render expected dates (June 2022)', () => {
         assertGrid(dateFixtures.june2022);
+      });
+
+      it('should render expected dates (Feb 2022)', () => {
+        assertGrid(dateFixtures.feb2022);
       });
     });
   });
