@@ -742,6 +742,10 @@ describe('Date picker', () => {
       it('should render expected dates (June 2022)', () => {
         assertGrid(dateFixtures.june2022);
       });
+
+      it('should render expected dates (Feb 2022)', () => {
+        assertGrid(dateFixtures.feb2022);
+      });
     });
   });
 });
