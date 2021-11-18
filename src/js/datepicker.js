@@ -68,7 +68,6 @@ function DatePicker(datePickerElement, options = {}) {
     ariaLiveMessage: null,
     heading: {},
     dialog: {},
-    overlay: {},
   };
   state = {
     isOpen: false,
@@ -303,24 +302,12 @@ function DatePicker(datePickerElement, options = {}) {
   function showCalender() {
     state.isOpen = true;
     elements.dialog.classList.remove('date-picker__dialog--hidden');
-    document.body.appendChild(elements.overlay);
-    document.addEventListener('touchmove', disableTouchScroll, true);
   }
 
   function hideCalender() {
     state.isOpen = false;
     elements.dialog.classList.add('date-picker__dialog--hidden');
     elements.buttons.revealButton.focus();
-    document.body.removeChild(elements.overlay);
-    document.removeEventListener('touchmove', dispatchEvent, true);
-  }
-
-  function disableTouchScroll(e) {
-    var touches = e.touches || e.changedTouches || [];
-
-    if (touches.length === 1) {
-      e.preventDefault();
-    }
   }
 
   function incrementFocusMonth() {
@@ -356,7 +343,6 @@ function DatePicker(datePickerElement, options = {}) {
     var i;
     var j;
     var labelId = 'date-picker-label-' + Math.floor((Math.random() * 100) + 1);
-    var overlay;
 
     function createElement(tag, attrs) {
       var e = document.createElement(tag);
@@ -394,7 +380,6 @@ function DatePicker(datePickerElement, options = {}) {
     thead = createElement('thead');
     tbody = createElement('tbody');
     headingRow = createElement('tr');
-    overlay = createElement('div', { class: 'date-picker__overlay' });
 
     for (i = 0, j = content[state.language].days.length; i < j; i++) {
       th = createElement('th');
@@ -437,7 +422,6 @@ function DatePicker(datePickerElement, options = {}) {
 
     elements.dialog = dialog;
     elements.heading = heading;
-    elements.overlay = overlay;
     setAriaLiveMessage('');
   }
 
