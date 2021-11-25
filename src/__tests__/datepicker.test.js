@@ -67,7 +67,7 @@ describe('Date picker', () => {
       expect(revealButton).toBeTruthy();
     };
 
-    it('it should should render with no configuration options', () => {
+    it('it should render with no configuration options', () => {
       DatePicker(document.querySelector('.date-picker'));
 
       assertRender();

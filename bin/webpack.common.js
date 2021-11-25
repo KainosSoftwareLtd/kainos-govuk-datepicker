@@ -1,15 +1,12 @@
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
   target: ['web', 'es5'],
-  entry: {
-    main: path.resolve(__dirname, './src/index.js'),
-  },
   output: {
-    path: path.resolve(__dirname, './dist'),
+    path: path.resolve(__dirname, '../dist'),
     filename: 'date-picker.js',
   },
   optimization: {
@@ -18,11 +15,6 @@ module.exports = {
   plugins: [
     new MiniCssExtractPlugin({
       filename: 'index.css',
-    }),
-    new HtmlWebpackPlugin({
-      title: 'Date picker',
-      template: path.resolve(__dirname, './src/index.html'),
-      filename: 'index.html',
     }),
     new CleanWebpackPlugin(),
   ],

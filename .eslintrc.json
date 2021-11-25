@@ -45,6 +45,7 @@
     {
       "files": [
         "./codecept.conf.js",
+        "./bin/*.js",
         "./server.js"
       ],
       "rules": {
