@@ -795,10 +795,6 @@ function DatePicker(datePickerElement, options = {}) {
           row.appendChild(cell);
         }
         k++;
-
-        if (state.days.length < 35) {
-          row.style.display = 'none';
-        }
       }
     }
 

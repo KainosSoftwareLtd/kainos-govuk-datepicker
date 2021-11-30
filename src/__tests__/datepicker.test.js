@@ -805,8 +805,14 @@ describe('Date picker', () => {
       assertGrid(dateFixtures.june2022);
     });
 
+    // Check that February correctly renders for leap years
     it('should render expected dates (Feb 2024)', () => {
       assertGrid(dateFixtures.feb2024);
+    });
+
+    // Check that dates render when there are exactly 4 weeks with no padding
+    it('should render expected dates (Feb 2026)', () => {
+      assertGrid(dateFixtures.feb2026);
     });
   });
 });
