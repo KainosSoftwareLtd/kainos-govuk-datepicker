@@ -7,7 +7,7 @@ module.exports = {
   target: ['web', 'es5'],
   output: {
     path: path.resolve(__dirname, '../dist'),
-    filename: 'date-picker.js',
+    filename: 'index.js',
   },
   optimization: {
     minimize: true,

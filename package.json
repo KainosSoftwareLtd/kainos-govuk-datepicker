@@ -1,5 +1,6 @@
 {
   "name": "govuk-datepicker",
+  "main": "dist",
   "files": [
     "dist"
   ],
