@@ -78,12 +78,8 @@ $tablet: 641px;
     color: $black;
     text-indent: -999em;
     overflow: hidden;
-    width: 20px;
-    height: 20px;
-    @media screen and (min-width: $tablet) {
-      width: 25px;
-      height: 25px;
-    }
+    width: 25px;
+    height: 25px;
   }
 
   &__button__previous-month {
@@ -156,7 +152,8 @@ $tablet: 641px;
 }
 
 .date__button {
-  width: 100%;
+  width: 36px;
+  height: 36px;
   margin: 0;
   border: 1px solid $mid-grey;
   color: $blue;
@@ -198,7 +195,6 @@ $tablet: 641px;
   }
 
   &--today {
-    margin-bottom: -3px;
     border-bottom: 4px solid $blue;
   }
 
