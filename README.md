@@ -34,44 +34,39 @@ import datepicker from 'accessible-date-picker';
 const datepicker = require('accessible-date-picker');
 ```
 
-Add a class of `.date-picker` to your HTML form wrapper. Ensure day, month and year inputs have a class of `.date-picker-day`, `.date-picker-month`, `.date-picker-year`.
+Add a class of `.date-picker` (can be named differently) to your HTML form wrapper.
 
-See recommended HTML structure below - 
+Ensure day, month and year inputs have a class of `.date-picker-day`, `.date-picker-month`, `.date-picker-year`.
+
+See recommended HTML - 
 
 ```html
 <div class="govuk-form-group">
  <fieldset class="govuk-fieldset" role="group" aria-describedby="passport-issued-hint">
    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-    <h1 class="govuk-fieldset__heading">
-      When was your passport issued?
-    </h1>
+    <h1 class="govuk-fieldset__heading">When was your passport issued?</h1>
    </legend>
-   <div id="passport-issued-hint" class="govuk-hint">
-     For example, 27 3 2007
-   </div>
+   <div class="govuk-hint">For example, 27 3 2007</div>
    <div class="govuk-date-input date-picker" id="passport-issued">
     <div class="govuk-date-input__item">
-    <div class="govuk-form-group">
-      <label class="govuk-label govuk-date-input__label" for="passport-issued-day">
-      Day
-      </label>
-      <input class="govuk-input govuk-date-input__input govuk-input--width-2 date-picker-day" id="passport-issued-day" name="passport-issued-day" type="text" pattern="[0-9]*" inputmode="numeric"></div>
-    </div>
+      <div class="govuk-form-group">
+        <label class="govuk-label govuk-date-input__label" for="passport-issued-day">Day</label>
+        <input class="govuk-input govuk-date-input__input govuk-input--width-2 date-picker-day" id="passport-issued-day" name="passport-issued-day" type="text" pattern="[0-9]*" inputmode="numeric" />
+      </div>
+    <div>
     <div class="govuk-date-input__item">
       <div class="govuk-form-group">
-     <label class="govuk-label govuk-date-input__label" for="passport-issued-month">
-      Month
-      </label>
-      <input class="govuk-input govuk-date-input__input govuk-input--width-2 date-picker-month" id="passport-issued-month" name="passport-issued-month" type="text" pattern="[0-9]*" inputmode="numeric"></div>
-    </div>
-    <div class="govuk-date-input__item">
-      <div class="govuk-form-group">
-      <label class="govuk-label govuk-date-input__label" for="passport-issued-year">
-      year
-      </label>
-      <input class="govuk-input govuk-date-input__input govuk-input--width-4 date-picker-year" id="passport-issued-year" name="passport-issued-year" type="text" pattern="[0-9]*" inputmode="numeric"></div>
+        <label class="govuk-label govuk-date-input__label" for="passport-issued-month">Month</label>
+        <input class="govuk-input govuk-date-input__input govuk-input--width-2 date-picker-month" id="passport-issued-month" name="passport-issued-month" type="text" pattern="[0-9]*" inputmode="numeric" />
       </div>
     </div>
+    <div class="govuk-date-input__item">
+      <div class="govuk-form-group">
+        <label class="govuk-label govuk-date-input__label" for="passport-issued-year">year</label>
+        <input class="govuk-input govuk-date-input__input govuk-input--width-4 date-picker-year" id="passport-issued-year" name="passport-issued-year" type="text" pattern="[0-9]*" inputmode="numeric" />
+      </div>
+    </div>
+   </div>
  </fieldset>
 </div>
 ```

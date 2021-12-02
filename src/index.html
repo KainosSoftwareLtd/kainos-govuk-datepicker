@@ -1,48 +1,184 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Date picker example</title>
-  </head>
-  <body>
-    <main id="main">
-      <div class="date-picker-demo-container">
-        <div class="govuk-form-group">
-          <fieldset class="govuk-fieldset" role="group" aria-describedby="passport-issued-hint">
-            <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-              <h1 class="govuk-fieldset__heading">
-                When was your passport issued?
-              </h1>
-            </legend>
-            <div id="passport-issued-hint" class="govuk-hint">
-              For example, 27 3 2007
+<html lang='en'>
+<head>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <title>Date picker examples</title>
+</head>
+<body>
+<div class='govuk-width-container'>
+  <main id='main' class='govuk-main-wrapper'>
+    <h1 class='govuk-heading-xl'>Date picker examples</h1>
+    <h2 class='govuk-heading-l'>Default</h2>
+    <p class='govuk-body'>The default datepicker does not have a minimum or maximum date range set. Any date is
+      selectable. Language will default to English.</p>
+    <div class='govuk-form-group'>
+      <fieldset class='govuk-fieldset' role='group' aria-describedby='passport-issued-hint'>
+        <legend class='govuk-fieldset__legend govuk-fieldset__legend--l'>
+          <h1 class='govuk-fieldset__heading'>When was your passport issued?</h1>
+        </legend>
+        <div class='govuk-hint'>For example, 27 3 2007</div>
+        <div class='govuk-date-input date-picker-default'>
+          <div class='govuk-date-input__item'>
+            <div class='govuk-form-group'>
+              <label class='govuk-label govuk-date-input__label' for='example-1-day'>Day</label>
+              <input class='govuk-input govuk-date-input__input govuk-input--width-2 date-picker-day'
+                     id='example-1-day' name='example-1-day' type='text' pattern='[0-9]*' inputmode='numeric' />
             </div>
-            <div class="govuk-date-input date-picker" id="passport-issued">
-              <div class="govuk-date-input__item">
-                <div class="govuk-form-group">
-                  <label class="govuk-label govuk-date-input__label" for="passport-issued-day">
-                    Day
-                  </label>
-                  <input class="govuk-input govuk-date-input__input govuk-input--width-2 date-picker-day" id="passport-issued-day" name="passport-issued-day" type="text" pattern="[0-9]*" inputmode="numeric"></div>
-              </div>
-              <div class="govuk-date-input__item">
-                <div class="govuk-form-group">
-                  <label class="govuk-label govuk-date-input__label" for="passport-issued-month">
-                    Month
-                  </label>
-                  <input class="govuk-input govuk-date-input__input govuk-input--width-2 date-picker-month" id="passport-issued-month" name="passport-issued-month" type="text" pattern="[0-9]*" inputmode="numeric"></div>
-              </div>
-              <div class="govuk-date-input__item">
-                <div class="govuk-form-group">
-                  <label class="govuk-label govuk-date-input__label" for="passport-issued-year">
-                    Year
-                  </label>
-                  <input class="govuk-input govuk-date-input__input govuk-input--width-4 date-picker-year" id="passport-issued-year" name="passport-issued-year" type="text" pattern="[0-9]*" inputmode="numeric"></div>
-              </div>
+          </div>
+          <div class='govuk-date-input__item'>
+            <div class='govuk-form-group'>
+              <label class='govuk-label govuk-date-input__label' for='example-1-month'>Month</label>
+              <input class='govuk-input govuk-date-input__input govuk-input--width-2 date-picker-month'
+                     id='example-1-month' name='example-1-month' type='text' pattern='[0-9]*' inputmode='numeric' />
             </div>
-          </fieldset>
+          </div>
+          <div class='govuk-date-input__item'>
+            <div class='govuk-form-group'>
+              <label class='govuk-label govuk-date-input__label' for='example-1-year'>Year</label>
+              <input class='govuk-input govuk-date-input__input govuk-input--width-4 date-picker-year'
+                     id='example-1-year' name='example-1-year' type='text' pattern='[0-9]*' inputmode='numeric' />
+            </div>
+          </div>
         </div>
-      </div>
-    </main>
-  </body>
+      </fieldset>
+    </div>
+    <hr />
+    <h2 class='govuk-heading-l'>Min Date</h2>
+    <p class='govuk-body'>Date picker includes a minimum date of today.</p>
+    <div class='govuk-form-group'>
+      <fieldset class='govuk-fieldset' role='group' aria-describedby='passport-issued-hint'>
+        <legend class='govuk-fieldset__legend govuk-fieldset__legend--l'>
+          <h1 class='govuk-fieldset__heading'>When was your passport issued?</h1>
+        </legend>
+        <div class='govuk-hint'>For example, 27 3 2007</div>
+        <div class='govuk-date-input date-picker-min-date'>
+          <div class='govuk-date-input__item'>
+            <div class='govuk-form-group'>
+              <label class='govuk-label govuk-date-input__label' for='example-2-day'>Day</label>
+              <input class='govuk-input govuk-date-input__input govuk-input--width-2 date-picker-day'
+                     id='example-2-day' name='example-2-day' type='text' pattern='[0-9]*' inputmode='numeric' />
+            </div>
+          </div>
+          <div class='govuk-date-input__item'>
+            <div class='govuk-form-group'>
+              <label class='govuk-label govuk-date-input__label' for='example-2-month'>Month</label>
+              <input class='govuk-input govuk-date-input__input govuk-input--width-2 date-picker-month'
+                     id='example-2-month' name='example-2-month' type='text' pattern='[0-9]*' inputmode='numeric' />
+            </div>
+          </div>
+          <div class='govuk-date-input__item'>
+            <div class='govuk-form-group'>
+              <label class='govuk-label govuk-date-input__label' for='example-2-year'>Year</label>
+              <input class='govuk-input govuk-date-input__input govuk-input--width-4 date-picker-year'
+                     id='example-2-year' name='example-2-year' type='text' pattern='[0-9]*' inputmode='numeric' />
+            </div>
+          </div>
+        </div>
+      </fieldset>
+    </div>
+    <hr />
+    <h2 class='govuk-heading-l'>Max Date</h2>
+    <p class='govuk-body'>Date picker includes a minimum date of today.</p>
+    <div class='govuk-form-group'>
+      <fieldset class='govuk-fieldset' role='group' aria-describedby='passport-issued-hint'>
+        <legend class='govuk-fieldset__legend govuk-fieldset__legend--l'>
+          <h1 class='govuk-fieldset__heading'>When was your passport issued?</h1>
+        </legend>
+        <div class='govuk-hint'>For example, 27 3 2007</div>
+        <div class='govuk-date-input date-picker-max-date'>
+          <div class='govuk-date-input__item'>
+            <div class='govuk-form-group'>
+              <label class='govuk-label govuk-date-input__label' for='example-3-day'>Day</label>
+              <input class='govuk-input govuk-date-input__input govuk-input--width-2 date-picker-day'
+                     id='example-3-day' name='example-1-day' type='text' pattern='[0-9]*' inputmode='numeric' />
+            </div>
+          </div>
+          <div class='govuk-date-input__item'>
+            <div class='govuk-form-group'>
+              <label class='govuk-label govuk-date-input__label' for='example-3-month'>Month</label>
+              <input class='govuk-input govuk-date-input__input govuk-input--width-2 date-picker-month'
+                     id='example-3-month' name='example-1-month' type='text' pattern='[0-9]*' inputmode='numeric' />
+            </div>
+          </div>
+          <div class='govuk-date-input__item'>
+            <div class='govuk-form-group'>
+              <label class='govuk-label govuk-date-input__label' for='example-3-year'>Year</label>
+              <input class='govuk-input govuk-date-input__input govuk-input--width-4 date-picker-year'
+                     id='example-3-year' name='example-1-year' type='text' pattern='[0-9]*' inputmode='numeric' />
+            </div>
+          </div>
+        </div>
+      </fieldset>
+    </div>
+    <hr />
+    <h2 class='govuk-heading-l'>Date range</h2>
+    <p class='govuk-body'>Date picker has a range of selectable dates.</p>
+    <div class='govuk-form-group'>
+      <fieldset class='govuk-fieldset' role='group' aria-describedby='passport-issued-hint'>
+        <legend class='govuk-fieldset__legend govuk-fieldset__legend--l'>
+          <h1 class='govuk-fieldset__heading'>When was your passport issued?</h1>
+        </legend>
+        <div class='govuk-hint'>For example, 27 3 2007</div>
+        <div class='govuk-date-input date-picker-date-range'>
+          <div class='govuk-date-input__item'>
+            <div class='govuk-form-group'>
+              <label class='govuk-label govuk-date-input__label' for='example-4-day'>Day</label>
+              <input class='govuk-input govuk-date-input__input govuk-input--width-2 date-picker-day'
+                     id='example-4-day' name='example-1-day' type='text' pattern='[0-9]*' inputmode='numeric' />
+            </div>
+          </div>
+          <div class='govuk-date-input__item'>
+            <div class='govuk-form-group'>
+              <label class='govuk-label govuk-date-input__label' for='example-4-month'>Month</label>
+              <input class='govuk-input govuk-date-input__input govuk-input--width-2 date-picker-month'
+                     id='example-4-month' name='example-1-month' type='text' pattern='[0-9]*' inputmode='numeric' />
+            </div>
+          </div>
+          <div class='govuk-date-input__item'>
+            <div class='govuk-form-group'>
+              <label class='govuk-label govuk-date-input__label' for='example-4-year'>Year</label>
+              <input class='govuk-input govuk-date-input__input govuk-input--width-4 date-picker-year'
+                     id='example-4-year' name='example-1-year' type='text' pattern='[0-9]*' inputmode='numeric' />
+            </div>
+          </div>
+        </div>
+      </fieldset>
+    </div>
+    <hr />
+    <h2 class='govuk-heading-l'>Welsh</h2>
+    <p class='govuk-body'>Date picker language is set to Welsh.</p>
+    <div class='govuk-form-group'>
+      <fieldset class='govuk-fieldset' role='group' aria-describedby='passport-issued-hint'>
+        <legend class='govuk-fieldset__legend govuk-fieldset__legend--l'>
+          <h1 class='govuk-fieldset__heading'>When was your passport issued?</h1>
+        </legend>
+        <div class='govuk-hint'>For example, 27 3 2007</div>
+        <div class='govuk-date-input date-picker-welsh'>
+          <div class='govuk-date-input__item'>
+            <div class='govuk-form-group'>
+              <label class='govuk-label govuk-date-input__label' for='example-5-day'>Day</label>
+              <input class='govuk-input govuk-date-input__input govuk-input--width-2 date-picker-day'
+                     id='example-5-day' name='example-1-day' type='text' pattern='[0-9]*' inputmode='numeric' />
+            </div>
+          </div>
+          <div class='govuk-date-input__item'>
+            <div class='govuk-form-group'>
+              <label class='govuk-label govuk-date-input__label' for='example-5-month'>Month</label>
+              <input class='govuk-input govuk-date-input__input govuk-input--width-2 date-picker-month'
+                     id='example-5-month' name='example-1-month' type='text' pattern='[0-9]*' inputmode='numeric' />
+            </div>
+          </div>
+          <div class='govuk-date-input__item'>
+            <div class='govuk-form-group'>
+              <label class='govuk-label govuk-date-input__label' for='example-5-year'>Year</label>
+              <input class='govuk-input govuk-date-input__input govuk-input--width-4 date-picker-year'
+                     id='example-5-year' name='example-1-year' type='text' pattern='[0-9]*' inputmode='numeric' />
+            </div>
+          </div>
+        </div>
+      </fieldset>
+    </div>
+  </main>
+</div>
+</body>
 </html>

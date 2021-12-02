@@ -67,19 +67,19 @@ describe('Date picker', () => {
       expect(revealButton).toBeTruthy();
     };
 
-    it('it should render with no configuration options', () => {
+    it('should render with no configuration options', () => {
       DatePicker(document.querySelector('.date-picker'));
 
       assertRender();
     });
 
-    it('it should render with empty configuration options', () => {
+    it('should render with empty configuration options', () => {
       DatePicker(document.querySelector('.date-picker'), {});
 
       assertRender();
     });
 
-    it('it should render with partial configuration options', () => {
+    it('should render with partial configuration options', () => {
       DatePicker(document.querySelector('.date-picker'), {
         language: 'cy',
       });
@@ -87,7 +87,7 @@ describe('Date picker', () => {
       assertRender();
     });
 
-    it('it should render with full configuration options', () => {
+    it('should render with full configuration options', () => {
       DatePicker(document.querySelector('.date-picker'), {
         language: 'cy',
         minDate: yesterday,
@@ -97,13 +97,13 @@ describe('Date picker', () => {
       assertRender();
     });
 
-    it('it should throw an error when date picker element was not provided', () => {
+    it('should throw an error when date picker element was not provided', () => {
       expect(() => {
         DatePicker();
       }).toThrow('Date picker not configured correctly');
     });
 
-    it('it should throw an error when an unsupported language is used', () => {
+    it('should throw an error when an unsupported language is used', () => {
       const unsupportedLanguageKey = 'fr';
 
       expect(() => {
@@ -113,7 +113,7 @@ describe('Date picker', () => {
       }).toThrow(`Date picker does not currently support language ${unsupportedLanguageKey}`);
     });
 
-    it('it should throw an error when min date is not of type date', () => {
+    it('should throw an error when min date is not of type date', () => {
       expect(() => {
         DatePicker(document.querySelector('.date-picker'), {
           minDate: '12/05/2005',
@@ -121,7 +121,7 @@ describe('Date picker', () => {
       }).toThrow('Date picker min and max dates must be of type Date');
     });
 
-    it('it should throw an error when max date is not of type date', () => {
+    it('should throw an error when max date is not of type date', () => {
       expect(() => {
         DatePicker(document.querySelector('.date-picker'), {
           maxDate: '12/10/2050',
@@ -129,7 +129,7 @@ describe('Date picker', () => {
       }).toThrow('Date picker min and max dates must be of type Date');
     });
 
-    it('it should throw an error when min date is greater than max date', () => {
+    it('should throw an error when min date is greater than max date', () => {
       expect(() => {
         DatePicker(document.querySelector('.date-picker'), {
           minDate: tomorrow,
