@@ -84,36 +84,14 @@ $dp-tablet: 641px;
     float: right;
   }
 
-  &__button__previous-month:before,
-  &__button__next-month:before {
-    top: 0;
-    left: 0;
-    position: absolute;
-    content: '\279C';
-    width: 24px;
-    height: 24px;
-    background-color: $dp-black;
-    border-radius: 50%;
-  }
-
   &__button__previous-month:after,
   &__button__next-month:after {
     text-indent: 0;
     position: absolute;
-    top: 2px;
-    color: $dp-white;
-    font-size: 18px;
+    top: 0;
+    color: $dp-black;
+    font-size: 22px;
     font-weight: bold;
-
-    /* IE10-11 */
-    @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-      top: 0;
-    }
-
-    /* MS Edge */
-    @supports (-ms-ime-align:auto) {
-      top: 0;
-    }
   }
 
   &__button__previous-month:after {
@@ -185,7 +163,7 @@ $dp-tablet: 641px;
   }
 
   &__button--disabled {
-    opacity: .5;
+    opacity: .4;
   }
 
   &__button--disabled:hover {
