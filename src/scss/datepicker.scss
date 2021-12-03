@@ -109,6 +109,11 @@ $dp-tablet: 641px;
     @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
       top: 0;
     }
+
+    /* MS Edge */
+    @supports (-ms-ime-align:auto) {
+      top: 0;
+    }
   }
 
   &__button__previous-month:after {
@@ -119,6 +124,11 @@ $dp-tablet: 641px;
     @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
       left: 5px;
     }
+
+    /* MS Edge */
+    @supports (-ms-ime-align:auto) {
+      left: 5px;
+    }
   }
 
   &__button__next-month:after {
@@ -127,6 +137,11 @@ $dp-tablet: 641px;
 
     /* IE10-11 */
     @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+      left: 7px;
+    }
+
+    /* MS Edge */
+    @supports (-ms-ime-align:auto) {
       left: 7px;
     }
   }
