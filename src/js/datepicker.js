@@ -373,7 +373,7 @@ function datePicker(datePickerElement, options = {}) {
       id: labelId, class: 'date-picker__heading', 'aria-live': 'assertive', 'aria-atomic': true,
     });
     table = createElement('table', {
-      class: 'date-picker__date-table', role: 'grid', 'aria-labelledby': labelId,
+      class: 'date-picker__date-table', role: 'presentation', 'aria-labelledby': labelId,
     });
     thead = createElement('thead');
     tbody = createElement('tbody');
@@ -383,7 +383,7 @@ function datePicker(datePickerElement, options = {}) {
       th = createElement('th');
       th.setAttribute('scope', 'col');
       th.setAttribute('abbr', content[state.language].days[i]);
-      th.setAttribute('aria-labelledby', content[state.language].days[i]);
+      th.setAttribute('aria-label', content[state.language].days[i]);
       th.innerText = content[state.language].dayAbbr[i];
 
       headingRow.appendChild(th);
@@ -825,6 +825,7 @@ function datePicker(datePickerElement, options = {}) {
     props.element.setAttribute('type', 'button');
     props.element.setAttribute('tabindex', '-1');
     props.element.setAttribute('data-test-id', props.date.toLocaleDateString());
+    props.element.setAttribute('aria-label', content[state.language].days[props.date.getDay()] + ', ' + getFormattedDate(props.date));
 
     props.element.innerHTML = props.date.getDate();
     props.element.classList.add('date__button');

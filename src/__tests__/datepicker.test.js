@@ -1,7 +1,6 @@
+import $ from 'jquery';
 import datePicker from '../js/datepicker';
-
-const $ = require('jquery');
-const dateFixtures = require('./fixtures/dateFixtures');
+import dateFixtures from './fixtures/dateFixtures';
 
 const today = new Date();
 const previousMonth = new Date();
@@ -16,6 +15,7 @@ yesterday.setDate(today.getDate() - 1);
 const tomorrow = new Date();
 tomorrow.setDate(today.getDate() + 1);
 
+const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 const monthsEnglish = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 const monthsWelsh = ['Ionawr', 'Chwefror', 'Mawrth', 'Ebrill', 'Mai', 'Mehefin', 'Gorffennaf', 'Awst', 'Medi', 'Hydref',
   'Tachwedd', 'Rhagfyr'];
@@ -784,9 +784,12 @@ describe('Date picker', () => {
       expect($(heading).text()).toEqual(fixture.heading);
 
       let button;
-      fixture.dates.forEach((date) => {
-        button = document.querySelector(`[data-test-id="${getDateFromString(date).toLocaleDateString()}"]`);
+      fixture.dates.forEach((fixtureDate) => {
+        const date = getDateFromString(fixtureDate);
+        button = document.querySelector(`[data-test-id="${date.toLocaleDateString()}"]`);
         expect(button).toBeTruthy();
+        expect(button.getAttribute('aria-label'))
+          .toContain(`${days[date.getDay()]}, ${date.getDate()} ${monthsEnglish[date.getMonth()]} ${date.getFullYear()}`);
       });
     };
 
