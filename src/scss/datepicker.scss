@@ -68,6 +68,8 @@ $dp-tablet: 641px;
 
   &__button__previous-month,
   &__button__next-month {
+    text-indent: -999em;
+    overflow: hidden;
     color: $dp-black;
     width: 24px;
     height: 24px;
@@ -96,6 +98,7 @@ $dp-tablet: 641px;
 
   &__button__previous-month:after,
   &__button__next-month:after {
+    text-indent: 0;
     position: absolute;
     top: 2px;
     color: $dp-white;

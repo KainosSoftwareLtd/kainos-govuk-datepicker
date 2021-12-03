@@ -363,14 +363,12 @@ function datePicker(datePickerElement, options = {}) {
     });
 
     previousMonthButton = createElement('button', {
-      type: 'button', class: 'date-picker__button__previous-month', 'aria-labelledby': labelId,
+      type: 'button', class: 'date-picker__button__previous-month',
     });
     container = createElement('div', { class: 'date-picker__container' });
     revealButton = createElement('button', { class: 'govuk-link date-picker__reveal', type: 'button' });
     headerContainer = createElement('div', { class: 'date-picker__header govuk-clearfix' });
-    nextMonthButton = createElement('button', {
-      type: 'button', class: 'date-picker__button__next-month', 'aria-labelledby': labelId,
-    });
+    nextMonthButton = createElement('button', { type: 'button', class: 'date-picker__button__next-month' });
     heading = createElement('h2', {
       id: labelId, class: 'date-picker__heading', 'aria-live': 'assertive', 'aria-atomic': true,
     });
@@ -385,6 +383,7 @@ function datePicker(datePickerElement, options = {}) {
       th = createElement('th');
       th.setAttribute('scope', 'col');
       th.setAttribute('abbr', content[state.language].days[i]);
+      th.setAttribute('aria-labelledby', content[state.language].days[i]);
       th.innerText = content[state.language].dayAbbr[i];
 
       headingRow.appendChild(th);
@@ -392,6 +391,9 @@ function datePicker(datePickerElement, options = {}) {
 
     revealButton.innerHTML = content[state.language].buttons.dialogTrigger;
     closeButton.innerHTML = content[state.language].buttons.close;
+
+    nextMonthButton.innerHTML = content[state.language].aria.nextMonth;
+    previousMonthButton.innerHTML = content[state.language].aria.previousMonth;
 
     thead.appendChild(headingRow);
     table.appendChild(thead);
