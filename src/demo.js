@@ -1,5 +1,5 @@
-import './scss/demo.scss';
-import './scss/index.scss';
+import './scss/datepicker-demo.scss';
+import './scss/datepicker.scss';
 
 import datePicker from './js/datepicker';
 

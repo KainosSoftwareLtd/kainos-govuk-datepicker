@@ -4,7 +4,7 @@
   "style": "src/scss/index.scss",
   "files": [
     "dist",
-    "src/scss/index.scss"
+    "src/scss/datepicker.scss"
   ],
   "version": "0.0.1",
   "description": "GOV.UK datepicker",

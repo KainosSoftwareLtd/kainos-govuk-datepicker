@@ -1,12 +1,10 @@
 $govuk-font-family: 'Arial', sans-serif;
 
-@import 'govuk-frontend/govuk/components/button/_button';
-
 $dp-black: #0b0c0c;
-$dp-mid-grey:	#b1b4b6;
+$dp-mid-grey: #b1b4b6;
 $dp-light-grey: #f3f2f1;
 $dp-white: #fff;
-$dp-dark-blue:	#003078;
+$dp-dark-blue: #003078;
 $dp-blue: #1d70b8;
 $dp-yellow: #fd0;
 
@@ -71,8 +69,8 @@ $dp-tablet: 641px;
   &__button__previous-month,
   &__button__next-month {
     color: $dp-black;
-    width: 25px;
-    height: 25px;
+    width: 24px;
+    height: 24px;
     position: relative;
   }
 

@@ -20,18 +20,19 @@ npm install accessible-date-picker
 
 Files & locations:
 
-|        File        |             Folder              |               Description               |
-| ------------------ | ------------------------------- | --------------------------------------- |
-| datepicker.min.js  | node_modules/js-datepicker/     | production build - (ES5, 5.9kb gzipped) |
-| datepicker.min.css | node_modules/js-datepicker/     | production stylesheet                   |
+|        File        |             Folder                          |               Description               |
+| ------------------ | ------------------------------------------- | --------------------------------------- |
+| datepicker.min.js  | node_modules/govuk-datepicker/dist          | production build - (ES5, 14kb) |
+| datepicker.min.css | node_modules/govuk-datepicker/dist          | production stylesheet                   |
+| datepicker.scss    | node_modules/govuk-datepicker/src/sccss     | SCSS file for use in builds             |
 
 ## Basic Usage
 
 Importing the library if you're using it in Node:
 ```javascript
-import datepicker from 'accessible-date-picker';
+import datePicker from 'govuk-datepicker';
 // or
-const datepicker = require('accessible-date-picker');
+const datePicker = require('govuk-datepicker');
 ```
 
 Add a class of `.date-picker` (can be named differently) to your HTML form wrapper.
@@ -74,15 +75,17 @@ See recommended HTML -
 Importing the styles into your project using Node:
 ```javascript
 // Import datepickers css file.
-@import '~accessible-date-picker/dist/accessible-date-picker.min.css';
+@import '~govuk-datepicker/src/scss/datepicker.scss';
+// Import datepickers css file.
+@import '~govuk-datepicker/dist/govuk-datepicker.min.css';
 ```
 
 Using it in your code:
 ```javascript
-datepicker(selector, options);
+datePicker(selector, options);
 ```
 
-Datepicker takes 2 arguments:
+datePicker takes 2 arguments:
 
 1. `selector` - DOM node, such as `document.querySelector('#my-id')`.
 2. `options` - (optional) - A configuration object (see below).
@@ -99,7 +102,7 @@ Supports English `en` and Welsh `cy`. Defaults to English if not specified.
 
 Using it in your code:
 ```javascript
-datepicker(selector, {
+datePicker(selector, {
   language: 'en', // 'cy'
 });
 ```
@@ -112,7 +115,7 @@ The minimum date the user can select. Null by default.
 
 Using it in your code:
 ```javascript
-datepicker(selector, {
+datePicker(selector, {
   minDate: new Date(),
 });
 ```
@@ -125,7 +128,7 @@ The maximum date the user can select. Null by default.
 
 Using it in your code:
 ```javascript
-datepicker(selector, {
+datePicker(selector, {
   maxDate: new Date(),
 });
 ```
