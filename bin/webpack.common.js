@@ -14,7 +14,7 @@ module.exports = {
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: 'index.css',
+      filename: 'datepicker.min.css',
     }),
     new CleanWebpackPlugin(),
   ],
@@ -24,10 +24,6 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         use: ['babel-loader'],
-      },
-      {
-        test: /\.(?:ico|gif|png|jpg|jpeg)$/i,
-        type: 'asset/resource',
       },
       {
         test: /\.(sa|sc|c)ss$/,

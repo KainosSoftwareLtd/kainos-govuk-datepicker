@@ -1,4 +1,4 @@
-function DatePicker(datePickerElement, options = {}) {
+function datePicker(datePickerElement, options = {}) {
   var keyCodes;
   var content;
   var elements;
@@ -912,4 +912,4 @@ function DatePicker(datePickerElement, options = {}) {
   registerEventHandlers();
 }
 
-module.exports = DatePicker;
+export default datePicker;

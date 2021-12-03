@@ -1,5 +1,6 @@
+import datePicker from '../js/datepicker';
+
 const $ = require('jquery');
-const DatePicker = require('../js/datepicker');
 const dateFixtures = require('./fixtures/dateFixtures');
 
 const today = new Date();
@@ -68,19 +69,19 @@ describe('Date picker', () => {
     };
 
     it('should render with no configuration options', () => {
-      DatePicker(document.querySelector('.date-picker'));
+      datePicker(document.querySelector('.date-picker'));
 
       assertRender();
     });
 
     it('should render with empty configuration options', () => {
-      DatePicker(document.querySelector('.date-picker'), {});
+      datePicker(document.querySelector('.date-picker'), {});
 
       assertRender();
     });
 
     it('should render with partial configuration options', () => {
-      DatePicker(document.querySelector('.date-picker'), {
+      datePicker(document.querySelector('.date-picker'), {
         language: 'cy',
       });
 
@@ -88,7 +89,7 @@ describe('Date picker', () => {
     });
 
     it('should render with full configuration options', () => {
-      DatePicker(document.querySelector('.date-picker'), {
+      datePicker(document.querySelector('.date-picker'), {
         language: 'cy',
         minDate: yesterday,
         maxDate: tomorrow,
@@ -99,7 +100,7 @@ describe('Date picker', () => {
 
     it('should throw an error when date picker element was not provided', () => {
       expect(() => {
-        DatePicker();
+        datePicker();
       }).toThrow('Date picker not configured correctly');
     });
 
@@ -107,7 +108,7 @@ describe('Date picker', () => {
       const unsupportedLanguageKey = 'fr';
 
       expect(() => {
-        DatePicker(document.querySelector('.date-picker'), {
+        datePicker(document.querySelector('.date-picker'), {
           language: unsupportedLanguageKey,
         });
       }).toThrow(`Date picker does not currently support language ${unsupportedLanguageKey}`);
@@ -115,7 +116,7 @@ describe('Date picker', () => {
 
     it('should throw an error when min date is not of type date', () => {
       expect(() => {
-        DatePicker(document.querySelector('.date-picker'), {
+        datePicker(document.querySelector('.date-picker'), {
           minDate: '12/05/2005',
         });
       }).toThrow('Date picker min and max dates must be of type Date');
@@ -123,7 +124,7 @@ describe('Date picker', () => {
 
     it('should throw an error when max date is not of type date', () => {
       expect(() => {
-        DatePicker(document.querySelector('.date-picker'), {
+        datePicker(document.querySelector('.date-picker'), {
           maxDate: '12/10/2050',
         });
       }).toThrow('Date picker min and max dates must be of type Date');
@@ -131,7 +132,7 @@ describe('Date picker', () => {
 
     it('should throw an error when min date is greater than max date', () => {
       expect(() => {
-        DatePicker(document.querySelector('.date-picker'), {
+        datePicker(document.querySelector('.date-picker'), {
           minDate: tomorrow,
           maxDate: yesterday,
         });
@@ -141,13 +142,13 @@ describe('Date picker', () => {
 
   describe('Date picker visibility', () => {
     it('should hide the calendar on initial load', () => {
-      DatePicker(document.querySelector('.date-picker'), {});
+      datePicker(document.querySelector('.date-picker'), {});
       const dialog = document.querySelector('.date-picker__dialog');
       expect(dialog.classList.contains('date-picker__dialog--hidden')).toBeTruthy();
     });
 
     it('should display the calendar when reveal button is clicked', () => {
-      DatePicker(document.querySelector('.date-picker'), {});
+      datePicker(document.querySelector('.date-picker'), {});
       const dialog = document.querySelector('.date-picker__dialog');
       const revealButton = document.querySelector('.date-picker__reveal');
 
@@ -159,7 +160,7 @@ describe('Date picker', () => {
     });
 
     it('should hide the calendar when the close button is clicked', () => {
-      DatePicker(document.querySelector('.date-picker'), {});
+      datePicker(document.querySelector('.date-picker'), {});
       const dialog = document.querySelector('.date-picker__dialog');
       const revealButton = document.querySelector('.date-picker__reveal');
       const closeButton = document.querySelector('.date-picker__button__close');
@@ -182,7 +183,7 @@ describe('Date picker', () => {
     const nextMonthAsFormattedMonthYear = getFormattedMonthAndYear(nextMonth);
 
     it('should enabled previous month button by default', () => {
-      DatePicker(document.querySelector('.date-picker'), {});
+      datePicker(document.querySelector('.date-picker'), {});
       const heading = document.querySelector('.date-picker__heading');
       const revealButton = document.querySelector('.date-picker__reveal');
       const previousMonthButton = document.querySelector('.date-picker__button__previous-month');
@@ -194,7 +195,7 @@ describe('Date picker', () => {
     });
 
     it('should disable previous month button when min date is within this month', () => {
-      DatePicker(document.querySelector('.date-picker'), {
+      datePicker(document.querySelector('.date-picker'), {
         minDate: today,
       });
 
@@ -211,7 +212,7 @@ describe('Date picker', () => {
     });
 
     it('should enable next month button by default', () => {
-      DatePicker(document.querySelector('.date-picker'), {});
+      datePicker(document.querySelector('.date-picker'), {});
 
       const heading = document.querySelector('.date-picker__heading');
       const revealButton = document.querySelector('.date-picker__reveal');
@@ -225,7 +226,7 @@ describe('Date picker', () => {
     });
 
     it('should disable next month button when max date is within this month', () => {
-      DatePicker(document.querySelector('.date-picker'), {
+      datePicker(document.querySelector('.date-picker'), {
         maxDate: nextMonth,
       });
 
@@ -243,7 +244,7 @@ describe('Date picker', () => {
     });
 
     it('should navigate between previous and next month', () => {
-      DatePicker(document.querySelector('.date-picker'), {});
+      datePicker(document.querySelector('.date-picker'), {});
 
       const heading = document.querySelector('.date-picker__heading');
       const revealButton = document.querySelector('.date-picker__reveal');
@@ -270,7 +271,7 @@ describe('Date picker', () => {
     });
 
     it('should keep focus on previous month button when clicked', () => {
-      DatePicker(document.querySelector('.date-picker'), {});
+      datePicker(document.querySelector('.date-picker'), {});
 
       const previousMonthButton = document.querySelector('.date-picker__button__previous-month');
       const revealButton = document.querySelector('.date-picker__reveal');
@@ -282,7 +283,7 @@ describe('Date picker', () => {
     });
 
     it('should keep focus on next month button when clicked', () => {
-      DatePicker(document.querySelector('.date-picker'), {});
+      datePicker(document.querySelector('.date-picker'), {});
 
       const nextMonthButtonButton = document.querySelector('.date-picker__button__next-month');
       const revealButton = document.querySelector('.date-picker__reveal');
@@ -296,7 +297,7 @@ describe('Date picker', () => {
 
   describe('Date selection', () => {
     it('should set focus on today when date inputs are empty', () => {
-      DatePicker(document.querySelector('.date-picker'), {});
+      datePicker(document.querySelector('.date-picker'), {});
       const revealButton = document.querySelector('.date-picker__reveal');
 
       $(revealButton).trigger('click');
@@ -309,7 +310,7 @@ describe('Date picker', () => {
     });
 
     it('should insert selected date into date inputs', () => {
-      DatePicker(document.querySelector('.date-picker'), {});
+      datePicker(document.querySelector('.date-picker'), {});
       const revealButton = document.querySelector('.date-picker__reveal');
       const dayInput = document.querySelector('.date-picker-day');
       const monthInput = document.querySelector('.date-picker-month');
@@ -328,7 +329,7 @@ describe('Date picker', () => {
     });
 
     it('should allow for selection of tomorrow', () => {
-      DatePicker(document.querySelector('.date-picker'), {});
+      datePicker(document.querySelector('.date-picker'), {});
 
       const revealButton = document.querySelector('.date-picker__reveal');
       const dayInput = document.querySelector('.date-picker-day');
@@ -348,7 +349,7 @@ describe('Date picker', () => {
     });
 
     it('should allow for selection of yesterday', () => {
-      DatePicker(document.querySelector('.date-picker'), {});
+      datePicker(document.querySelector('.date-picker'), {});
 
       const revealButton = document.querySelector('.date-picker__reveal');
       const dayInput = document.querySelector('.date-picker-day');
@@ -372,7 +373,7 @@ describe('Date picker', () => {
       nextMonthWithSetDay.setDate(10);
       nextMonthWithSetDay.setMonth(today.getMonth() + 1);
 
-      DatePicker(document.querySelector('.date-picker'), {});
+      datePicker(document.querySelector('.date-picker'), {});
       const revealButton = document.querySelector('.date-picker__reveal');
       const dayInput = document.querySelector('.date-picker-day');
       const monthInput = document.querySelector('.date-picker-month');
@@ -395,7 +396,7 @@ describe('Date picker', () => {
       previousMonthWithSetDay.setDate(10);
       previousMonthWithSetDay.setMonth(today.getMonth() - 1);
 
-      DatePicker(document.querySelector('.date-picker'), {});
+      datePicker(document.querySelector('.date-picker'), {});
       const revealButton = document.querySelector('.date-picker__reveal');
       const dayInput = document.querySelector('.date-picker-day');
       const monthInput = document.querySelector('.date-picker-month');
@@ -418,7 +419,7 @@ describe('Date picker', () => {
       nextYear.setDate(10);
       nextYear.setFullYear(today.getFullYear() + 1);
 
-      DatePicker(document.querySelector('.date-picker'), {});
+      datePicker(document.querySelector('.date-picker'), {});
       const revealButton = document.querySelector('.date-picker__reveal');
       const dayInput = document.querySelector('.date-picker-day');
       const monthInput = document.querySelector('.date-picker-month');
@@ -441,7 +442,7 @@ describe('Date picker', () => {
       previousYear.setDate(10);
       previousYear.setFullYear(today.getFullYear() + 1);
 
-      DatePicker(document.querySelector('.date-picker'), {});
+      datePicker(document.querySelector('.date-picker'), {});
       const revealButton = document.querySelector('.date-picker__reveal');
       const dayInput = document.querySelector('.date-picker-day');
       const monthInput = document.querySelector('.date-picker-month');
@@ -460,7 +461,7 @@ describe('Date picker', () => {
     });
 
     it('should set focus on nearest date when day input is incorrectly formatted', () => {
-      DatePicker(document.querySelector('.date-picker'), {});
+      datePicker(document.querySelector('.date-picker'), {});
       const revealButton = document.querySelector('.date-picker__reveal');
       const dayInput = document.querySelector('.date-picker-day');
       const monthInput = document.querySelector('.date-picker-month');
@@ -480,7 +481,7 @@ describe('Date picker', () => {
     });
 
     it('should set focus on nearest date when month input is incorrectly formatted', () => {
-      DatePicker(document.querySelector('.date-picker'), {});
+      datePicker(document.querySelector('.date-picker'), {});
       const revealButton = document.querySelector('.date-picker__reveal');
       const dayInput = document.querySelector('.date-picker-day');
       const monthInput = document.querySelector('.date-picker-month');
@@ -500,7 +501,7 @@ describe('Date picker', () => {
     });
 
     it('should set focus on 31st December when day and month input is incorrectly formatted', () => {
-      DatePicker(document.querySelector('.date-picker'), {});
+      datePicker(document.querySelector('.date-picker'), {});
       const revealButton = document.querySelector('.date-picker__reveal');
       const dayInput = document.querySelector('.date-picker-day');
       const monthInput = document.querySelector('.date-picker-month');
@@ -526,7 +527,7 @@ describe('Date picker', () => {
     maxDate.setMonth(today.getMonth() + 1);
 
     it('should disable interaction with days before min date', () => {
-      DatePicker(document.querySelector('.date-picker'), {
+      datePicker(document.querySelector('.date-picker'), {
         minDate: today,
       });
 
@@ -555,7 +556,7 @@ describe('Date picker', () => {
       maxDatePlusDay.setDate(11);
       maxDatePlusDay.setMonth(today.getMonth() + 1);
 
-      DatePicker(document.querySelector('.date-picker'), { maxDate });
+      datePicker(document.querySelector('.date-picker'), { maxDate });
 
       const revealButton = document.querySelector('.date-picker__reveal');
       const dayInput = document.querySelector('.date-picker-day');
@@ -580,7 +581,7 @@ describe('Date picker', () => {
     });
 
     it('should default focus day to min date when input dates are before min date', () => {
-      DatePicker(document.querySelector('.date-picker'), {
+      datePicker(document.querySelector('.date-picker'), {
         minDate: yesterday,
       });
 
@@ -604,7 +605,7 @@ describe('Date picker', () => {
     });
 
     it('should default focus day to max date when input dates exceed max date', () => {
-      DatePicker(document.querySelector('.date-picker'), {
+      datePicker(document.querySelector('.date-picker'), {
         maxDate,
       });
 
@@ -635,7 +636,7 @@ describe('Date picker', () => {
       const dec032022 = new Date('October 31, 2021 23:15:30');
       const dec042022 = new Date('October 31, 2021 23:15:30');
 
-      DatePicker(document.querySelector('.date-picker'), {});
+      datePicker(document.querySelector('.date-picker'), {});
 
       const revealButton = document.querySelector('.date-picker__reveal');
       const dayInput = document.querySelector('.date-picker-day');
@@ -665,7 +666,7 @@ describe('Date picker', () => {
     });
 
     it('should set focus on maxDate when day and month input is incorrectly formatted beyond maxDate', () => {
-      DatePicker(document.querySelector('.date-picker'), {
+      datePicker(document.querySelector('.date-picker'), {
         maxDate: new Date('2022-06-15'),
       });
       const revealButton = document.querySelector('.date-picker__reveal');
@@ -688,7 +689,7 @@ describe('Date picker', () => {
 
   describe('English / Welsh translations', () => {
     it('should render in English', () => {
-      DatePicker(document.querySelector('.date-picker'), {});
+      datePicker(document.querySelector('.date-picker'), {});
 
       const revealButton = document.querySelector('.date-picker__reveal');
       const heading = document.querySelector('.date-picker__heading');
@@ -699,7 +700,7 @@ describe('Date picker', () => {
     });
 
     it('should render in Welsh', () => {
-      DatePicker(document.querySelector('.date-picker'), {
+      datePicker(document.querySelector('.date-picker'), {
         language: 'cy',
       });
 
@@ -716,7 +717,7 @@ describe('Date picker', () => {
 
   describe('Aria message', () => {
     it('should inform the user they cannot select a day in the past', () => {
-      DatePicker(document.querySelector('.date-picker'), {
+      datePicker(document.querySelector('.date-picker'), {
         maxDate: today,
       });
 
@@ -736,7 +737,7 @@ describe('Date picker', () => {
     });
 
     it('should inform the user they cannot select a day in the future', () => {
-      DatePicker(document.querySelector('.date-picker'), {
+      datePicker(document.querySelector('.date-picker'), {
         maxDate: today,
       });
 
@@ -766,7 +767,7 @@ describe('Date picker', () => {
     };
 
     const assertGrid = (fixture) => {
-      DatePicker(document.querySelector('.date-picker'), {});
+      datePicker(document.querySelector('.date-picker'), {});
 
       const revealButton = document.querySelector('.date-picker__reveal');
       const dayInput = document.querySelector('.date-picker-day');

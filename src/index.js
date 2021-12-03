@@ -1,3 +1,4 @@
 import './scss/index.scss';
+import datePicker from './js/datepicker';
 
-require('./js/datepicker');
+export default datePicker;
