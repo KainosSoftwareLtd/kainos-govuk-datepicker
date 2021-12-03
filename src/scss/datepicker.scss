@@ -100,50 +100,22 @@ $dp-tablet: 641px;
   &__button__next-month:after {
     text-indent: 0;
     position: absolute;
-    top: 2px;
+    top: 0;
+    left: 0;
     color: $dp-white;
     font-size: 18px;
     font-weight: bold;
-
-    /* IE10-11 */
-    @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-      top: 0;
-    }
-
-    /* MS Edge */
-    @supports (-ms-ime-align:auto) {
-      top: 0;
-    }
+    width: 24px;
+    height: 24px;
+    padding-top: 2px;
   }
 
   &__button__previous-month:after {
-    left: 6px;
     content: '\276E';
-
-    /* IE10-11 */
-    @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-      left: 5px;
-    }
-
-    /* MS Edge */
-    @supports (-ms-ime-align:auto) {
-      left: 5px;
-    }
   }
 
   &__button__next-month:after {
-    left: 8px;
     content: '\276F';
-
-    /* IE10-11 */
-    @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-      left: 7px;
-    }
-
-    /* MS Edge */
-    @supports (-ms-ime-align:auto) {
-      left: 7px;
-    }
   }
 
   &__button__previous-month,
