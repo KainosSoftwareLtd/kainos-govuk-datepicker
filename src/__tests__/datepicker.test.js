@@ -581,6 +581,9 @@ describe('Date picker', () => {
     });
 
     it('should default focus day to min date when input dates are before min date', () => {
+      const yesterdayMinusOne = new Date();
+      yesterdayMinusOne.setDate(yesterday.getDate() - 1);
+
       datePicker(document.querySelector('.date-picker'), {
         minDate: yesterday,
       });
@@ -590,9 +593,9 @@ describe('Date picker', () => {
       const monthInput = document.querySelector('.date-picker-month');
       const yearInput = document.querySelector('.date-picker-year');
 
-      $(dayInput).val(yesterday.getDate() - 3);
-      $(monthInput).val(yesterday.getMonth() + 1);
-      $(yearInput).val(yesterday.getFullYear());
+      $(dayInput).val(yesterdayMinusOne.getDate());
+      $(monthInput).val(yesterdayMinusOne.getMonth() + 1);
+      $(yearInput).val(yesterdayMinusOne.getFullYear());
 
       $(revealButton).trigger('click');
 
@@ -605,6 +608,10 @@ describe('Date picker', () => {
     });
 
     it('should default focus day to max date when input dates exceed max date', () => {
+      const maxDatePlusDay = new Date();
+      maxDatePlusDay.setDate(11);
+      maxDatePlusDay.setMonth(today.getMonth() + 1);
+
       datePicker(document.querySelector('.date-picker'), {
         maxDate,
       });
@@ -614,9 +621,9 @@ describe('Date picker', () => {
       const monthInput = document.querySelector('.date-picker-month');
       const yearInput = document.querySelector('.date-picker-year');
 
-      $(dayInput).val(maxDate.getDate() + 1);
-      $(monthInput).val(maxDate.getMonth() + 1);
-      $(yearInput).val(maxDate.getFullYear());
+      $(dayInput).val(maxDatePlusDay.getDate());
+      $(monthInput).val(maxDatePlusDay.getMonth() + 1);
+      $(yearInput).val(maxDatePlusDay.getFullYear());
 
       $(revealButton).trigger('click');
 

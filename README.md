@@ -1,6 +1,6 @@
 # Accessible Date picker (GOV.UK Theme)
 
-A Date picker design and developed to be used within GOV.UK projects. Full support for 'keyboard only' users. Supports both English and Welsh.  
+A Date picker design and developed to be used within GOV.UK projects. Full support for 'keyboard only' users. Supports both English and Welsh.
 
 See a preview [here](https://still-headland-16463.herokuapp.com)
 
@@ -9,6 +9,8 @@ See a preview [here](https://still-headland-16463.herokuapp.com)
 * [Installation](#installation)
 * [Basic Usage](#basic-usage)
 * [Configuration options](#options)
+* [Running locally](#running-locally)
+* [Testing](#testing)
 
 ## Installation
 
@@ -24,7 +26,7 @@ Files & locations:
 | ------------------ | ------------------------------------------- | --------------------------------------- |
 | datepicker.min.js  | node_modules/govuk-datepicker/dist          | production build - (ES5, 14kb) |
 | datepicker.min.css | node_modules/govuk-datepicker/dist          | production stylesheet                   |
-| datepicker.scss    | node_modules/govuk-datepicker/src/sccss     | SCSS file for use in builds             |
+| datepicker.scss    | node_modules/govuk-datepicker/src/scss      | SCSS file for use in builds             |
 
 ## Basic Usage
 
@@ -39,7 +41,7 @@ Add a class of `.date-picker` (can be named differently) to your HTML form wrapp
 
 Ensure day, month and year inputs have a class of `.date-picker-day`, `.date-picker-month`, `.date-picker-year`.
 
-See recommended HTML - 
+See recommended HTML -
 
 ```html
 <div class="govuk-form-group">
@@ -74,7 +76,7 @@ See recommended HTML -
 
 Importing the styles into your project using Node:
 ```javascript
-// Import datepickers css file.
+// Import datepickers scss file.
 @import '~govuk-datepicker/src/scss/datepicker.scss';
 // Import datepickers css file.
 @import '~govuk-datepicker/dist/govuk-datepicker.min.css';
@@ -133,3 +135,36 @@ datePicker(selector, {
 });
 ```
 
+## Running locally
+
+Clone this repository to your local machine and install dependencies.
+
+```shell
+npm install
+```
+
+Webpack is used to bundle the date picker's files, while express is used to spin up the local dev environment.
+
+Both can be ran simultaneously via running -
+
+```shell
+npm run start:dev
+```
+
+After a few moments, you should be able to see the express server on port 8080.
+
+## Testing
+
+The date picker component is tested via Jest unit tests and Codecept e2e tests.
+
+To run the unit tests run -
+
+```shell
+npm run test
+```
+
+To run the e2e tests run -
+
+```shell
+npm run test:e2e
+```

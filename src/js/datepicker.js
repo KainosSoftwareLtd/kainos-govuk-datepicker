@@ -801,7 +801,7 @@ function datePicker(datePickerElement, options = {}) {
     }
 
     for (l = 0; l < state.days.length; l++) {
-      state.days[i].element.setAttribute('tabindex', '-1');
+      state.days[l].element.setAttribute('tabindex', '-1');
 
       if (isDatesEqual(state.days[l].date, state.focusedDate)) {
         setFocusOnDayButton(state.days[l].index);
