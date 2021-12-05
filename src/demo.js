@@ -4,15 +4,13 @@ import './scss/datepicker.scss';
 import datePicker from './js/datepicker';
 
 const today = new Date();
-const yesterday = new Date();
-yesterday.setDate(today.getDate() - 1);
 const nextMonth = new Date();
 nextMonth.setMonth(today.getMonth() + 1);
 
 datePicker(document.querySelector('.date-picker-default'));
 
 datePicker(document.querySelector('.date-picker-min-date'), {
-  minDate: yesterday,
+  minDate: today,
 });
 
 datePicker(document.querySelector('.date-picker-max-date'), {
