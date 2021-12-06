@@ -3,7 +3,9 @@ $govuk-font-family: 'Arial', sans-serif;
 $dp-black: #0b0c0c;
 $dp-mid-grey: #b1b4b6;
 $dp-light-grey: #f3f2f1;
+$dp-close-button-hover: #dbdad9;
 $dp-white: #fff;
+$dp-button-border: #929191;
 $dp-dark-blue: #003078;
 $dp-blue: #1d70b8;
 $dp-yellow: #fd0;
@@ -63,7 +65,65 @@ $dp-tablet: 641px;
 
   &__button__close {
     width: 100%;
+    font-family: $govuk-font-family;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-weight: 400;
+    font-size: 16px;
+    font-size: 1rem;
+    line-height: 1.1875;
+    box-sizing: border-box;
+    display: inline-block;
+    position: relative;
+    margin-top: 0;
+    margin-right: 0;
+    margin-left: 0;
     margin-bottom: 0;
+    padding: 8px 10px 7px;
+    border: 2px solid transparent;
+    border-radius: 0;
+    color: $dp-black;
+    background-color: $dp-light-grey;
+    box-shadow: 0 2px 0 $dp-button-border;
+    text-align: center;
+    vertical-align: top;
+    cursor: pointer;
+    -webkit-appearance: none;
+    @media screen and (min-width: $dp-tablet){
+      font-size: 19px;
+    }
+
+    &:before {
+      content: "";
+      display: block;
+      position: absolute;
+      top: -2px;
+      right: -2px;
+      bottom: -4px;
+      left: -2px;
+      background: transparent;
+    }
+
+    &:hover {
+        background-color: $dp-close-button-hover;
+    }
+
+    &:active {
+        top: 2px;
+    }
+
+    &:focus {
+      border-color: $dp-yellow;
+      outline: 3px solid transparent;
+      box-shadow: inset 0 0 0 1px $dp-yellow;
+
+      &:not(:active):not(:hover) {
+        border-color: $dp-yellow;
+        color: $dp-black;
+        background-color: $dp-yellow;
+        box-shadow: 0 2px 0 $dp-black;
+      }
+    }
   }
 
   &__button__previous-month,

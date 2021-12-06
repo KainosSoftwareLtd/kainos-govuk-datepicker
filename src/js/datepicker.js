@@ -359,7 +359,7 @@ function datePicker(datePickerElement, options = {}) {
     });
 
     closeButton = createElement('button', {
-      class: 'govuk-button govuk-button--secondary date-picker__button__close', type: 'button', value: 'close',
+      class: 'date-picker__button__close', type: 'button', value: 'close',
     });
 
     previousMonthButton = createElement('button', {
