@@ -17,7 +17,7 @@ See a preview [here](https://still-headland-16463.herokuapp.com)
 ### Via NPM
 
 ```
-npm install accessible-date-picker
+npm install govuk-datepicker
 ```
 
 Files & locations:
