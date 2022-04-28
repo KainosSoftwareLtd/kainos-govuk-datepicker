@@ -223,7 +223,7 @@ $dp-tablet: 641px;
   }
 
   &__button--disabled {
-    opacity: .4;
+    opacity: .6;
   }
 
   &__button--disabled:hover {
@@ -274,15 +274,13 @@ $dp-tablet: 641px;
 
   &--disabled {
     background-color: $dp-light-grey;
-    opacity: .4;
     color: $dp-black;
-    text-decoration: none;
+    text-decoration: line-through;
   }
 
   &--disabled:hover {
     color: $dp-black;
-    text-decoration: none;
-    text-decoration-thickness: 0;
+    text-decoration: line-through;
     cursor: not-allowed;
   }
 
