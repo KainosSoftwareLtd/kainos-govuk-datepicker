@@ -1,4 +1,5 @@
 const { setHeadlessWhen } = require('@codeceptjs/configure');
+const server = require('./server');
 
 // turn on headless mode when running with HEADLESS=true environment variable
 // export HEADLESS=true && npx codeceptjs run
@@ -13,6 +14,12 @@ exports.config = {
       show: true,
       windowSize: '1200x900',
     },
+  },
+  async bootstrap() {
+    await server;
+  },
+  async teardown() {
+    await server.shutdown();
   },
   mocha: {},
   name: 'date-picker',

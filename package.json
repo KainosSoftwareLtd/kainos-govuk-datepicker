@@ -14,7 +14,8 @@
     "start": "node ./server",
     "start:dev": "npm run build && npm run start",
     "test": "jest --env=jsdom",
-    "test:e2e": "npm run build & npm run start & npx codeceptjs run",
+    "test:e2e": "npm run build && npx codeceptjs run",
+    "test:e2e:ci": "npm run build && HEADLESS=true npx codeceptjs run",
     "lint": "eslint .",
     "prepare": "husky install"
   },
