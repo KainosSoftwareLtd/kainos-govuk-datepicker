@@ -17,7 +17,7 @@
           <h1 class='govuk-fieldset__heading'>When was your passport issued?</h1>
         </legend>
         <div class='govuk-hint'>For example, 27 3 2007</div>
-        <div class='govuk-date-input date-picker-default'>
+        <div class='govuk-date-input date-picker__input__container date-picker-default'>
           <div class='govuk-date-input__item'>
             <div class='govuk-form-group'>
               <label class='govuk-label govuk-date-input__label' for='example-1-day'>Day</label>
@@ -51,7 +51,7 @@
           <h1 class='govuk-fieldset__heading'>When was your passport issued?</h1>
         </legend>
         <div class='govuk-hint'>For example, 27 3 2007</div>
-        <div class='govuk-date-input date-picker-min-date'>
+        <div class='govuk-date-input date-picker__input__container date-picker-min-date'>
           <div class='govuk-date-input__item'>
             <div class='govuk-form-group'>
               <label class='govuk-label govuk-date-input__label' for='example-2-day'>Day</label>
@@ -85,7 +85,7 @@
           <h1 class='govuk-fieldset__heading'>When was your passport issued?</h1>
         </legend>
         <div class='govuk-hint'>For example, 27 3 2007</div>
-        <div class='govuk-date-input date-picker-max-date'>
+        <div class='govuk-date-input date-picker__input__container date-picker-max-date'>
           <div class='govuk-date-input__item'>
             <div class='govuk-form-group'>
               <label class='govuk-label govuk-date-input__label' for='example-3-day'>Day</label>
@@ -119,7 +119,7 @@
           <h1 class='govuk-fieldset__heading'>When was your passport issued?</h1>
         </legend>
         <div class='govuk-hint'>For example, 27 3 2007</div>
-        <div class='govuk-date-input date-picker-date-range'>
+        <div class='govuk-date-input date-picker__input__container date-picker-date-range'>
           <div class='govuk-date-input__item'>
             <div class='govuk-form-group'>
               <label class='govuk-label govuk-date-input__label' for='example-4-day'>Day</label>
@@ -153,7 +153,7 @@
           <h1 class='govuk-fieldset__heading'>When was your passport issued?</h1>
         </legend>
         <div class='govuk-hint'>For example, 27 3 2007</div>
-        <div class='govuk-date-input date-picker-welsh'>
+        <div class='govuk-date-input date-picker__input__container date-picker-welsh'>
           <div class='govuk-date-input__item'>
             <div class='govuk-form-group'>
               <label class='govuk-label govuk-date-input__label' for='example-5-day'>Day</label>
@@ -173,6 +173,40 @@
               <label class='govuk-label govuk-date-input__label' for='example-5-year'>Year</label>
               <input class='govuk-input govuk-date-input__input govuk-input--width-4 date-picker-year'
                      id='example-5-year' name='example-1-year' type='text' pattern='[0-9]*' inputmode='numeric' />
+            </div>
+          </div>
+        </div>
+      </fieldset>
+    </div>
+    <hr />
+    <h2 class='govuk-heading-l'>Icon</h2>
+    <p class='govuk-body'>The icon date picker will be triggered using a calendar icon.</p>
+    <div class='govuk-form-group'>
+      <fieldset class='govuk-fieldset' role='group'>
+        <legend class='govuk-fieldset__legend govuk-fieldset__legend--l'>
+          <h1 class='govuk-fieldset__heading'>When was your passport issued?</h1>
+        </legend>
+        <div class='govuk-hint'>For example, 27 3 2007</div>
+        <div class='govuk-date-input date-picker__input__container date-picker-icon'>
+          <div class='govuk-date-input__item'>
+            <div class='govuk-form-group'>
+              <label class='govuk-label govuk-date-input__label' for='example-6-day'>Day</label>
+              <input class='govuk-input govuk-date-input__input govuk-input--width-2 date-picker-day'
+                     id='example-6-day' name='example-6-day' type='text' pattern='[0-9]*' inputmode='numeric' />
+            </div>
+          </div>
+          <div class='govuk-date-input__item'>
+            <div class='govuk-form-group'>
+              <label class='govuk-label govuk-date-input__label' for='example-6-month'>Month</label>
+              <input class='govuk-input govuk-date-input__input govuk-input--width-2 date-picker-month'
+                     id='example-6-month' name='example-6-month' type='text' pattern='[0-9]*' inputmode='numeric' />
+            </div>
+          </div>
+          <div class='govuk-date-input__item'>
+            <div class='govuk-form-group'>
+              <label class='govuk-label govuk-date-input__label' for='example-6-year'>Year</label>
+              <input class='govuk-input govuk-date-input__input govuk-input--width-4 date-picker-year'
+                     id='example-6-year' name='example-6-year' type='text' pattern='[0-9]*' inputmode='numeric' />
             </div>
           </div>
         </div>

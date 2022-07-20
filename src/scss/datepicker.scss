@@ -1,6 +1,8 @@
 $govuk-font-family: 'Arial', sans-serif;
+@import "helpers/box-shadow/box-shadow";
 
 $dp-black: #0b0c0c;
+$dp-dark-grey: #505a5f;
 $dp-mid-grey: #b1b4b6;
 $dp-light-grey: #f3f2f1;
 $dp-close-button-hover: #dbdad9;
@@ -8,11 +10,17 @@ $dp-white: #fff;
 $dp-button-border: #929191;
 $dp-dark-blue: #003078;
 $dp-blue: #1d70b8;
+$dp-light-blue: #5694ca;
 $dp-yellow: #fd0;
+
+$dp-height-heading: 40px;
 
 $dp-tablet: 641px;
 
 .date-picker {
+  &__input__container {
+    position: relative;
+  }
   &__container {
     display: block;
     position: relative;
@@ -22,13 +30,18 @@ $dp-tablet: 641px;
       margin-top: 0;
     }
   }
+  &__container__icon {
+    position: absolute;
+    display: inline-block;
+    bottom: 0;
+  }
 
   &__dialog {
+    @include ds-box-shadow;
     position: absolute;
     z-index: 1002;
     top: 0;
     padding: 10px;
-    border: 4px solid $dp-black;
     background-color: $dp-white;
     @media screen and (min-width: $dp-tablet) {
       top: -8px;
@@ -50,7 +63,8 @@ $dp-tablet: 641px;
   &__heading {
     font-family: $govuk-font-family;
     -webkit-font-smoothing: antialiased;
-    font-size: 19px;
+    font-size: 1.1rem;
+    line-height: calc($dp-height-heading - 5px);
     font-weight: bold;
     display: inline-block;
     margin: 0;
@@ -60,7 +74,15 @@ $dp-tablet: 641px;
     margin: 10px 0;
     border-spacing: 0;
     border-collapse: collapse;
-    background-color: $dp-light-grey;
+  }
+
+  &__caption {
+    font-family: $govuk-font-family;
+    -webkit-font-smoothing: antialiased;
+    font-size: 14px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    caption-side: bottom;
   }
 
   &__button__close {
@@ -105,11 +127,11 @@ $dp-tablet: 641px;
     }
 
     &:hover {
-        background-color: $dp-close-button-hover;
+      background-color: $dp-close-button-hover;
     }
 
     &:active {
-        top: 2px;
+      top: 2px;
     }
 
     &:focus {
@@ -134,6 +156,11 @@ $dp-tablet: 641px;
     width: 24px;
     height: 24px;
     position: relative;
+
+    min-height: $dp-height-heading;
+    min-width: 32px;
+    transition: background-color .2s,outline-color .2s;
+    outline: 0 !important;
   }
 
   &__button__previous-month {
@@ -148,40 +175,19 @@ $dp-tablet: 641px;
   &__button__next-month:after {
     text-indent: 0;
     position: absolute;
-    top: 0;
+    left: 0;
+    width: 100%;
     color: $dp-black;
-    font-size: 20px;
-    font-weight: bold;
+    font-size: 1rem;
+    font-weight: 400;
   }
 
   &__button__previous-month:after {
-    left: 6px;
     content: '\276E';
-
-    /* IE10-11 */
-    @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-      left: 5px;
-    }
-
-    /* MS Edge */
-    @supports (-ms-ime-align:auto) {
-      left: 5px;
-    }
   }
 
   &__button__next-month:after {
-    left: 8px;
     content: '\276F';
-
-    /* IE10-11 */
-    @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-      left: 7px;
-    }
-
-    /* MS Edge */
-    @supports (-ms-ime-align:auto) {
-      left: 7px;
-    }
   }
 
   &__button__previous-month,
@@ -205,11 +211,38 @@ $dp-tablet: 641px;
     cursor: pointer;
   }
 
-  &__reveal:focus {
+  &__reveal:focus,
+  &__reveal__icon:focus {
     text-decoration: none;
     background: $dp-yellow;
     outline: 3px solid transparent;
     box-shadow: 0 -2px $dp-yellow, 0 4px $dp-black;
+  }
+
+  &__reveal__icon {
+    height: 2.5rem;
+    width: 2.5rem;
+    background-color: $dp-blue;
+    color: white;
+    border: none;
+
+    svg {
+      position: absolute;
+      top: 10%;
+      left: 10%;
+      height: 80%;
+      width: 80%;
+      fill: currentColor;
+    }
+
+    &:focus {
+      color: black;
+    }
+  }
+
+  &__reveal__icon:hover {
+    background: $dp-dark-blue;
+    cursor: pointer;
   }
 
   &__button__previous-month:hover,
@@ -219,7 +252,9 @@ $dp-tablet: 641px;
     cursor: pointer;
     color: $dp-black;
     text-decoration-thickness: 3px;
-    box-shadow: 0 4px $dp-black;
+    background-color: $dp-light-blue;
+    outline-color: transparent;
+    transition-duration: .2s;
   }
 
   &__button--disabled {
@@ -239,18 +274,20 @@ $dp-tablet: 641px;
   font-family: $govuk-font-family;
   -webkit-font-smoothing: antialiased;
   font-weight: 400;
-  font-size: 19px;
+  font-size: 1rem;
+  color: $dp-dark-grey;
   padding: 5px;
 }
 
 .date__button {
-  width: 36px;
-  height: 36px;
+  background-color: transparent;
+  border-width: 0;
+  color: $dp-black;
+  font-weight: 400;
+  min-height: 40px;
   margin: 0;
-  border: 1px solid $dp-mid-grey;
-  color: $dp-blue;
-  background-color: $dp-white;
-  text-align: center;
+  padding: 0;
+  min-width: 40px;
 
   &:focus {
     outline: 3px solid $dp-yellow;
@@ -263,13 +300,14 @@ $dp-tablet: 641px;
   &:hover {
     color: $dp-dark-blue;
     cursor: pointer;
-    text-decoration: underline;
+    background-color: $dp-light-blue;
   }
 
   &--inactive,
   &--inactive:hover {
     color: $dp-black;
     background-color: $dp-light-grey;
+    display: none;
   }
 
   &--disabled {

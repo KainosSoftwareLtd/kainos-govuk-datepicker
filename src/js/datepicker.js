@@ -35,6 +35,7 @@ function datePicker(datePickerElement, options = {}) {
         nextMonth: 'Next month',
         dayInPast: 'You cannot select a day before',
         dayInFuture: 'You cannot select a day after',
+        caption: 'You can use the cursor keys to select a date',
       },
     },
     cy: {
@@ -53,6 +54,7 @@ function datePicker(datePickerElement, options = {}) {
         nextMonth: 'Mis nesaf',
         dayInPast: 'Ni allwch ddewis ddiwrnod cynt',
         dayInFuture: 'Ni allwch ddewis ddiwrnod ar ôl',
+        caption: 'Gallwch ddefnyddio\'r bysellau cyrchwr i ddewis dyddiad',
       },
     },
   };
@@ -336,13 +338,16 @@ function datePicker(datePickerElement, options = {}) {
     var nextMonthButton;
     var previousMonthButton;
     var revealButton;
+    var revealButtonIcon;
     var table;
+    var caption;
     var tbody;
     var thead;
     var th;
     var i;
     var j;
     var labelId = 'date-picker-label-' + Math.floor((Math.random() * 100) + 1);
+    var iconClass = options.useIcon ? '__icon' : '';
 
     function createElement(tag, attrs) {
       var e = document.createElement(tag);
@@ -365,8 +370,9 @@ function datePicker(datePickerElement, options = {}) {
     previousMonthButton = createElement('button', {
       type: 'button', class: 'date-picker__button__previous-month',
     });
-    container = createElement('div', { class: 'date-picker__container' });
+    container = createElement('div', { class: `date-picker__container${iconClass}` });
     revealButton = createElement('button', { class: 'govuk-link date-picker__reveal', type: 'button' });
+    revealButtonIcon = createElement('button', { class: 'date-picker__reveal__icon', type: 'button' });
     headerContainer = createElement('div', { class: 'date-picker__header govuk-clearfix' });
     nextMonthButton = createElement('button', { type: 'button', class: 'date-picker__button__next-month' });
     heading = createElement('h2', {
@@ -375,6 +381,7 @@ function datePicker(datePickerElement, options = {}) {
     table = createElement('table', {
       class: 'date-picker__date-table', role: 'presentation', 'aria-labelledby': labelId,
     });
+    caption = createElement('caption', { class: 'date-picker__caption' });
     thead = createElement('thead');
     tbody = createElement('tbody');
     headingRow = createElement('tr');
@@ -390,12 +397,16 @@ function datePicker(datePickerElement, options = {}) {
     }
 
     revealButton.innerHTML = content[state.language].buttons.dialogTrigger;
+    revealButtonIcon.innerHTML = getCalendarIconTemplate();
     closeButton.innerHTML = content[state.language].buttons.close;
 
     nextMonthButton.innerHTML = content[state.language].aria.nextMonth;
     previousMonthButton.innerHTML = content[state.language].aria.previousMonth;
 
+    caption.innerHTML = content[state.language].aria.caption;
+
     thead.appendChild(headingRow);
+    table.appendChild(caption);
     table.appendChild(thead);
     table.appendChild(tbody);
     headerContainer.appendChild(previousMonthButton);
@@ -404,13 +415,16 @@ function datePicker(datePickerElement, options = {}) {
     dialog.appendChild(headerContainer);
     dialog.appendChild(table);
     dialog.appendChild(closeButton);
-    container.appendChild(revealButton);
+    if (options.useIcon) { container.appendChild(revealButtonIcon); } else {
+      container.appendChild((revealButton));
+    }
     container.appendChild(dialog);
 
     elements.container.appendChild(container);
 
     elements.buttons = {
       revealButton: revealButton,
+      revealButtonIcon: revealButtonIcon,
       previousMonthButton: previousMonthButton,
       nextMonthButton: nextMonthButton,
       closeButton: closeButton,
@@ -433,6 +447,8 @@ function datePicker(datePickerElement, options = {}) {
     elements.dialog.addEventListener('keydown', handleDialogKeydown, true);
     elements.buttons.revealButton.addEventListener('click', handleRevealButtonInteraction, true);
     elements.buttons.revealButton.addEventListener('keydown', handleRevealButtonInteraction, true);
+    elements.buttons.revealButtonIcon.addEventListener('click', handleRevealButtonInteraction, true);
+    elements.buttons.revealButtonIcon.addEventListener('keydown', handleRevealButtonInteraction, true);
     elements.buttons.nextMonthButton.addEventListener('click', handleNextButtonInteraction, true);
     elements.buttons.nextMonthButton.addEventListener('keydown', handleNextButtonInteraction, true);
     elements.buttons.previousMonthButton.addEventListener('click', handlePreviousButtonInteraction, true);
@@ -895,6 +911,11 @@ function datePicker(datePickerElement, options = {}) {
     var newDate = new Date(date);
     newDate.setHours(0, 0, 0, 0);
     return newDate;
+  }
+
+  function getCalendarIconTemplate() {
+    return `<span class="visually-hidden">Choose date</span>
+            <svg aria-hidden="true" role="img"><use href="${options.icon}#calendar_today"></use></svg>`;
   }
 
   function isDatesEqual(dateA, dateB) {
