@@ -916,7 +916,7 @@ function datePicker(datePickerElement, options = {}) {
   }
 
   function getCalendarIconTemplate() {
-    return `<span class="visually-hidden">Choose date</span>
+    return `<span class="visually-hidden">${content[state.language].buttons.dialogTrigger}</span>
             <svg aria-hidden="true" role="img"><use href="${options.icon}#calendar_today"></use></svg>`;
   }
 

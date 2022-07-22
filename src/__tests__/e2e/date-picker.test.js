@@ -30,7 +30,7 @@ Scenario('it should close the calendar when DOM elements outside of the calendar
   });
 });
 
-Scenario('it should be open the calendar via icon', async ({ I }) => {
+Scenario('it should open the calendar via icon', async ({ I }) => {
   await within('.date-picker-icon', () => {
     I.click({ css: '.date-picker__reveal__icon' });
     I.seeElement('.date-picker__dialog');
