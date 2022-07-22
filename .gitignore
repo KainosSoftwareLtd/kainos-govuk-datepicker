@@ -3,3 +3,4 @@ dist
 .idea/
 output
 .DS_STORE
+/coverage/*

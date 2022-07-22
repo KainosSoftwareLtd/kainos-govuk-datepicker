@@ -68,6 +68,14 @@ describe('Date picker', () => {
       expect(revealButton).toBeTruthy();
     };
 
+    const assertIconRender = () => {
+      const datePickerElement = document.querySelector('.date-picker__container__icon');
+      const revealButton = document.querySelector('.date-picker__reveal__icon');
+
+      expect(datePickerElement).toBeTruthy();
+      expect(revealButton).toBeTruthy();
+    };
+
     it('should render with no configuration options', () => {
       datePicker(document.querySelector('.date-picker'));
 
@@ -93,9 +101,11 @@ describe('Date picker', () => {
         language: 'cy',
         minDate: yesterday,
         maxDate: tomorrow,
+        useIcon: true,
+        icon: 'location',
       });
 
-      assertRender();
+      assertIconRender();
     });
 
     it('should throw an error when date picker element was not provided', () => {
@@ -137,6 +147,40 @@ describe('Date picker', () => {
           maxDate: yesterday,
         });
       }).toThrow('Date picker min date cannot be greater than max date');
+    });
+
+    const scenarios = [
+      {
+        element: 'day',
+        day: 'irrelevant',
+        month: 'date-picker-month',
+        year: 'date-picker-year',
+      },
+      {
+        element: 'month',
+        day: '.date-picker-day',
+        month: 'irrelevant',
+        year: 'date-picker-year',
+      },
+      {
+        element: 'year',
+        day: '.date-picker-day',
+        month: 'date-picker-month',
+        year: 'irrelevant',
+      },
+    ];
+    scenarios.forEach((scenario) => {
+      it(`should throw an error when the ${scenario.element} element is not accessible`, () => {
+        document.body.innerHTML = `
+          <div>
+            <div class="${scenario.day}"></div>
+            <div class="${scenario.month}"></div>
+            <div class="${scenario.year}"></div>
+          </div>`;
+        expect(() => {
+          datePicker(document.querySelector('.irrelevant'));
+        }).toThrow('Date picker not configured correctly');
+      });
     });
   });
 
