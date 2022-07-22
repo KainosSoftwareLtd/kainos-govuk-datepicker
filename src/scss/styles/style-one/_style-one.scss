@@ -1,0 +1,293 @@
+$govuk-font-family: 'Arial', sans-serif;
+@import "../../helpers/box-shadow/box-shadow";
+@import "../../helpers/variables/colours";
+@import "../../helpers/variables/sizes";
+
+.date-picker__container__style__one {
+  .date-picker {
+    &__container {
+      display: block;
+      position: relative;
+      margin-top: 10px;
+      @media screen and (min-width: $dp-tablet) {
+        display: inline-block;
+        margin-top: 0;
+      }
+    }
+
+    &__dialog {
+      position: absolute;
+      z-index: 1002;
+      top: 0;
+      padding: 10px;
+      border: 4px solid $dp-black;
+      background-color: $dp-white;
+      @media screen and (min-width: $dp-tablet) {
+        top: -8px;
+        left: auto;
+        right: auto;
+      }
+    }
+
+    &__reveal--hidden,
+    &__dialog--hidden {
+      display: none;
+    }
+
+    &__header {
+      display: block;
+      text-align: center;
+    }
+
+    &__heading {
+      font-family: $govuk-font-family;
+      -webkit-font-smoothing: antialiased;
+      font-size: 19px;
+      font-weight: bold;
+      display: inline-block;
+      margin: 0;
+    }
+
+    &__date-table {
+      margin: 10px 0;
+      border-spacing: 0;
+      border-collapse: collapse;
+      background-color: $dp-light-grey;
+    }
+
+    &__button__close {
+      width: 100%;
+      font-family: $govuk-font-family;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      font-weight: 400;
+      font-size: 16px;
+      font-size: 1rem;
+      line-height: 1.1875;
+      box-sizing: border-box;
+      display: inline-block;
+      position: relative;
+      margin-top: 0;
+      margin-right: 0;
+      margin-left: 0;
+      margin-bottom: 0;
+      padding: 8px 10px 7px;
+      border: 2px solid transparent;
+      border-radius: 0;
+      color: $dp-black;
+      background-color: $dp-light-grey;
+      box-shadow: 0 2px 0 $dp-button-border;
+      text-align: center;
+      vertical-align: top;
+      cursor: pointer;
+      -webkit-appearance: none;
+      @media screen and (min-width: $dp-tablet) {
+        font-size: 19px;
+      }
+
+      &:before {
+        content: "";
+        display: block;
+        position: absolute;
+        top: -2px;
+        right: -2px;
+        bottom: -4px;
+        left: -2px;
+        background: transparent;
+      }
+
+      &:hover {
+        background-color: $dp-close-button-hover;
+      }
+
+      &:active {
+        top: 2px;
+      }
+
+      &:focus {
+        border-color: $dp-yellow;
+        outline: 3px solid transparent;
+        box-shadow: inset 0 0 0 1px $dp-yellow;
+
+        &:not(:active):not(:hover) {
+          border-color: $dp-yellow;
+          color: $dp-black;
+          background-color: $dp-yellow;
+          box-shadow: 0 2px 0 $dp-black;
+        }
+      }
+    }
+
+    &__button__previous-month,
+    &__button__next-month {
+      text-indent: -999em;
+      overflow: hidden;
+      color: $dp-black;
+      width: 24px;
+      height: 24px;
+      position: relative;
+    }
+
+    &__button__previous-month {
+      float: left;
+    }
+
+    &__button__next-month {
+      float: right;
+    }
+
+    &__button__previous-month:after,
+    &__button__next-month:after {
+      text-indent: 0;
+      position: absolute;
+      top: 0;
+      color: $dp-black;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    &__button__previous-month:after {
+      left: 6px;
+      content: '\276E';
+
+      /* IE10-11 */
+      @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+        left: 5px;
+      }
+
+      /* MS Edge */
+      @supports (-ms-ime-align:auto) {
+        left: 5px;
+      }
+    }
+
+    &__button__next-month:after {
+      left: 8px;
+      content: '\276F';
+
+      /* IE10-11 */
+      @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+        left: 7px;
+      }
+
+      /* MS Edge */
+      @supports (-ms-ime-align:auto) {
+        left: 7px;
+      }
+    }
+
+    &__button__previous-month,
+    &__button__next-month,
+    &__reveal {
+      font-family: $govuk-font-family;
+      -webkit-font-smoothing: antialiased;
+      font-size: 19px;
+      padding: 0;
+      border: 0;
+      background-color: transparent;
+    }
+
+    &__reveal {
+      text-decoration: underline;
+      color: $dp-blue;
+    }
+
+    &__reveal:hover {
+      color: $dp-dark-blue;
+      cursor: pointer;
+    }
+
+    &__reveal:focus {
+      text-decoration: none;
+      background: $dp-yellow;
+      outline: 3px solid transparent;
+      box-shadow: 0 -2px $dp-yellow, 0 4px $dp-black;
+    }
+
+    &__button__previous-month:hover,
+    &__button__next-month:hover,
+    &__button__previous-month:focus,
+    &__button__next-month:focus {
+      cursor: pointer;
+      color: $dp-black;
+      text-decoration-thickness: 3px;
+      box-shadow: 0 4px $dp-black;
+    }
+
+    &__button--disabled {
+      opacity: .6;
+    }
+
+    &__button--disabled:hover {
+      text-decoration-thickness: 1px;
+      cursor: not-allowed;
+      color: $dp-black;
+      box-shadow: none;
+    }
+  }
+
+  .date-picker__date-table thead th,
+  .date__button {
+    font-family: $govuk-font-family;
+    -webkit-font-smoothing: antialiased;
+    font-weight: 400;
+    font-size: 19px;
+    padding: 5px;
+  }
+
+  .date__button {
+    width: 36px;
+    height: 36px;
+    margin: 0;
+    border: 1px solid $dp-mid-grey;
+    color: $dp-blue;
+    background-color: $dp-white;
+    text-align: center;
+
+    &:focus {
+      outline: 3px solid $dp-yellow;
+      outline-offset: 0;
+      color: $dp-dark-blue;
+      box-shadow: inset 0 0 0 2px;
+      text-decoration-thickness: 3px;
+    }
+
+    &:hover {
+      color: $dp-dark-blue;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
+    &--inactive,
+    &--inactive:hover {
+      color: $dp-black;
+      background-color: $dp-light-grey;
+    }
+
+    &--disabled {
+      background-color: $dp-light-grey;
+      color: $dp-black;
+      text-decoration: line-through;
+    }
+
+    &--disabled:hover {
+      color: $dp-black;
+      text-decoration: line-through;
+      cursor: not-allowed;
+    }
+
+    &--today {
+      border-bottom: 4px solid $dp-blue;
+    }
+
+    &--selected {
+      background-color: $dp-blue;
+      color: $dp-white;
+    }
+
+    &--selected:hover,
+    &--selected:focus {
+      color: $dp-white;
+    }
+  }
+}

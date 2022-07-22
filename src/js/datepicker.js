@@ -3,6 +3,7 @@ function datePicker(datePickerElement, options = {}) {
   var content;
   var elements;
   var state;
+  var styles;
 
   if (!datePickerElement) {
     throw new Error('Date picker not configured correctly');
@@ -80,6 +81,10 @@ function datePicker(datePickerElement, options = {}) {
     language: options.language || 'en',
     focusedDate: new Date(),
     days: [],
+  };
+  styles = {
+    STYLE_ONE: 'style-one',
+    STYLE_TWO: 'style-two',
   };
 
   content.ni = content.en;
@@ -184,6 +189,22 @@ function datePicker(datePickerElement, options = {}) {
     ariaLabel.innerText = message;
     elements.ariaLiveMessage = ariaLabel;
     elements.dialog.appendChild(elements.ariaLiveMessage);
+  }
+
+  function getStyleClassName(style) {
+    switch (style) {
+      case styles.STYLE_ONE: return 'date-picker__container__style__one';
+      case styles.STYLE_TWO: return 'date-picker__container__style__two';
+      default: return 'date-picker__container__style__one';
+    }
+  }
+
+  function setCalendarStyle() {
+    if (options.useIcon) {
+      elements.container.classList.add(getStyleClassName(styles.STYLE_TWO));
+    } else {
+      elements.container.classList.add(getStyleClassName(options.style));
+    }
   }
 
   function removeAriaLiveMessage() {
@@ -441,6 +462,7 @@ function datePicker(datePickerElement, options = {}) {
     elements.dialog = dialog;
     elements.heading = heading;
     setAriaLiveMessage('');
+    setCalendarStyle();
   }
 
   function registerEventHandlers() {
