@@ -3,7 +3,7 @@ function datePicker(datePickerElement, options = {}) {
   var content;
   var elements;
   var state;
-  var styles;
+  var theme;
 
   if (!datePickerElement) {
     throw new Error('Date picker not configured correctly');
@@ -36,7 +36,6 @@ function datePicker(datePickerElement, options = {}) {
         nextMonth: 'Next month',
         dayInPast: 'You cannot select a day before',
         dayInFuture: 'You cannot select a day after',
-        caption: 'You can use the arrow keys to select a date',
       },
     },
     cy: {
@@ -55,7 +54,6 @@ function datePicker(datePickerElement, options = {}) {
         nextMonth: 'Mis nesaf',
         dayInPast: 'Ni allwch ddewis ddiwrnod cynt',
         dayInFuture: 'Ni allwch ddewis ddiwrnod ar ôl',
-        caption: 'Gallwch ddefnyddio\'r bysellau saeth i ddewis dyddiad',
       },
     },
   };
@@ -82,10 +80,7 @@ function datePicker(datePickerElement, options = {}) {
     focusedDate: new Date(),
     days: [],
   };
-  styles = {
-    STYLE_ONE: 'style-one',
-    STYLE_TWO: 'style-two',
-  };
+  theme = options.theme || '';
 
   content.ni = content.en;
 
@@ -189,22 +184,6 @@ function datePicker(datePickerElement, options = {}) {
     ariaLabel.innerText = message;
     elements.ariaLiveMessage = ariaLabel;
     elements.dialog.appendChild(elements.ariaLiveMessage);
-  }
-
-  function getStyleClassName(style) {
-    switch (style) {
-      case styles.STYLE_ONE: return 'date-picker__container__style__one';
-      case styles.STYLE_TWO: return 'date-picker__container__style__two';
-      default: return 'date-picker__container__style__one';
-    }
-  }
-
-  function setCalendarStyle() {
-    if (options.useIcon) {
-      elements.container.classList.add(getStyleClassName(styles.STYLE_TWO));
-    } else {
-      elements.container.classList.add(getStyleClassName(options.style));
-    }
   }
 
   function removeAriaLiveMessage() {
@@ -361,14 +340,12 @@ function datePicker(datePickerElement, options = {}) {
     var revealButton;
     var revealButtonIcon;
     var table;
-    var caption;
     var tbody;
     var thead;
     var th;
     var i;
     var j;
     var labelId = 'date-picker-label-' + Math.floor((Math.random() * 100) + 1);
-    var iconClass = options.useIcon ? '__icon' : '';
 
     function createElement(tag, attrs) {
       var e = document.createElement(tag);
@@ -391,9 +368,7 @@ function datePicker(datePickerElement, options = {}) {
     previousMonthButton = createElement('button', {
       type: 'button', class: 'date-picker__button__previous-month',
     });
-    container = createElement('div', { class: `date-picker__container${iconClass}` });
-    revealButton = createElement('button', { class: 'govuk-link date-picker__reveal', type: 'button' });
-    revealButtonIcon = createElement('button', { class: 'date-picker__reveal__icon', type: 'button' });
+    container = createElement('div', { class: `date-picker__container ${theme}` });
     headerContainer = createElement('div', { class: 'date-picker__header govuk-clearfix' });
     nextMonthButton = createElement('button', { type: 'button', class: 'date-picker__button__next-month' });
     heading = createElement('h2', {
@@ -402,7 +377,6 @@ function datePicker(datePickerElement, options = {}) {
     table = createElement('table', {
       class: 'date-picker__date-table', role: 'presentation', 'aria-labelledby': labelId,
     });
-    caption = createElement('caption', { class: 'date-picker__caption' });
     thead = createElement('thead');
     tbody = createElement('tbody');
     headingRow = createElement('tr');
@@ -417,17 +391,12 @@ function datePicker(datePickerElement, options = {}) {
       headingRow.appendChild(th);
     }
 
-    revealButton.innerHTML = content[state.language].buttons.dialogTrigger;
-    revealButtonIcon.innerHTML = getCalendarIconTemplate();
     closeButton.innerHTML = content[state.language].buttons.close;
 
     nextMonthButton.innerHTML = content[state.language].aria.nextMonth;
     previousMonthButton.innerHTML = content[state.language].aria.previousMonth;
 
-    caption.innerHTML = content[state.language].aria.caption;
-
     thead.appendChild(headingRow);
-    table.appendChild(caption);
     table.appendChild(thead);
     table.appendChild(tbody);
     headerContainer.appendChild(previousMonthButton);
@@ -436,22 +405,31 @@ function datePicker(datePickerElement, options = {}) {
     dialog.appendChild(headerContainer);
     dialog.appendChild(table);
     dialog.appendChild(closeButton);
-    if (options.useIcon) {
+
+    if (options.icon) {
+      revealButtonIcon = createElement('button', { class: 'date-picker__reveal__icon', type: 'button' });
+      revealButtonIcon.innerHTML = getCalendarIconTemplate();
       container.appendChild(revealButtonIcon);
     } else {
+      revealButton = createElement('button', { class: 'govuk-link date-picker__reveal', type: 'button' });
+      revealButton.innerHTML = content[state.language].buttons.dialogTrigger;
       container.appendChild(revealButton);
     }
+
     container.appendChild(dialog);
 
     elements.container.appendChild(container);
 
     elements.buttons = {
       revealButton: revealButton,
-      revealButtonIcon: revealButtonIcon,
       previousMonthButton: previousMonthButton,
       nextMonthButton: nextMonthButton,
       closeButton: closeButton,
     };
+
+    if (options.icon) {
+      elements.buttons.revealButtonIcon = revealButtonIcon;
+    }
 
     elements.table = {
       container: table,
@@ -462,17 +440,21 @@ function datePicker(datePickerElement, options = {}) {
     elements.dialog = dialog;
     elements.heading = heading;
     setAriaLiveMessage('');
-    setCalendarStyle();
   }
 
   function registerEventHandlers() {
     document.addEventListener('focus', handleDocumentFocus, true);
     document.body.addEventListener('mousedown', handleDocumentBodyMouseDown, true);
     elements.dialog.addEventListener('keydown', handleDialogKeydown, true);
-    elements.buttons.revealButton.addEventListener('click', handleRevealButtonInteraction, true);
-    elements.buttons.revealButton.addEventListener('keydown', handleRevealButtonInteraction, true);
-    elements.buttons.revealButtonIcon.addEventListener('click', handleRevealButtonInteraction, true);
-    elements.buttons.revealButtonIcon.addEventListener('keydown', handleRevealButtonInteraction, true);
+
+    if (options.icon) {
+      elements.buttons.revealButtonIcon.addEventListener('click', handleRevealButtonInteraction, true);
+      elements.buttons.revealButtonIcon.addEventListener('keydown', handleRevealButtonInteraction, true);
+    } else {
+      elements.buttons.revealButton.addEventListener('click', handleRevealButtonInteraction, true);
+      elements.buttons.revealButton.addEventListener('keydown', handleRevealButtonInteraction, true);
+    }
+
     elements.buttons.nextMonthButton.addEventListener('click', handleNextButtonInteraction, true);
     elements.buttons.nextMonthButton.addEventListener('keydown', handleNextButtonInteraction, true);
     elements.buttons.previousMonthButton.addEventListener('click', handlePreviousButtonInteraction, true);

@@ -61,19 +61,19 @@ describe('Date picker', () => {
 
   describe('Initialisation', () => {
     const assertRender = () => {
-      const datePickerElement = document.querySelector('.date-picker__container');
       const revealButton = document.querySelector('.date-picker__reveal');
+      const revealButtonIcon = document.querySelector('.date-picker__reveal__icon');
 
-      expect(datePickerElement).toBeTruthy();
       expect(revealButton).toBeTruthy();
+      expect(revealButtonIcon).toBeFalsy();
     };
 
     const assertIconRender = () => {
-      const datePickerElement = document.querySelector('.date-picker__container__icon');
-      const revealButton = document.querySelector('.date-picker__reveal__icon');
+      const revealButtonIcon = document.querySelector('.date-picker__reveal__icon');
+      const revealButton = document.querySelector('.date-picker__reveal');
 
-      expect(datePickerElement).toBeTruthy();
-      expect(revealButton).toBeTruthy();
+      expect(revealButtonIcon).toBeTruthy();
+      expect(revealButton).toBeFalsy();
     };
 
     it('should render with no configuration options', () => {
@@ -101,8 +101,8 @@ describe('Date picker', () => {
         language: 'cy',
         minDate: yesterday,
         maxDate: tomorrow,
-        useIcon: true,
         icon: 'location',
+        theme: 'test-theme',
       });
 
       assertIconRender();
@@ -805,6 +805,24 @@ describe('Date picker', () => {
 
       expect(ariaLiveMessage.getAttribute('aria-live')).toEqual('assertive');
       expect(ariaLiveMessage.innerText).toContain('You cannot select a day after');
+    });
+  });
+
+  describe('Themeing', () => {
+    it('should append theme class to datepicker container when provided', () => {
+      const testClass = 'test';
+
+      datePicker(document.querySelector('.date-picker'), {
+        theme: testClass,
+      });
+
+      const revealButton = document.querySelector('.date-picker__reveal');
+
+      $(revealButton).trigger('click');
+
+      const container = document.querySelector('.date-picker__container');
+
+      expect(container.classList.contains(testClass)).toBeTruthy();
     });
   });
 

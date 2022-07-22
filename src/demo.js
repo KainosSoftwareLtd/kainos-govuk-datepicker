@@ -27,13 +27,10 @@ datePicker(document.querySelector('.date-picker-welsh'), {
   language: 'cy',
 });
 
-datePicker(document.querySelector('.date-picker-style-one'));
-
 datePicker(document.querySelector('.date-picker-style-two'), {
-  style: 'style-two',
+  theme: 'digital-scotland',
 });
 
 datePicker(document.querySelector('.date-picker-icon'), {
-  useIcon: true,
   icon: CalendarIcon,
 });
