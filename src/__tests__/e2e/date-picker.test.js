@@ -8,10 +8,12 @@ const getFormattedMonthAndYear = (date) => {
 
 Feature('Date picker');
 
-Scenario('it should close calendar on press of the ESC key', ({ I }) => {
+Before(({ I }) => {
   I.amOnPage('');
+});
 
-  within('.date-picker-default', () => {
+Scenario('it should close calendar on press of the ESC key', async ({ I }) => {
+  await within('.date-picker-default', () => {
     I.click('Choose date');
     I.seeElement('.date-picker__dialog');
     I.pressKey('Escape');
@@ -19,14 +21,19 @@ Scenario('it should close calendar on press of the ESC key', ({ I }) => {
   });
 });
 
-Scenario('it should close the calendar when DOM elements outside of the calendar are clicked', ({ I }) => {
-  I.amOnPage('');
-
-  within('.date-picker-default', () => {
+Scenario('it should close the calendar when DOM elements outside of the calendar are clicked', async ({ I }) => {
+  await within('.date-picker-default', () => {
     I.click('Choose date');
     I.seeElement('.date-picker__dialog');
     I.click('#example-1-day');
     I.dontSeeElement('.date-picker__dialog');
+  });
+});
+
+Scenario('it should be open the calendar via icon', async ({ I }) => {
+  await within('.date-picker-icon', () => {
+    I.click({ css: '.date-picker__reveal__icon' });
+    I.seeElement('.date-picker__dialog');
   });
 });
 
@@ -37,8 +44,6 @@ Scenario('it should allow navigation & selection of a date using keyboard only',
   selectedDate.setDate(selectedDate.getDate() - 1); // Simulates LEFT keypress
   selectedDate.setDate(selectedDate.getDate() + 7); // Simulates DOWN keypress
   selectedDate.setDate(selectedDate.getDate() - 7); // Simulates UP keypress
-
-  I.amOnPage('');
 
   await within('.date-picker-default', async () => {
     await I.seeElement('#example-1-day');
@@ -67,8 +72,6 @@ Scenario('it should allow for navigation to the previous month using left arrow 
   const currentMonth = new Date('2021-11-01');
   const previousMonth = new Date('2021-10-31');
 
-  I.amOnPage('');
-
   await within('.date-picker-default', async () => {
     await I.seeElement('#example-1-day');
     await I.fillField('#example-1-day', '1');
@@ -91,8 +94,6 @@ Scenario('it should allow for navigation to the previous month using left arrow 
 Scenario('it should allow for navigation to the previous month using up arrow key only', async ({ I }) => {
   const currentMonth = new Date('2021-11-01');
   const previousMonth = new Date('2021-10-31');
-
-  I.amOnPage('');
 
   await within('.date-picker-default', async () => {
     await I.seeElement('#example-1-day');
@@ -117,8 +118,6 @@ Scenario('it should allow for navigation to the next month using right key only'
   const currentMonth = new Date('2021-10-31');
   const nextMonth = new Date('2021-11-01');
 
-  I.amOnPage('');
-
   await within('.date-picker-default', async () => {
     await I.seeElement('#example-1-day');
     await I.fillField('#example-1-day', '31');
@@ -141,8 +140,6 @@ Scenario('it should allow for navigation to the next month using right key only'
 Scenario('it should allow for navigation to the next month using down arrow key only', async ({ I }) => {
   const currentMonth = new Date('2021-10-31');
   const nextMonth = new Date('2021-11-01');
-
-  I.amOnPage('');
 
   await within('.date-picker-default', async () => {
     await I.seeElement('#example-1-day');
@@ -172,8 +169,6 @@ Scenario('it should not change the value of another date picker when multiple pr
   selectedDate.setDate(selectedDate.getDate() - 1); // Simulates LEFT keypress
   selectedDate.setDate(selectedDate.getDate() + 7); // Simulates DOWN keypress
   selectedDate.setDate(selectedDate.getDate() - 7); // Simulates UP keypress
-
-  I.amOnPage('');
 
   await within('.date-picker-default', async () => {
     await I.seeElement('#example-1-day');
