@@ -17,16 +17,16 @@ See a preview [here](https://still-headland-16463.herokuapp.com)
 ### Via NPM
 
 ```
-npm install govuk-datepicker
+npm i kainos-govuk-datepicker
 ```
 
 Files & locations:
 
-|        File        |             Folder                          |               Description               |
-| ------------------ | ------------------------------------------- | --------------------------------------- |
-| datepicker.min.js  | node_modules/govuk-datepicker/dist          | production build - (ES5, 14kb) |
-| datepicker.min.css | node_modules/govuk-datepicker/dist          | production stylesheet                   |
-| datepicker.scss    | node_modules/govuk-datepicker/src/scss      | SCSS file for use in builds             |
+| File               | Folder                                 | Description                    |
+|--------------------|----------------------------------------|--------------------------------|
+| datepicker.min.js  | node_modules/govuk-datepicker/dist     | production build - (ES5, 14kb) |
+| datepicker.min.css | node_modules/govuk-datepicker/dist     | production stylesheet          |
+| datepicker.scss    | node_modules/govuk-datepicker/src/scss | SCSS file for use in builds    |
 
 ## Basic Usage
 
