@@ -234,8 +234,8 @@ $dp-tablet: 641px;
   }
 
   &__reveal__icon {
-    height: 2.5rem;
-    width: 2.5rem;
+    height: 32px;
+    width: 32px;
     color: white;
     border: none;
     background-color: transparent;
@@ -246,22 +246,23 @@ $dp-tablet: 641px;
       left: 0;
       height: 100%;
       width: 100%;
+      fill: $dp-black;
     }
 
     &:focus {
-      color: #0b0c0c;
+      outline: none;
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    &:focus svg,
+    &:hover svg {
       text-decoration: none;
       background: $dp-yellow;
-      outline: 3px solid transparent;
-      box-shadow: 0 -2px $dp-yellow, 0 4px $dp-black;
+      border-bottom: 4px solid $dp-black;
     }
-  }
-
-  &__reveal__icon:hover {
-    background: $dp-yellow;
-    cursor: pointer;
-    outline: 3px solid transparent;
-    box-shadow: 0 -2px $dp-yellow, 0 4px $dp-black;
   }
 }
 
