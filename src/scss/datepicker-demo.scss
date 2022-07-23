@@ -47,17 +47,9 @@ hr {
     &__dialog {
       @include ds-box-shadow;
       position: absolute;
-      z-index: 1002;
-      top: 0;
-      padding: 10px;
       background-color: $dp-white;
       border: 0;
       outline: 1px solid #b3b3b3;
-      @media screen and (min-width: $dp-tablet) {
-        top: -8px;
-        left: auto;
-        right: auto;
-      }
     }
 
     &__reveal--hidden,
@@ -65,151 +57,49 @@ hr {
       display: none;
     }
 
-    &__header {
-      display: block;
-      text-align: center;
-    }
-
     &__heading {
-      font-family: $govuk-font-family;
-      -webkit-font-smoothing: antialiased;
       font-size: 1.1rem;
       line-height: 20px;
-      font-weight: bold;
-      display: inline-block;
-      margin: 0;
+      text-transform: uppercase;
     }
 
     &__date-table {
       background-color: white;
-      margin: 10px 0;
-      border-spacing: 0;
-      border-collapse: collapse;
-    }
-
-    &__caption {
-      font-family: $govuk-font-family;
-      -webkit-font-smoothing: antialiased;
-      font-size: 14px;
-      margin-top: 10px;
-      margin-bottom: 10px;
-      caption-side: bottom;
-    }
-
-    &__button__close {
-      width: 100%;
-      font-family: $govuk-font-family;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      font-weight: 400;
-      font-size: 16px;
-      font-size: 1rem;
-      line-height: 1.1875;
-      box-sizing: border-box;
-      display: inline-block;
-      position: relative;
-      margin-top: 0;
-      margin-right: 0;
-      margin-left: 0;
-      margin-bottom: 0;
-      padding: 8px 10px 7px;
-      border: 2px solid transparent;
-      border-radius: 0;
-      color: $dp-black;
-      background-color: $dp-light-grey;
-      box-shadow: 0 2px 0 $dp-button-border;
-      text-align: center;
-      vertical-align: top;
-      cursor: pointer;
-
-      -webkit-appearance: none;
-      @media screen and (min-width: $dp-tablet) {
-        font-size: 19px;
-      }
-
-      &:before {
-        content: "";
-        display: block;
-        position: absolute;
-        top: -2px;
-        right: -2px;
-        bottom: -4px;
-        left: -2px;
-        background: transparent;
-      }
-
-      &:hover {
-        background-color: $dp-close-button-hover;
-      }
-
-      &:active {
-        top: 2px;
-      }
-
-      &:focus {
-        border-color: $dp-yellow;
-        outline: 3px solid transparent;
-        box-shadow: inset 0 0 0 1px $dp-yellow;
-
-        &:not(:active):not(:hover) {
-          border-color: $dp-yellow;
-          color: $dp-black;
-          background-color: $dp-yellow;
-          box-shadow: 0 2px 0 $dp-black;
-        }
-      }
-    }
-
-    &__button__previous-month,
-    &__button__next-month {
-      text-indent: -999em;
-      overflow: hidden;
-      color: $dp-black;
-      width: 24px;
-      height: 24px;
-      position: relative;
-      min-height: 0;
-      min-width: 32px;
-      transition: background-color .2s, outline-color .2s;
-      outline: 0 !important;
-    }
-
-    &__button__previous-month {
-      float: left;
-    }
-
-    &__button__next-month {
-      float: right;
     }
 
     &__button__previous-month:after,
     &__button__next-month:after {
-      text-indent: 0;
-      position: absolute;
-      left: 0;
-      width: 100%;
+      font-weight: normal;
+      font-size: 18px;
+      top: auto;
+    }
+
+    &__button__previous-month:hover,
+    &__button__next-month:hover {
+      background-color: #d9effc;
+      box-shadow: none;
+    }
+
+    &__button__previous-month:focus,
+    &__button__next-month:focus {
+      background-color: $dp-yellow;
+      outline: none;
+    }
+
+    &__button__close {
+      background-color: white;
       color: $dp-black;
-      font-size: 1rem;
-      font-weight: 400;
-    }
+      box-shadow: none;
+      border-color: $dp-black;
 
-    &__button__previous-month:after {
-      content: '\276E';
-    }
+      &:hover {
+        background-color: #ebebeb;
+      }
 
-    &__button__next-month:after {
-      content: '\276F';
-    }
-
-    &__button__previous-month,
-    &__button__next-month,
-    &__reveal {
-      font-family: $govuk-font-family;
-      -webkit-font-smoothing: antialiased;
-      font-size: 19px;
-      padding: 0;
-      border: 0;
-      background-color: transparent;
+      &:focus {
+        background-color: $dp-yellow;
+        box-shadow: 0 2px 0 $dp-black;
+      }
     }
 
     &__reveal {
@@ -222,50 +112,11 @@ hr {
       cursor: pointer;
     }
 
-    &__reveal:focus,
-    &__reveal__icon:focus {
+    &__reveal:focus {
       text-decoration: none;
       background: $dp-yellow;
       outline: 3px solid transparent;
       box-shadow: 0 -2px $dp-yellow, 0 4px $dp-black;
-    }
-
-    &__reveal__icon {
-      height: 2.5rem;
-      width: 2.5rem;
-      background-color: $dp-blue;
-      color: white;
-      border: none;
-
-      svg {
-        position: absolute;
-        top: 10%;
-        left: 10%;
-        height: 80%;
-        width: 80%;
-        fill: currentColor;
-      }
-
-      &:focus {
-        color: black;
-      }
-    }
-
-    &__reveal__icon:hover {
-      background: $dp-dark-blue;
-      cursor: pointer;
-    }
-
-    &__button__previous-month:hover,
-    &__button__next-month:hover,
-    &__button__previous-month:focus,
-    &__button__next-month:focus {
-      cursor: pointer;
-      color: $dp-black;
-      text-decoration-thickness: 3px;
-      background-color: $dp-light-blue;
-      outline-color: transparent;
-      transition-duration: .2s;
     }
 
     &__button--disabled {
@@ -282,7 +133,6 @@ hr {
 
   .date-picker__date-table thead th,
   .date__button {
-    font-family: $govuk-font-family;
     -webkit-font-smoothing: antialiased;
     font-weight: 400;
     font-size: 1rem;
@@ -296,55 +146,28 @@ hr {
     color: $dp-black;
     font-weight: 400;
     min-height: 40px;
-    margin: 0;
     padding: 0;
     min-width: 40px;
 
     &:focus {
-      outline: 3px solid $dp-yellow;
-      outline-offset: 0;
-      color: $dp-dark-blue;
-      box-shadow: inset 0 0 0 2px;
-      text-decoration-thickness: 3px;
+      background-color: $dp-yellow;
+      border: 0;
+      border-bottom: 3px solid black;
+      box-shadow: none;
+      outline: none;
     }
 
     &:hover {
-      color: $dp-dark-blue;
-      cursor: pointer;
-      background-color: $dp-light-blue;
+      background-color: #d9effc;
     }
 
     &--inactive,
     &--inactive:hover {
-      color: $dp-black;
-      background-color: $dp-light-grey;
       display: none;
     }
 
-    &--disabled {
-      background-color: $dp-light-grey;
-      color: $dp-black;
-      text-decoration: line-through;
-    }
-
-    &--disabled:hover {
-      color: $dp-black;
-      text-decoration: line-through;
-      cursor: not-allowed;
-    }
-
     &--today {
-      border-bottom: 4px solid $dp-blue;
-    }
-
-    &--selected {
-      background-color: $dp-blue;
-      color: $dp-white;
-    }
-
-    &--selected:hover,
-    &--selected:focus {
-      color: $dp-white;
+      border-bottom: 0;
     }
   }
 }
