@@ -179,7 +179,7 @@ function datePicker(datePickerElement, options = {}) {
 
   function setAriaLiveMessage(message) {
     var ariaLabel = document.createElement('p');
-    ariaLabel.setAttribute('class', 'aria-live-message govuk-visually-hidden');
+    ariaLabel.setAttribute('class', 'aria-live-message sr-only');
     ariaLabel.setAttribute('aria-live', 'assertive');
     ariaLabel.innerText = message;
     elements.ariaLiveMessage = ariaLabel;
@@ -920,7 +920,7 @@ function datePicker(datePickerElement, options = {}) {
   }
 
   function getCalendarIconTemplate() {
-    return `<span class="govuk-visually-hidden">${content[state.language].buttons.dialogTrigger}</span>
+    return `<span class="sr-only">${content[state.language].buttons.dialogTrigger}</span>
             <svg aria-hidden="true" role="img"><use href="${options.icon}#calendar_today"></use></svg>`;
   }
 
