@@ -21,6 +21,18 @@ $dp-tablet: 641px;
       display: inline-block;
       margin-top: 0;
     }
+
+    &--icon {
+      display: inline-block;
+      bottom: 0;
+
+      .date-picker__dialog {
+        @media screen and (max-width: $dp-tablet) {
+          top: 50px;
+          right: -37px;
+        }
+      }
+    }
   }
 
   &__dialog {

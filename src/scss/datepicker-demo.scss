@@ -21,40 +21,12 @@ hr {
 .digital-scotland {
   position: relative;
   .date-picker {
-    &__container {
-      display: block;
-      position: relative;
-      margin-top: 10px;
-      @media screen and (min-width: $dp-tablet) {
-        display: inline-block;
-        margin-top: 0;
-      }
-    }
-
-    &__container__icon {
-      position: absolute;
-      display: inline-block;
-      bottom: 0;
-
-      .date-picker__dialog {
-        @media screen and (max-width: $dp-tablet) {
-          top: 2.8rem;
-          right: -3.1rem;
-        }
-      }
-    }
-
     &__dialog {
       @include ds-box-shadow;
       position: absolute;
       background-color: $dp-white;
       border: 0;
       outline: 1px solid #b3b3b3;
-    }
-
-    &__reveal--hidden,
-    &__dialog--hidden {
-      display: none;
     }
 
     &__heading {
@@ -133,11 +105,8 @@ hr {
 
   .date-picker__date-table thead th,
   .date__button {
-    -webkit-font-smoothing: antialiased;
-    font-weight: 400;
     font-size: 1rem;
     color: $dp-dark-grey;
-    padding: 5px;
   }
 
   .date__button {

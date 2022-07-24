@@ -808,7 +808,7 @@ describe('Date picker', () => {
     });
   });
 
-  describe('Themeing', () => {
+  describe('Themeing & Icon', () => {
     it('should append theme class to datepicker container when provided', () => {
       const testClass = 'test';
 
@@ -823,6 +823,38 @@ describe('Date picker', () => {
       const container = document.querySelector('.date-picker__container');
 
       expect(container.classList.contains(testClass)).toBeTruthy();
+    });
+
+    it('should append icon class to datepicker container when provided', () => {
+      datePicker(document.querySelector('.date-picker'), {
+        icon: 'location',
+      });
+
+      const revealButton = document.querySelector('.date-picker__reveal');
+
+      $(revealButton).trigger('click');
+
+      const container = document.querySelector('.date-picker__container');
+
+      expect(container.classList.contains('date-picker__container--icon')).toBeTruthy();
+    });
+
+    it('should append both theme and icon classes when both theme and icon options provided', () => {
+      const testClass = 'test';
+
+      datePicker(document.querySelector('.date-picker'), {
+        icon: 'location',
+        theme: testClass,
+      });
+
+      const revealButton = document.querySelector('.date-picker__reveal');
+
+      $(revealButton).trigger('click');
+
+      const container = document.querySelector('.date-picker__container');
+
+      expect(container.classList.contains(testClass)).toBeTruthy();
+      expect(container.classList.contains('date-picker__container--icon')).toBeTruthy();
     });
   });
 

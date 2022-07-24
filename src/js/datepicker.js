@@ -328,6 +328,20 @@ function datePicker(datePickerElement, options = {}) {
     state.previousMonth = getPreviousMonth();
   }
 
+  function getContainerClass() {
+    var classes = 'date-picker__container';
+
+    if (options.icon) {
+      classes = `${classes} date-picker__container--icon`;
+    }
+
+    if (theme) {
+      classes = `${classes} ${theme}`;
+    }
+
+    return classes;
+  }
+
   function buildUI() {
     var closeButton;
     var container;
@@ -368,7 +382,7 @@ function datePicker(datePickerElement, options = {}) {
     previousMonthButton = createElement('button', {
       type: 'button', class: 'date-picker__button__previous-month',
     });
-    container = createElement('div', { class: `date-picker__container ${theme}` });
+    container = createElement('div', { class: `${getContainerClass()}` });
     headerContainer = createElement('div', { class: 'date-picker__header govuk-clearfix' });
     nextMonthButton = createElement('button', { type: 'button', class: 'date-picker__button__next-month' });
     heading = createElement('h2', {
