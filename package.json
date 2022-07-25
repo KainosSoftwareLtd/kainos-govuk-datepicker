@@ -1,5 +1,5 @@
 {
-  "name": "govuk-datepicker",
+  "name": "kainos-govuk-datepicker",
   "main": "dist/datepicker.min.js",
   "style": "src/scss/index.scss",
   "files": [
