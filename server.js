@@ -11,6 +11,14 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(DIST_DIR, 'index.html'));
 });
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`App listening to ${PORT}....`);
 });
+
+const shutdown = () => {
+  server.close();
+};
+
+module.exports = {
+  shutdown,
+};
