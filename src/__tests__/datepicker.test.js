@@ -158,13 +158,13 @@ describe('Date picker', () => {
       },
       {
         element: 'month',
-        day: '.date-picker-day',
+        day: 'date-picker-day',
         month: 'irrelevant',
         year: 'date-picker-year',
       },
       {
         element: 'year',
-        day: '.date-picker-day',
+        day: 'date-picker-day',
         month: 'date-picker-month',
         year: 'irrelevant',
       },
@@ -172,7 +172,7 @@ describe('Date picker', () => {
     scenarios.forEach((scenario) => {
       it(`should throw an error when the ${scenario.element} element is not accessible`, () => {
         document.body.innerHTML = `
-          <div>
+          <div class="irrelevant">
             <div class="${scenario.day}"></div>
             <div class="${scenario.month}"></div>
             <div class="${scenario.year}"></div>
