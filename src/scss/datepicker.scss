@@ -21,6 +21,18 @@ $dp-tablet: 641px;
       display: inline-block;
       margin-top: 0;
     }
+
+    &--icon {
+      display: inline-block;
+      bottom: 0;
+
+      .date-picker__dialog {
+        @media screen and (max-width: $dp-tablet) {
+          top: 50px;
+          right: -37px;
+        }
+      }
+    }
   }
 
   &__dialog {
@@ -232,6 +244,38 @@ $dp-tablet: 641px;
     color: $dp-black;
     box-shadow: none;
   }
+
+  &__reveal__icon {
+    height: 32px;
+    width: 32px;
+    color: white;
+    border: none;
+    background-color: transparent;
+
+    svg {
+      position: absolute;
+      top: -7px;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      fill: $dp-black;
+    }
+
+    &:focus {
+      outline: none;
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    &:focus svg,
+    &:hover svg {
+      text-decoration: none;
+      background: $dp-yellow;
+      border-bottom: 4px solid $dp-black;
+    }
+  }
 }
 
 .date-picker__date-table thead th,
@@ -297,4 +341,14 @@ $dp-tablet: 641px;
   &--selected:focus {
     color: $dp-white;
   }
+}
+
+.sr-only {
+  clip: rect(0 0 0 0); 
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap; 
+  width: 1px;
 }

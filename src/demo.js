@@ -1,5 +1,6 @@
 import './scss/datepicker-demo.scss';
 import './scss/datepicker.scss';
+import CalendarIcon from './images/icons/icons.stack.svg';
 
 import datePicker from './js/datepicker';
 
@@ -24,4 +25,12 @@ datePicker(document.querySelector('.date-picker-date-range'), {
 
 datePicker(document.querySelector('.date-picker-welsh'), {
   language: 'cy',
+});
+
+datePicker(document.querySelector('.date-picker-style-two'), {
+  theme: 'digital-scotland',
+});
+
+datePicker(document.querySelector('.date-picker-icon'), {
+  icon: CalendarIcon,
 });

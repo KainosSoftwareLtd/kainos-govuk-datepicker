@@ -61,11 +61,19 @@ describe('Date picker', () => {
 
   describe('Initialisation', () => {
     const assertRender = () => {
-      const datePickerElement = document.querySelector('.date-picker__container');
+      const revealButton = document.querySelector('.date-picker__reveal');
+      const revealButtonIcon = document.querySelector('.date-picker__reveal__icon');
+
+      expect(revealButton).toBeTruthy();
+      expect(revealButtonIcon).toBeFalsy();
+    };
+
+    const assertIconRender = () => {
+      const revealButtonIcon = document.querySelector('.date-picker__reveal__icon');
       const revealButton = document.querySelector('.date-picker__reveal');
 
-      expect(datePickerElement).toBeTruthy();
-      expect(revealButton).toBeTruthy();
+      expect(revealButtonIcon).toBeTruthy();
+      expect(revealButton).toBeFalsy();
     };
 
     it('should render with no configuration options', () => {
@@ -93,9 +101,11 @@ describe('Date picker', () => {
         language: 'cy',
         minDate: yesterday,
         maxDate: tomorrow,
+        icon: 'location',
+        theme: 'test-theme',
       });
 
-      assertRender();
+      assertIconRender();
     });
 
     it('should throw an error when date picker element was not provided', () => {
@@ -137,6 +147,40 @@ describe('Date picker', () => {
           maxDate: yesterday,
         });
       }).toThrow('Date picker min date cannot be greater than max date');
+    });
+
+    const scenarios = [
+      {
+        element: 'day',
+        day: 'irrelevant',
+        month: 'date-picker-month',
+        year: 'date-picker-year',
+      },
+      {
+        element: 'month',
+        day: 'date-picker-day',
+        month: 'irrelevant',
+        year: 'date-picker-year',
+      },
+      {
+        element: 'year',
+        day: 'date-picker-day',
+        month: 'date-picker-month',
+        year: 'irrelevant',
+      },
+    ];
+    scenarios.forEach((scenario) => {
+      it(`should throw an error when the ${scenario.element} element is not accessible`, () => {
+        document.body.innerHTML = `
+          <div class="irrelevant">
+            <div class="${scenario.day}"></div>
+            <div class="${scenario.month}"></div>
+            <div class="${scenario.year}"></div>
+          </div>`;
+        expect(() => {
+          datePicker(document.querySelector('.irrelevant'));
+        }).toThrow('Date picker not configured correctly');
+      });
     });
   });
 
@@ -761,6 +805,56 @@ describe('Date picker', () => {
 
       expect(ariaLiveMessage.getAttribute('aria-live')).toEqual('assertive');
       expect(ariaLiveMessage.innerText).toContain('You cannot select a day after');
+    });
+  });
+
+  describe('Themeing & Icon', () => {
+    it('should append theme class to datepicker container when provided', () => {
+      const testClass = 'test';
+
+      datePicker(document.querySelector('.date-picker'), {
+        theme: testClass,
+      });
+
+      const revealButton = document.querySelector('.date-picker__reveal');
+
+      $(revealButton).trigger('click');
+
+      const container = document.querySelector('.date-picker__container');
+
+      expect(container.classList.contains(testClass)).toBeTruthy();
+    });
+
+    it('should append icon class to datepicker container when provided', () => {
+      datePicker(document.querySelector('.date-picker'), {
+        icon: 'location',
+      });
+
+      const revealButton = document.querySelector('.date-picker__reveal');
+
+      $(revealButton).trigger('click');
+
+      const container = document.querySelector('.date-picker__container');
+
+      expect(container.classList.contains('date-picker__container--icon')).toBeTruthy();
+    });
+
+    it('should append both theme and icon classes when both theme and icon options provided', () => {
+      const testClass = 'test';
+
+      datePicker(document.querySelector('.date-picker'), {
+        icon: 'location',
+        theme: testClass,
+      });
+
+      const revealButton = document.querySelector('.date-picker__reveal');
+
+      $(revealButton).trigger('click');
+
+      const container = document.querySelector('.date-picker__container');
+
+      expect(container.classList.contains(testClass)).toBeTruthy();
+      expect(container.classList.contains('date-picker__container--icon')).toBeTruthy();
     });
   });
 

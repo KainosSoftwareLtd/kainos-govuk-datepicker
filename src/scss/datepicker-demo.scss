@@ -9,6 +9,134 @@ $govuk-font-family: 'Arial', sans-serif;
 @import '~govuk-frontend/govuk/components/date-input/_date-input';
 @import '~govuk-frontend/govuk/components/date-input/_index';
 
+@import 'helpers/utilities/_utilities';
+@import "helpers/box-shadow/box-shadow";
+@import "helpers/variables/colours";
+@import "helpers/variables/sizes";
+
 hr {
   margin: 60px 0;
+}
+
+.digital-scotland {
+  position: relative;
+  .date-picker {
+    &__dialog {
+      @include ds-box-shadow;
+      position: absolute;
+      background-color: $dp-white;
+      border: 0;
+      outline: 1px solid #b3b3b3;
+    }
+
+    &__heading {
+      font-size: 1.1rem;
+      line-height: 20px;
+      text-transform: uppercase;
+    }
+
+    &__date-table {
+      background-color: white;
+    }
+
+    &__button__previous-month:after,
+    &__button__next-month:after {
+      font-weight: normal;
+      font-size: 18px;
+      top: auto;
+    }
+
+    &__button__previous-month:hover,
+    &__button__next-month:hover {
+      background-color: #d9effc;
+      box-shadow: none;
+    }
+
+    &__button__previous-month:focus,
+    &__button__next-month:focus {
+      background-color: $dp-yellow;
+      outline: none;
+    }
+
+    &__button__close {
+      background-color: white;
+      color: $dp-black;
+      box-shadow: none;
+      border-color: $dp-black;
+
+      &:hover {
+        background-color: #ebebeb;
+      }
+
+      &:focus {
+        background-color: $dp-yellow;
+        box-shadow: 0 2px 0 $dp-black;
+      }
+    }
+
+    &__reveal {
+      text-decoration: underline;
+      color: $dp-blue;
+    }
+
+    &__reveal:hover {
+      color: $dp-dark-blue;
+      cursor: pointer;
+    }
+
+    &__reveal:focus {
+      text-decoration: none;
+      background: $dp-yellow;
+      outline: 3px solid transparent;
+      box-shadow: 0 -2px $dp-yellow, 0 4px $dp-black;
+    }
+
+    &__button--disabled {
+      opacity: .6;
+    }
+
+    &__button--disabled:hover {
+      text-decoration-thickness: 1px;
+      cursor: not-allowed;
+      color: $dp-black;
+      box-shadow: none;
+    }
+  }
+
+  .date-picker__date-table thead th,
+  .date__button {
+    font-size: 1rem;
+    color: $dp-dark-grey;
+  }
+
+  .date__button {
+    background-color: transparent;
+    border-width: 0;
+    color: $dp-black;
+    font-weight: 400;
+    min-height: 40px;
+    padding: 0;
+    min-width: 40px;
+
+    &:focus {
+      background-color: $dp-yellow;
+      border: 0;
+      border-bottom: 3px solid black;
+      box-shadow: none;
+      outline: none;
+    }
+
+    &:hover {
+      background-color: #d9effc;
+    }
+
+    &--inactive,
+    &--inactive:hover {
+      display: none;
+    }
+
+    &--today {
+      border-bottom: 0;
+    }
+  }
 }

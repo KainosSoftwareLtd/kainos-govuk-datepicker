@@ -135,6 +135,32 @@ datePicker(selector, {
 });
 ```
 
+### theme
+
+Type: String
+
+The class to append to the date picker container to assist with CSS overwrites. Empty by default.
+
+Using it in your code:
+```javascript
+datePicker(selector, {
+  theme: 'my-class-name',
+});
+```
+
+### icon
+
+Type: String
+
+The icon you wish to use in place of the default 'choose date' text.
+
+Using it in your code:
+```javascript
+datePicker(selector, {
+  icon: 'http://my-icon-url.com',
+});
+```
+
 ## Running locally
 
 Clone this repository to your local machine and install dependencies.
