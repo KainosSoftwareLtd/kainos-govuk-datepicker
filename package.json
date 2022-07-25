@@ -6,7 +6,7 @@
     "dist",
     "src/scss/datepicker.scss"
   ],
-  "version": "0.0.2",
+  "version": "1.0.0",
   "description": "GOV.UK datepicker",
   "scripts": {
     "build": "webpack --config ./bin/webpack.dev.js",
