@@ -1,5 +1,8 @@
 # Accessible Date picker (GOV.UK Theme)
 
+![Latest merge to main](https://github.com/KainosSoftwareLtd/accessible-date-picker/actions/workflows/main-ci.yml/badge.svg)
+![Nightly CI](https://github.com/KainosSoftwareLtd/accessible-date-picker/actions/workflows/nightly-ci.yml/badge.svg)
+
 A Date picker design and developed to be used within GOV.UK projects. Full support for 'keyboard only' users. Supports both English and Welsh.
 
 See a preview [here](https://still-headland-16463.herokuapp.com)
@@ -22,19 +25,19 @@ npm i kainos-govuk-datepicker
 
 Files & locations:
 
-| File               | Folder                                 | Description                    |
-|--------------------|----------------------------------------|--------------------------------|
-| datepicker.min.js  | node_modules/govuk-datepicker/dist     | production build - (ES5, 14kb) |
-| datepicker.min.css | node_modules/govuk-datepicker/dist     | production stylesheet          |
-| datepicker.scss    | node_modules/govuk-datepicker/src/scss | SCSS file for use in builds    |
+| File               | Folder                                        | Description                    |
+|--------------------|-----------------------------------------------|--------------------------------|
+| datepicker.min.js  | node_modules/kainos-govuk-datepicker/dist     | production build - (ES5, 14kb) |
+| datepicker.min.css | node_modules/kainos-govuk-datepicker/dist     | production stylesheet          |
+| datepicker.scss    | node_modules/kainos-govuk-datepicker/src/scss | SCSS file for use in builds    |
 
 ## Basic Usage
 
 Importing the library if you're using it in Node:
 ```javascript
-import datePicker from 'govuk-datepicker';
+import datePicker from 'kainos-govuk-datepicker';
 // or
-const datePicker = require('govuk-datepicker');
+const datePicker = require('kainos-govuk-datepicker');
 ```
 
 Add a class of `.date-picker` (can be named differently) to your HTML form wrapper.
@@ -77,9 +80,9 @@ See recommended HTML -
 Importing the styles into your project using Node:
 ```javascript
 // Import datepickers scss file.
-@import '~govuk-datepicker/src/scss/datepicker.scss';
+@import '~kainos-govuk-datepicker/src/scss/datepicker.scss';
 // Import datepickers css file.
-@import '~govuk-datepicker/dist/govuk-datepicker.min.css';
+@import '~kainos-govuk-datepicker/dist/datepicker.min.css';
 ```
 
 Using it in your code:
