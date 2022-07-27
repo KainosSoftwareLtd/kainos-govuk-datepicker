@@ -5,7 +5,7 @@
 
 TEST
 
-A Date picker was designed and developed to be used within GOV.UK projects. Full support for 'keyboard only' users. Supports both English and Welsh.
+A Date picker asdwas designed and developed to be used within GOV.UK projects. Full support for 'keyboard only' users. Supports both English and Welsh.
 
 See a preview [here](https://still-headland-16463.herokuapp.com)
 
