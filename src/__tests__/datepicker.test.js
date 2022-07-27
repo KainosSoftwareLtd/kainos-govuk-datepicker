@@ -808,7 +808,7 @@ describe('Date picker', () => {
     });
   });
 
-  describe('Themeing & Icon', () => {
+  describe('Theming & Icon', () => {
     it('should append theme class to datepicker container when provided', () => {
       const testClass = 'test';
 
@@ -855,6 +855,26 @@ describe('Date picker', () => {
 
       expect(container.classList.contains(testClass)).toBeTruthy();
       expect(container.classList.contains('date-picker__container--icon')).toBeTruthy();
+    });
+
+    it('should focus on the icon when the close button is clicked', () => {
+      datePicker(document.querySelector('.date-picker'), {
+        icon: 'some/icon/path',
+      });
+      const dialog = document.querySelector('.date-picker__dialog');
+      const revealButton = document.querySelector('.date-picker__reveal__icon');
+      const closeButton = document.querySelector('.date-picker__button__close');
+
+      expect(dialog.classList.contains('date-picker__dialog--hidden')).toBeTruthy();
+
+      $(revealButton).trigger('click');
+
+      expect(dialog.classList.contains('date-picker__dialog--hidden')).toBeFalsy();
+
+      $(closeButton).trigger('click');
+
+      expect(dialog.classList.contains('date-picker__dialog--hidden')).toBeTruthy();
+      expect(revealButton === document.activeElement).toBeTruthy();
     });
   });
 

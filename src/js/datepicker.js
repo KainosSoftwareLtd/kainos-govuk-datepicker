@@ -309,7 +309,11 @@ function datePicker(datePickerElement, options = {}) {
   function hideCalender() {
     state.isOpen = false;
     elements.dialog.classList.add('date-picker__dialog--hidden');
-    elements.buttons.revealButton.focus();
+    if (options.icon) {
+      elements.buttons.revealButtonIcon.focus();
+    } else {
+      elements.buttons.revealButton.focus();
+    }
   }
 
   function incrementFocusMonth() {
