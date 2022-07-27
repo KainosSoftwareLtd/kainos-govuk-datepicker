@@ -309,11 +309,7 @@ function datePicker(datePickerElement, options = {}) {
   function hideCalender() {
     state.isOpen = false;
     elements.dialog.classList.add('date-picker__dialog--hidden');
-    if (options.icon) {
-      elements.buttons.revealButtonIcon.focus();
-    } else {
-      elements.buttons.revealButton.focus();
-    }
+    elements.buttons.revealButton.focus();
   }
 
   function incrementFocusMonth() {
@@ -439,15 +435,12 @@ function datePicker(datePickerElement, options = {}) {
     elements.container.appendChild(container);
 
     elements.buttons = {
-      revealButton: revealButton,
       previousMonthButton: previousMonthButton,
       nextMonthButton: nextMonthButton,
       closeButton: closeButton,
     };
 
-    if (options.icon) {
-      elements.buttons.revealButtonIcon = revealButtonIcon;
-    }
+    elements.buttons.revealButton = options.icon ? revealButtonIcon : revealButton;
 
     elements.table = {
       container: table,
@@ -465,13 +458,8 @@ function datePicker(datePickerElement, options = {}) {
     document.body.addEventListener('mousedown', handleDocumentBodyMouseDown, true);
     elements.dialog.addEventListener('keydown', handleDialogKeydown, true);
 
-    if (options.icon) {
-      elements.buttons.revealButtonIcon.addEventListener('click', handleRevealButtonInteraction, true);
-      elements.buttons.revealButtonIcon.addEventListener('keydown', handleRevealButtonInteraction, true);
-    } else {
-      elements.buttons.revealButton.addEventListener('click', handleRevealButtonInteraction, true);
-      elements.buttons.revealButton.addEventListener('keydown', handleRevealButtonInteraction, true);
-    }
+    elements.buttons.revealButton.addEventListener('click', handleRevealButtonInteraction, true);
+    elements.buttons.revealButton.addEventListener('keydown', handleRevealButtonInteraction, true);
 
     elements.buttons.nextMonthButton.addEventListener('click', handleNextButtonInteraction, true);
     elements.buttons.nextMonthButton.addEventListener('keydown', handleNextButtonInteraction, true);
