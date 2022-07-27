@@ -1,6 +1,7 @@
 /node_modules
 dist
 .idea/
+accessible-date-picker.iml
 output
 .DS_STORE
 /coverage/
