@@ -1,15 +1,16 @@
-# Accessible Date picker (GOV.UK Theme)
+# Kainos GOV.UK Date picker
 
 ![Latest merge to main](https://github.com/KainosSoftwareLtd/accessible-date-picker/actions/workflows/main-ci.yml/badge.svg)
 ![Nightly CI](https://github.com/KainosSoftwareLtd/accessible-date-picker/actions/workflows/nightly-ci.yml/badge.svg)
 
-A Date picker was designed and developed to be used within GOV.UK projects. Full support for 'keyboard only' users. Supports both English and Welsh.
+A Date picker library designed and developed to be used within GOV.UK projects. Full support for 'keyboard only' users. Supports both English and Welsh.
 
 See a preview [here](https://still-headland-16463.herokuapp.com)
 
 ### Table of Contents
 
 * [Installation](#installation)
+* [Dependencies](#Dependencies)
 * [Basic Usage](#basic-usage)
 * [Configuration options](#options)
 * [Running locally](#running-locally)
@@ -30,6 +31,10 @@ Files & locations:
 | datepicker.min.js  | node_modules/kainos-govuk-datepicker/dist     | production build - (ES5, 14kb) |
 | datepicker.min.css | node_modules/kainos-govuk-datepicker/dist     | production stylesheet          |
 | datepicker.scss    | node_modules/kainos-govuk-datepicker/src/scss | SCSS file for use in builds    |
+
+## Dependencies
+
+The date picker has only one dependency i.e. [govuk-frontend](https://www.npmjs.com/package/govuk-frontend) ^3.14.0
 
 ## Basic Usage
 
