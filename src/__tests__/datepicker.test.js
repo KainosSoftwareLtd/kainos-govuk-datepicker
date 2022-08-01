@@ -1,21 +1,16 @@
 import $ from 'jquery';
+import { DateTime } from 'luxon';
+
 import datePicker from '../js/datepicker';
 import dateFixtures from './fixtures/dateFixtures';
 
-const today = new Date();
-const previousMonth = new Date();
-previousMonth.setMonth(today.getMonth() - 1);
+const now = DateTime.now();
+const today = now.toJSDate();
+const nextMonth = now.plus({ months: 1 }).toJSDate();
+const yesterday = now.minus({ days: 1 }).toJSDate();
+const tomorrow = now.plus({ days: 1 }).toJSDate();
 
-const nextMonth = new Date();
-nextMonth.setMonth(today.getMonth() + 1);
-
-const yesterday = new Date();
-yesterday.setDate(today.getDate() - 1);
-
-const tomorrow = new Date();
-tomorrow.setDate(today.getDate() + 1);
-
-const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 const monthsEnglish = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 const monthsWelsh = ['Ionawr', 'Chwefror', 'Mawrth', 'Ebrill', 'Mai', 'Mehefin', 'Gorffennaf', 'Awst', 'Medi', 'Hydref',
   'Tachwedd', 'Rhagfyr'];
@@ -413,9 +408,7 @@ describe('Date picker', () => {
     });
 
     it('should allow for selection of a day next month', () => {
-      const nextMonthWithSetDay = new Date();
-      nextMonthWithSetDay.setDate(10);
-      nextMonthWithSetDay.setMonth(today.getMonth() + 1);
+      const nextMonthWithSetDay = now.set({ day: 10 }).plus({ months: 1 });
 
       datePicker(document.querySelector('.date-picker'), {});
       const revealButton = document.querySelector('.date-picker__reveal');
@@ -423,22 +416,20 @@ describe('Date picker', () => {
       const monthInput = document.querySelector('.date-picker-month');
       const yearInput = document.querySelector('.date-picker-year');
 
-      $(dayInput).val(nextMonthWithSetDay.getDate());
-      $(monthInput).val(nextMonthWithSetDay.getMonth() + 1);
-      $(yearInput).val(nextMonthWithSetDay.getFullYear());
+      $(dayInput).val(nextMonthWithSetDay.day);
+      $(monthInput).val(nextMonthWithSetDay.month);
+      $(yearInput).val(nextMonthWithSetDay.year);
 
       $(revealButton).trigger('click');
 
-      const nextMonthButton = document.querySelector(`[data-test-id="${nextMonthWithSetDay.toLocaleDateString()}"]`);
+      const nextMonthButton = document.querySelector(`[data-test-id="${nextMonthWithSetDay.toLocaleString()}"]`);
 
       expect(nextMonthButton === document.activeElement).toBeTruthy();
       expect(nextMonthButton.tabIndex).toEqual(0);
     });
 
     it('should allow for selection of a day next month', () => {
-      const previousMonthWithSetDay = new Date();
-      previousMonthWithSetDay.setDate(10);
-      previousMonthWithSetDay.setMonth(today.getMonth() - 1);
+      const previousMonthWithSetDay = now.set({ day: 10 }).minus({ months: 1 });
 
       datePicker(document.querySelector('.date-picker'), {});
       const revealButton = document.querySelector('.date-picker__reveal');
@@ -446,22 +437,20 @@ describe('Date picker', () => {
       const monthInput = document.querySelector('.date-picker-month');
       const yearInput = document.querySelector('.date-picker-year');
 
-      $(dayInput).val(previousMonthWithSetDay.getDate());
-      $(monthInput).val(previousMonthWithSetDay.getMonth() + 1);
-      $(yearInput).val(previousMonthWithSetDay.getFullYear());
+      $(dayInput).val(previousMonthWithSetDay.day);
+      $(monthInput).val(previousMonthWithSetDay.month);
+      $(yearInput).val(previousMonthWithSetDay.year);
 
       $(revealButton).trigger('click');
 
-      const previousMonthButton = document.querySelector(`[data-test-id="${previousMonthWithSetDay.toLocaleDateString()}"]`);
+      const previousMonthButton = document.querySelector(`[data-test-id="${previousMonthWithSetDay.toLocaleString()}"]`);
 
       expect(previousMonthButton === document.activeElement).toBeTruthy();
       expect(previousMonthButton.tabIndex).toEqual(0);
     });
 
     it('should allow for selection of a day next year', () => {
-      const nextYear = new Date();
-      nextYear.setDate(10);
-      nextYear.setFullYear(today.getFullYear() + 1);
+      const nextYear = now.set({ day: 10 }).plus({ years: 1 });
 
       datePicker(document.querySelector('.date-picker'), {});
       const revealButton = document.querySelector('.date-picker__reveal');
@@ -469,22 +458,20 @@ describe('Date picker', () => {
       const monthInput = document.querySelector('.date-picker-month');
       const yearInput = document.querySelector('.date-picker-year');
 
-      $(dayInput).val(nextYear.getDate());
-      $(monthInput).val(nextYear.getMonth() + 1);
-      $(yearInput).val(nextYear.getFullYear());
+      $(dayInput).val(nextYear.day);
+      $(monthInput).val(nextYear.month);
+      $(yearInput).val(nextYear.year);
 
       $(revealButton).trigger('click');
 
-      const nextYearButton = document.querySelector(`[data-test-id="${nextYear.toLocaleDateString()}"]`);
+      const nextYearButton = document.querySelector(`[data-test-id="${nextYear.toLocaleString()}"]`);
 
       expect(nextYearButton === document.activeElement).toBeTruthy();
       expect(nextYearButton.tabIndex).toEqual(0);
     });
 
     it('should allow for selection of a day last year', () => {
-      const previousYear = new Date();
-      previousYear.setDate(10);
-      previousYear.setFullYear(today.getFullYear() + 1);
+      const previousYear = now.set({ day: 10 }).minus({ years: 1 });
 
       datePicker(document.querySelector('.date-picker'), {});
       const revealButton = document.querySelector('.date-picker__reveal');
@@ -492,13 +479,13 @@ describe('Date picker', () => {
       const monthInput = document.querySelector('.date-picker-month');
       const yearInput = document.querySelector('.date-picker-year');
 
-      $(dayInput).val(previousYear.getDate());
-      $(monthInput).val(previousYear.getMonth() + 1);
-      $(yearInput).val(previousYear.getFullYear());
+      $(dayInput).val(previousYear.day);
+      $(monthInput).val(previousYear.month);
+      $(yearInput).val(previousYear.year);
 
       $(revealButton).trigger('click');
 
-      const previousYearButton = document.querySelector(`[data-test-id="${previousYear.toLocaleDateString()}"]`);
+      const previousYearButton = document.querySelector(`[data-test-id="${previousYear.toLocaleString()}"]`);
 
       expect(previousYearButton === document.activeElement).toBeTruthy();
       expect(previousYearButton.tabIndex).toEqual(0);
@@ -517,8 +504,8 @@ describe('Date picker', () => {
 
       $(revealButton).trigger('click');
 
-      const nearestDate = new Date('2021-11-30');
-      const nearestDateButton = document.querySelector(`[data-test-id="${nearestDate.toLocaleDateString()}"]`);
+      const nearestDate = DateTime.fromObject({ year: 2021, month: 11, day: 30 });
+      const nearestDateButton = document.querySelector(`[data-test-id="${nearestDate.toLocaleString()}"]`);
 
       expect(nearestDateButton === document.activeElement).toBeTruthy();
       expect(nearestDateButton.tabIndex).toEqual(0);
@@ -537,8 +524,8 @@ describe('Date picker', () => {
 
       $(revealButton).trigger('click');
 
-      const nearestDate = new Date('2021-12-15');
-      const nearestDateButton = document.querySelector(`[data-test-id="${nearestDate.toLocaleDateString()}"]`);
+      const nearestDate = DateTime.fromObject({ year: 2021, month: 12, day: 15 });
+      const nearestDateButton = document.querySelector(`[data-test-id="${nearestDate.toLocaleString()}"]`);
 
       expect(nearestDateButton === document.activeElement).toBeTruthy();
       expect(nearestDateButton.tabIndex).toEqual(0);
@@ -557,8 +544,8 @@ describe('Date picker', () => {
 
       $(revealButton).trigger('click');
 
-      const nearestDate = new Date('2022-12-31');
-      const nearestDateButton = document.querySelector(`[data-test-id="${nearestDate.toLocaleDateString()}"]`);
+      const nearestDate = DateTime.fromObject({ year: 2022, month: 12, day: 31 });
+      const nearestDateButton = document.querySelector(`[data-test-id="${nearestDate.toLocaleString()}"]`);
 
       expect(nearestDateButton === document.activeElement).toBeTruthy();
       expect(nearestDateButton.tabIndex).toEqual(0);
@@ -566,9 +553,7 @@ describe('Date picker', () => {
   });
 
   describe('Date ranges', () => {
-    const maxDate = new Date();
-    maxDate.setDate(10);
-    maxDate.setMonth(today.getMonth() + 1);
+    const maxDate = now.set({ day: 10 }).plus({ months: 1 }).toJSDate();
 
     it('should disable interaction with days before min date', () => {
       datePicker(document.querySelector('.date-picker'), {
@@ -596,9 +581,7 @@ describe('Date picker', () => {
     });
 
     it('should disable interaction with days after max date', () => {
-      const maxDatePlusDay = new Date();
-      maxDatePlusDay.setDate(11);
-      maxDatePlusDay.setMonth(today.getMonth() + 1);
+      const maxDatePlusDay = now.set({ day: 11 }).plus({ months: 1 });
 
       datePicker(document.querySelector('.date-picker'), { maxDate });
 
@@ -611,7 +594,7 @@ describe('Date picker', () => {
       $(revealButton).trigger('click');
       $(nextMonthButton).trigger('click');
 
-      const disabledButton = document.querySelector(`[data-test-id="${maxDatePlusDay.toLocaleDateString()}"]`);
+      const disabledButton = document.querySelector(`[data-test-id="${maxDatePlusDay.toLocaleString()}"]`);
 
       expect(disabledButton.tabIndex).toEqual(-1);
       expect(disabledButton.getAttribute('aria-disabled')).toBeTruthy();
@@ -625,10 +608,7 @@ describe('Date picker', () => {
     });
 
     it('should default focus day to min date when input dates are before min date', () => {
-      const yesterdayMinusOne = new Date();
-      yesterdayMinusOne.setDate(yesterday.getDate() - 1);
-      yesterdayMinusOne.setMonth(yesterday.getMonth());
-      yesterdayMinusOne.setFullYear(yesterday.getFullYear());
+      const yesterdayMinusOne = now.minus({ days: 1 });
 
       datePicker(document.querySelector('.date-picker'), {
         minDate: yesterday,
@@ -639,9 +619,9 @@ describe('Date picker', () => {
       const monthInput = document.querySelector('.date-picker-month');
       const yearInput = document.querySelector('.date-picker-year');
 
-      $(dayInput).val(yesterdayMinusOne.getDate());
-      $(monthInput).val(yesterdayMinusOne.getMonth() + 1);
-      $(yearInput).val(yesterdayMinusOne.getFullYear());
+      $(dayInput).val(yesterdayMinusOne.day);
+      $(monthInput).val(yesterdayMinusOne.month);
+      $(yearInput).val(yesterdayMinusOne.year);
 
       $(revealButton).trigger('click');
 
@@ -654,9 +634,7 @@ describe('Date picker', () => {
     });
 
     it('should default focus day to max date when input dates exceed max date', () => {
-      const maxDatePlusDay = new Date();
-      maxDatePlusDay.setDate(11);
-      maxDatePlusDay.setMonth(today.getMonth() + 1);
+      const maxDatePlusDay = now.set({ day: 11 }).plus({ months: 1 });
 
       datePicker(document.querySelector('.date-picker'), {
         maxDate,
@@ -667,9 +645,9 @@ describe('Date picker', () => {
       const monthInput = document.querySelector('.date-picker-month');
       const yearInput = document.querySelector('.date-picker-year');
 
-      $(dayInput).val(maxDatePlusDay.getDate());
-      $(monthInput).val(maxDatePlusDay.getMonth() + 1);
-      $(yearInput).val(maxDatePlusDay.getFullYear());
+      $(dayInput).val(maxDatePlusDay.day);
+      $(monthInput).val(maxDatePlusDay.month);
+      $(yearInput).val(maxDatePlusDay.year);
 
       $(revealButton).trigger('click');
 
@@ -682,12 +660,12 @@ describe('Date picker', () => {
     });
 
     it('should display days outside of current month', () => {
-      const nov192021 = new Date('November 19, 2021 23:15:30');
-      const oct312021 = new Date('October 31, 2021 23:15:30');
-      const dec012022 = new Date('October 31, 2021 23:15:30');
-      const dec022022 = new Date('October 31, 2021 23:15:30');
-      const dec032022 = new Date('October 31, 2021 23:15:30');
-      const dec042022 = new Date('October 31, 2021 23:15:30');
+      const nov192021 = DateTime.fromISO('2021-11-19');
+      const oct312021 = DateTime.fromISO('2021-10-31');
+      const dec012021 = DateTime.fromISO('2021-12-01');
+      const dec022021 = DateTime.fromISO('2021-12-02');
+      const dec032021 = DateTime.fromISO('2021-12-03');
+      const dec042021 = DateTime.fromISO('2021-12-04');
 
       datePicker(document.querySelector('.date-picker'), {});
 
@@ -696,20 +674,21 @@ describe('Date picker', () => {
       const monthInput = document.querySelector('.date-picker-month');
       const yearInput = document.querySelector('.date-picker-year');
 
-      $(dayInput).val(nov192021.getDate());
-      $(monthInput).val(nov192021.getMonth() + 1);
-      $(yearInput).val(nov192021.getFullYear());
+      $(dayInput).val(nov192021.day);
+      $(monthInput).val(nov192021.month);
+      $(yearInput).val(nov192021.year);
 
       $(revealButton).trigger('click');
 
-      const oct312021Button = document.querySelector(`[data-test-id="${oct312021.toLocaleDateString()}"]`);
-      const dec012022Button = document.querySelector(`[data-test-id="${dec012022.toLocaleDateString()}"]`);
-      const dec022022Button = document.querySelector(`[data-test-id="${dec022022.toLocaleDateString()}"]`);
-      const dec032022Button = document.querySelector(`[data-test-id="${dec032022.toLocaleDateString()}"]`);
-      const dec042022Button = document.querySelector(`[data-test-id="${dec042022.toLocaleDateString()}"]`);
+      const oct312021Button = document.querySelector(`[data-test-id="${oct312021.toLocaleString()}"]`);
+      const dec012021Button = document.querySelector(`[data-test-id="${dec012021.toLocaleString()}"]`);
+      const dec022021Button = document.querySelector(`[data-test-id="${dec022021.toLocaleString()}"]`);
+      const dec032021Button = document.querySelector(`[data-test-id="${dec032021.toLocaleString()}"]`);
+      const dec042021Button = document.querySelector(`[data-test-id="${dec042021.toLocaleString()}"]`);
 
-      const dateButtons = [oct312021Button, dec012022Button, dec022022Button, dec032022Button,
-        dec042022Button];
+      const dateButtons = [
+        oct312021Button, dec012021Button, dec022021Button, dec032021Button, dec042021Button,
+      ];
 
       dateButtons.forEach((dateButton) => {
         expect(dateButton.tabIndex).toEqual(-1);
@@ -719,8 +698,9 @@ describe('Date picker', () => {
     });
 
     it('should set focus on maxDate when day and month input is incorrectly formatted beyond maxDate', () => {
+      const max = DateTime.fromObject({ year: 2022, month: 6, day: 15 });
       datePicker(document.querySelector('.date-picker'), {
-        maxDate: new Date('2022-06-15'),
+        maxDate: max.toJSDate(),
       });
       const revealButton = document.querySelector('.date-picker__reveal');
       const dayInput = document.querySelector('.date-picker-day');
@@ -732,8 +712,7 @@ describe('Date picker', () => {
       $(yearInput).val('2022');
 
       $(revealButton).trigger('click');
-      const nearestDate = new Date('2022-06-15');
-      const nearestDateButton = document.querySelector(`[data-test-id="${nearestDate.toLocaleDateString()}"]`);
+      const nearestDateButton = document.querySelector(`[data-test-id="${max.toLocaleString()}"]`);
 
       expect(nearestDateButton === document.activeElement).toBeTruthy();
       expect(nearestDateButton.tabIndex).toEqual(0);
@@ -881,14 +860,6 @@ describe('Date picker', () => {
   });
 
   describe('Date grid', () => {
-    const getDateFromString = (date) => {
-      const day = date.split('/', 1)[0];
-      const month = date.split('/', 2)[1];
-      const year = date.split('/', 3)[2];
-
-      return new Date(year, (month - 1), day);
-    };
-
     const assertGrid = (fixture) => {
       datePicker(document.querySelector('.date-picker'), {});
 
@@ -906,13 +877,12 @@ describe('Date picker', () => {
 
       expect($(heading).text()).toEqual(fixture.heading);
 
-      let button;
       fixture.dates.forEach((fixtureDate) => {
-        const date = getDateFromString(fixtureDate);
-        button = document.querySelector(`[data-test-id="${date.toLocaleDateString()}"]`);
+        const date = DateTime.fromFormat(fixtureDate, 'dd/MM/yyyy');
+        const button = document.querySelector(`[data-test-id="${date.toLocaleString()}"]`);
         expect(button).toBeTruthy();
         expect(button.getAttribute('aria-label'))
-          .toContain(`${days[date.getDay()]}, ${date.getDate()} ${monthsEnglish[date.getMonth()]} ${date.getFullYear()}`);
+          .toContain(`${days[date.weekday - 1]}, ${date.day} ${monthsEnglish[date.month - 1]} ${date.year}`);
       });
     };
 
