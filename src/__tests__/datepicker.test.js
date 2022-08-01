@@ -627,6 +627,8 @@ describe('Date picker', () => {
     it('should default focus day to min date when input dates are before min date', () => {
       const yesterdayMinusOne = new Date();
       yesterdayMinusOne.setDate(yesterday.getDate() - 1);
+      yesterdayMinusOne.setMonth(yesterday.getMonth());
+      yesterdayMinusOne.setFullYear(yesterday.getFullYear());
 
       datePicker(document.querySelector('.date-picker'), {
         minDate: yesterday,
