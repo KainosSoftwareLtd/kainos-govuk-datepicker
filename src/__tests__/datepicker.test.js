@@ -491,27 +491,26 @@ describe('Date picker', () => {
       expect(previousYearButton.tabIndex).toEqual(0);
     });
 
-    it('should set focus on nearest date when day input is incorrectly formatted', () => {
+    it('should set focus on today when day input is not a number', () => {
       datePicker(document.querySelector('.date-picker'), {});
       const revealButton = document.querySelector('.date-picker__reveal');
       const dayInput = document.querySelector('.date-picker-day');
       const monthInput = document.querySelector('.date-picker-month');
       const yearInput = document.querySelector('.date-picker-year');
 
-      $(dayInput).val('40');
+      $(dayInput).val('3 12');
       $(monthInput).val('11');
       $(yearInput).val('2021');
 
       $(revealButton).trigger('click');
 
-      const nearestDate = DateTime.fromObject({ year: 2021, month: 11, day: 30 });
-      const nearestDateButton = document.querySelector(`[data-test-id="${nearestDate.toLocaleString()}"]`);
+      const focusedDate = document.querySelector(`[data-test-id="${now.toLocaleString()}"]`);
 
-      expect(nearestDateButton === document.activeElement).toBeTruthy();
-      expect(nearestDateButton.tabIndex).toEqual(0);
+      expect(focusedDate === document.activeElement).toBeTruthy();
+      expect(focusedDate.tabIndex).toEqual(0);
     });
 
-    it('should set focus on nearest date when month input is incorrectly formatted', () => {
+    it('should set focus on today when month input is not a number', () => {
       datePicker(document.querySelector('.date-picker'), {});
       const revealButton = document.querySelector('.date-picker__reveal');
       const dayInput = document.querySelector('.date-picker-day');
@@ -519,36 +518,91 @@ describe('Date picker', () => {
       const yearInput = document.querySelector('.date-picker-year');
 
       $(dayInput).val('15');
-      $(monthInput).val('13');
+      $(monthInput).val('11 20');
       $(yearInput).val('2021');
 
       $(revealButton).trigger('click');
 
-      const nearestDate = DateTime.fromObject({ year: 2021, month: 12, day: 15 });
-      const nearestDateButton = document.querySelector(`[data-test-id="${nearestDate.toLocaleString()}"]`);
+      const focusedDate = document.querySelector(`[data-test-id="${now.toLocaleString()}"]`);
 
-      expect(nearestDateButton === document.activeElement).toBeTruthy();
-      expect(nearestDateButton.tabIndex).toEqual(0);
+      expect(focusedDate === document.activeElement).toBeTruthy();
+      expect(focusedDate.tabIndex).toEqual(0);
     });
 
-    it('should set focus on 31st December when day and month input is incorrectly formatted', () => {
+    it('should set focus on today when year input is not a number', () => {
       datePicker(document.querySelector('.date-picker'), {});
       const revealButton = document.querySelector('.date-picker__reveal');
       const dayInput = document.querySelector('.date-picker-day');
       const monthInput = document.querySelector('.date-picker-month');
       const yearInput = document.querySelector('.date-picker-year');
 
-      $(dayInput).val('32');
+      $(dayInput).val('15');
+      $(monthInput).val('11');
+      $(yearInput).val('20 22');
+
+      $(revealButton).trigger('click');
+
+      const focusedDate = document.querySelector(`[data-test-id="${now.toLocaleString()}"]`);
+
+      expect(focusedDate === document.activeElement).toBeTruthy();
+      expect(focusedDate.tabIndex).toEqual(0);
+    });
+
+    it('should set focus on today when day input is an invalid number', () => {
+      datePicker(document.querySelector('.date-picker'), {});
+      const revealButton = document.querySelector('.date-picker__reveal');
+      const dayInput = document.querySelector('.date-picker-day');
+      const monthInput = document.querySelector('.date-picker-month');
+      const yearInput = document.querySelector('.date-picker-year');
+
+      $(dayInput).val('1125');
+      $(monthInput).val('11');
+      $(yearInput).val('2022');
+
+      $(revealButton).trigger('click');
+
+      const focusedDate = document.querySelector(`[data-test-id="${now.toLocaleString()}"]`);
+
+      expect(focusedDate === document.activeElement).toBeTruthy();
+      expect(focusedDate.tabIndex).toEqual(0);
+    });
+
+    it('should set focus on today when month input is an invalid number', () => {
+      datePicker(document.querySelector('.date-picker'), {});
+      const revealButton = document.querySelector('.date-picker__reveal');
+      const dayInput = document.querySelector('.date-picker-day');
+      const monthInput = document.querySelector('.date-picker-month');
+      const yearInput = document.querySelector('.date-picker-year');
+
+      $(dayInput).val('11');
       $(monthInput).val('13');
       $(yearInput).val('2022');
 
       $(revealButton).trigger('click');
 
-      const nearestDate = DateTime.fromObject({ year: 2022, month: 12, day: 31 });
-      const nearestDateButton = document.querySelector(`[data-test-id="${nearestDate.toLocaleString()}"]`);
+      const focusedDate = document.querySelector(`[data-test-id="${now.toLocaleString()}"]`);
 
-      expect(nearestDateButton === document.activeElement).toBeTruthy();
-      expect(nearestDateButton.tabIndex).toEqual(0);
+      expect(focusedDate === document.activeElement).toBeTruthy();
+      expect(focusedDate.tabIndex).toEqual(0);
+    });
+
+    it('should set focus on today when year input is an invalid number', () => {
+      datePicker(document.querySelector('.date-picker'), {});
+      const revealButton = document.querySelector('.date-picker__reveal');
+      const dayInput = document.querySelector('.date-picker-day');
+      const monthInput = document.querySelector('.date-picker-month');
+      const yearInput = document.querySelector('.date-picker-year');
+
+      $(dayInput).val('11');
+      $(monthInput).val('11');
+      $(yearInput).val('202220222022202220222022');
+
+      $(revealButton).trigger('click');
+
+      const focusedDate = document.querySelector(`[data-test-id="${now.toLocaleString()}"]`);
+
+      expect(focusedDate === document.activeElement).toBeTruthy();
+      expect(focusedDate.tabIndex).toEqual(0);
     });
   });
 
