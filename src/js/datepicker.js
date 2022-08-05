@@ -932,7 +932,7 @@ function datePicker(datePickerElement, options = {}) {
 
   function getCalendarIconTemplate() {
     return `<span class="sr-only">${content[state.language].buttons.dialogTrigger}</span>
-            <svg aria-hidden="true" role="img"><use href="${options.icon}#calendar_today"></use></svg>`;
+            <svg aria-hidden="true" role="img"><use href="${options.icon}"></use></svg>`;
   }
 
   function isDatesEqual(dateA, dateB) {

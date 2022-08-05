@@ -282,31 +282,98 @@ describe('Date picker', () => {
       expect(nextMonthButton.classList.contains('date-picker__button--disabled')).toBeTruthy();
     });
 
-    it('should navigate between previous and next month', () => {
-      datePicker(document.querySelector('.date-picker'), {});
+    // eslint-disable-next-line max-len
+    const generateMonthTransitionScenario = (year, monthIndex, changedYear, changedMonthIndex, modifier) => ({
+      before: {
+        year,
+        index: monthIndex,
+      },
+      after: {
+        year: changedYear || year,
+        index: changedMonthIndex !== undefined ? changedMonthIndex : monthIndex + modifier,
+      },
+    });
 
-      const heading = document.querySelector('.date-picker__heading');
-      const revealButton = document.querySelector('.date-picker__reveal');
-      const previousMonthButton = document.querySelector('.date-picker__button__previous-month');
-      const nextMonthButtonButton = document.querySelector('.date-picker__button__next-month');
+    // eslint-disable-next-line max-len
+    const generatePreviousMonthScenario = (year, monthIndex, previousYear, previousMonthIndex) => generateMonthTransitionScenario(year, monthIndex, previousYear, previousMonthIndex, -1);
+    const previousMonthScenarios = [
+      generatePreviousMonthScenario('2021', 0, '2020', 11),
+      generatePreviousMonthScenario('2021', 1),
+      generatePreviousMonthScenario('2021', 2),
+      generatePreviousMonthScenario('2021', 3),
+      generatePreviousMonthScenario('2021', 4),
+      generatePreviousMonthScenario('2021', 5),
+      generatePreviousMonthScenario('2021', 6),
+      generatePreviousMonthScenario('2021', 7),
+      generatePreviousMonthScenario('2021', 8),
+      generatePreviousMonthScenario('2021', 9),
+      generatePreviousMonthScenario('2021', 10),
+      generatePreviousMonthScenario('2021', 11),
+    ];
+    previousMonthScenarios.forEach(({ before, after }) => {
+      it(`should navigate from ${monthsEnglish[before.index]} ${before.year} to ${monthsEnglish[after.index]} ${after.year} when the previous button is clicked`, () => {
+        datePicker(document.querySelector('.date-picker'), {});
 
-      $(revealButton).trigger('click');
+        const heading = document.querySelector('.date-picker__heading');
+        const revealButton = document.querySelector('.date-picker__reveal');
+        const previousMonthButton = document.querySelector('.date-picker__button__previous-month');
+        const dayInput = document.querySelector('.date-picker-day');
+        const monthInput = document.querySelector('.date-picker-month');
+        const yearInput = document.querySelector('.date-picker-year');
 
-      expect($(heading).text()).toEqual(todayAsFormattedMonthYear);
-      expect(previousMonthButton.tabIndex).toEqual(0);
-      expect(previousMonthButton.classList.contains('date-picker__button--disabled')).toBeFalsy();
+        $(dayInput).val('12');
+        $(monthInput).val(`${before.index + 1}`);
+        $(yearInput).val(before.year);
 
-      $(nextMonthButtonButton).trigger('click');
+        $(revealButton).trigger('click');
 
-      expect($(heading).text()).toEqual(nextMonthAsFormattedMonthYear);
-      expect(previousMonthButton.tabIndex).toEqual(0);
-      expect(previousMonthButton.classList.contains('date-picker__button--disabled')).toBeFalsy();
+        expect($(heading).text()).toEqual(`${monthsEnglish[before.index]} ${before.year}`);
 
-      $(previousMonthButton).trigger('click');
+        $(previousMonthButton).trigger('click');
 
-      expect($(heading).text()).toEqual(todayAsFormattedMonthYear);
-      expect(previousMonthButton.tabIndex).toEqual(0);
-      expect(previousMonthButton.classList.contains('date-picker__button--disabled')).toBeFalsy();
+        expect($(heading).text()).toEqual(`${monthsEnglish[after.index]} ${after.year}`);
+      });
+    });
+
+    // eslint-disable-next-line max-len
+    const generateNextMonthScenario = (year, monthIndex, nextYear, nextMonthIndex) => generateMonthTransitionScenario(year, monthIndex, nextYear, nextMonthIndex, 1);
+    const nextMonthScenarios = [
+      generateNextMonthScenario('2021', 0),
+      generateNextMonthScenario('2021', 1),
+      generateNextMonthScenario('2021', 2),
+      generateNextMonthScenario('2021', 3),
+      generateNextMonthScenario('2021', 4),
+      generateNextMonthScenario('2021', 5),
+      generateNextMonthScenario('2021', 6),
+      generateNextMonthScenario('2021', 7),
+      generateNextMonthScenario('2021', 8),
+      generateNextMonthScenario('2021', 9),
+      generateNextMonthScenario('2021', 10),
+      generateNextMonthScenario('2021', 11, '2022', 0),
+    ];
+    nextMonthScenarios.forEach(({ before, after }) => {
+      it(`should navigate from ${monthsEnglish[before.index]} ${before.year} to ${monthsEnglish[after.index]} ${after.year} when the next button is clicked`, () => {
+        datePicker(document.querySelector('.date-picker'), {});
+
+        const heading = document.querySelector('.date-picker__heading');
+        const revealButton = document.querySelector('.date-picker__reveal');
+        const nextMonthButtonButton = document.querySelector('.date-picker__button__next-month');
+        const dayInput = document.querySelector('.date-picker-day');
+        const monthInput = document.querySelector('.date-picker-month');
+        const yearInput = document.querySelector('.date-picker-year');
+
+        $(dayInput).val('12');
+        $(monthInput).val(`${before.index + 1}`);
+        $(yearInput).val(before.year);
+
+        $(revealButton).trigger('click');
+
+        expect($(heading).text()).toEqual(`${monthsEnglish[before.index]} ${before.year}`);
+
+        $(nextMonthButtonButton).trigger('click');
+
+        expect($(heading).text()).toEqual(`${monthsEnglish[after.index]} ${after.year}`);
+      });
     });
 
     it('should keep focus on previous month button when clicked', () => {
