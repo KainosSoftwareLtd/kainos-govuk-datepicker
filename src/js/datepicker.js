@@ -105,20 +105,27 @@ function datePicker(datePickerElement, options = {}) {
     return date.getDate() + ' ' + content[state.language].months[date.getMonth()] + ' ' + date.getFullYear();
   }
 
+  function constructDate(year, month, day) {
+    var date = new Date();
+    date.setFullYear(year);
+    date.setMonth(month);
+    date.setDate(day);
+    return date;
+  }
+
   function getNextMonth() {
     if (state.focusedDate.getMonth() === 11) {
-      return new Date(state.focusedDate.getFullYear() + 1, 0, 1);
+      return constructDate(state.focusedDate.getFullYear() + 1, 0, 1);
     }
 
-    return new Date(state.focusedDate.getFullYear(), state.focusedDate.getMonth() + 1, 1);
+    return constructDate(state.focusedDate.getFullYear(), state.focusedDate.getMonth() + 1, 1);
   }
 
   function getPreviousMonth() {
-    if (state.focusedDate.getMonth() === 1) {
-      return new Date(state.focusedDate.getFullYear() - 1, 12, 1);
+    if (state.focusedDate.getMonth() === 0) {
+      return constructDate(state.focusedDate.getFullYear() - 1, 11, 1);
     }
-
-    return new Date(state.focusedDate.getFullYear(), state.focusedDate.getMonth() - 1, 1);
+    return constructDate(state.focusedDate.getFullYear(), state.focusedDate.getMonth() - 1, 1);
   }
 
   function getDateFromInputs() {
@@ -134,7 +141,7 @@ function datePicker(datePickerElement, options = {}) {
     }
 
     function isValidDate(input) {
-      const date = new Date(input.year, input.month - 1, input.day);
+      const date = constructDate(input.year, input.month - 1, input.day);
       return date.getFullYear() === Number(input.year)
         && date.getMonth() + 1 === Number(input.month)
         && date.getDate() === Number(input.day);
@@ -147,21 +154,23 @@ function datePicker(datePickerElement, options = {}) {
       return new Date();
     }
 
-    return new Date(inputDates.year, inputDates.month - 1, inputDates.day);
+    return constructDate(inputDates.year, inputDates.month - 1, inputDates.day);
   }
 
   function setInputDate(date) {
-    var formatDateInput = function (dateToFormat) {
-      if (dateToFormat <= 9) {
-        return '0' + dateToFormat;
+    function padStart(target, paddingValue, targetLength) {
+      const converted = String(target);
+      const remainingLength = targetLength - converted.length;
+      let padding = '';
+      while (padding.length < remainingLength) {
+        padding = `${padding}${paddingValue}`;
       }
+      return `${padding}${converted}`;
+    }
 
-      return dateToFormat;
-    };
-
-    elements.inputs.day.value = formatDateInput(date.getDate());
-    elements.inputs.month.value = formatDateInput(date.getMonth() + 1);
-    elements.inputs.year.value = date.getFullYear();
+    elements.inputs.day.value = padStart(date.getDate(), '0', 2);
+    elements.inputs.month.value = padStart(date.getMonth() + 1, '0', 2);
+    elements.inputs.year.value = padStart(date.getFullYear(), '0', 4);
   }
 
   function setIsPreviousEnabled() {
@@ -325,7 +334,7 @@ function datePicker(datePickerElement, options = {}) {
   }
 
   function decrementFocusMonth() {
-    state.focusedDate = new Date(
+    state.focusedDate = constructDate(
       state.previousMonth.getFullYear(),
       state.previousMonth.getMonth() + 1,
       0,
@@ -846,7 +855,7 @@ function datePicker(datePickerElement, options = {}) {
   function createDay(date) {
     var props = {
       element: document.createElement('button'),
-      date: new Date(date.year, date.month, date.day),
+      date: constructDate(date.year, date.month, date.day),
       isDisabled: false,
       isToday: false,
       isInCurrentMonth: false,

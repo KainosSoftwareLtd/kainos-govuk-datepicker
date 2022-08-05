@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import { DateTime } from 'luxon';
+import { DateTime, Settings } from 'luxon';
 
 import datePicker from '../js/datepicker';
 import dateFixtures from './fixtures/dateFixtures';
@@ -22,6 +22,11 @@ const getFormattedMonthAndYear = (date, months = monthsEnglish) => {
 };
 
 describe('Date picker', () => {
+  beforeAll(() => {
+    Settings.defaultZone = 'utc';
+    Settings.defaultLocale = 'en-gb';
+  });
+
   beforeEach(() => {
     document.body.innerHTML = `
    <div class="date-picker">
@@ -402,38 +407,6 @@ describe('Date picker', () => {
   });
 
   describe('Date selection', () => {
-    it('should set focus on today when date inputs are empty', () => {
-      datePicker(document.querySelector('.date-picker'), {});
-      const revealButton = document.querySelector('.date-picker__reveal');
-
-      $(revealButton).trigger('click');
-
-      const todayDateButton = document.querySelector(`[data-test-id="${today.toLocaleDateString()}"]`);
-
-      expect(todayDateButton.tabIndex).toEqual(0);
-      expect(todayDateButton === document.activeElement).toBeTruthy();
-      expect(todayDateButton.classList.contains('date__button--today')).toBeTruthy();
-    });
-
-    it('should insert selected date into date inputs', () => {
-      datePicker(document.querySelector('.date-picker'), {});
-      const revealButton = document.querySelector('.date-picker__reveal');
-      const dayInput = document.querySelector('.date-picker-day');
-      const monthInput = document.querySelector('.date-picker-month');
-      const yearInput = document.querySelector('.date-picker-year');
-      const radix = 10;
-
-      $(revealButton).trigger('click');
-
-      const todayDateButton = document.querySelector(`[data-test-id="${today.toLocaleDateString()}"]`);
-
-      $(todayDateButton).trigger('click');
-
-      expect(parseInt($(dayInput).val(), radix)).toEqual(today.getDate());
-      expect(parseInt($(monthInput).val(), radix)).toEqual(today.getMonth() + 1);
-      expect(parseInt($(yearInput).val(), radix)).toEqual(today.getFullYear());
-    });
-
     it('should allow for selection of tomorrow', () => {
       datePicker(document.querySelector('.date-picker'), {});
 
@@ -557,14 +530,72 @@ describe('Date picker', () => {
       expect(previousYearButton === document.activeElement).toBeTruthy();
       expect(previousYearButton.tabIndex).toEqual(0);
     });
+  });
+
+  describe('Read from inputs', () => {
+    let revealButton;
+    let dayInput;
+    let monthInput;
+    let yearInput;
+
+    beforeEach(() => {
+      datePicker(document.querySelector('.date-picker'), {});
+      revealButton = document.querySelector('.date-picker__reveal');
+      dayInput = document.querySelector('.date-picker-day');
+      monthInput = document.querySelector('.date-picker-month');
+      yearInput = document.querySelector('.date-picker-year');
+    });
+
+    it('should set focus on today when date inputs are empty', () => {
+      $(revealButton).trigger('click');
+
+      const todayDateButton = document.querySelector(`[data-test-id="${today.toLocaleDateString()}"]`);
+
+      expect(todayDateButton.tabIndex).toEqual(0);
+      expect(todayDateButton === document.activeElement).toBeTruthy();
+      expect(todayDateButton.classList.contains('date__button--today')).toBeTruthy();
+    });
+
+    it('should set focus on date given with input fields when year has 4 digits', () => {
+      $(dayInput).val('12');
+      $(monthInput).val('11');
+      $(yearInput).val('2021');
+
+      $(revealButton).trigger('click');
+
+      const expectedDate = DateTime.fromObject({ year: 2021, month: 11, day: 12 });
+      const focusedDate = document.querySelector(`[data-test-id="${expectedDate.toLocaleString()}"]`);
+
+      expect(focusedDate === document.activeElement).toBeTruthy();
+    });
+
+    it('should set focus on date given with input fields when year has 2 digits', () => {
+      $(dayInput).val('12');
+      $(monthInput).val('11');
+      $(yearInput).val('21');
+
+      $(revealButton).trigger('click');
+
+      const expectedDate = DateTime.fromObject({ year: 21, month: 11, day: 12 });
+      const focusedDate = document.querySelector(`[data-test-id="${expectedDate.toLocaleString()}"]`);
+
+      expect(focusedDate === document.activeElement).toBeTruthy();
+    });
+
+    it('should set focus on date given with input fields when year has 1 digit', () => {
+      $(dayInput).val('12');
+      $(monthInput).val('11');
+      $(yearInput).val('1');
+
+      $(revealButton).trigger('click');
+
+      const expectedDate = DateTime.fromObject({ year: 1, month: 11, day: 12 });
+      const focusedDate = document.querySelector(`[data-test-id="${expectedDate.toLocaleString()}"]`);
+
+      expect(focusedDate === document.activeElement).toBeTruthy();
+    });
 
     it('should set focus on today when day input is not a number', () => {
-      datePicker(document.querySelector('.date-picker'), {});
-      const revealButton = document.querySelector('.date-picker__reveal');
-      const dayInput = document.querySelector('.date-picker-day');
-      const monthInput = document.querySelector('.date-picker-month');
-      const yearInput = document.querySelector('.date-picker-year');
-
       $(dayInput).val('3 12');
       $(monthInput).val('11');
       $(yearInput).val('2021');
@@ -578,12 +609,6 @@ describe('Date picker', () => {
     });
 
     it('should set focus on today when month input is not a number', () => {
-      datePicker(document.querySelector('.date-picker'), {});
-      const revealButton = document.querySelector('.date-picker__reveal');
-      const dayInput = document.querySelector('.date-picker-day');
-      const monthInput = document.querySelector('.date-picker-month');
-      const yearInput = document.querySelector('.date-picker-year');
-
       $(dayInput).val('15');
       $(monthInput).val('11 20');
       $(yearInput).val('2021');
@@ -597,12 +622,6 @@ describe('Date picker', () => {
     });
 
     it('should set focus on today when year input is not a number', () => {
-      datePicker(document.querySelector('.date-picker'), {});
-      const revealButton = document.querySelector('.date-picker__reveal');
-      const dayInput = document.querySelector('.date-picker-day');
-      const monthInput = document.querySelector('.date-picker-month');
-      const yearInput = document.querySelector('.date-picker-year');
-
       $(dayInput).val('15');
       $(monthInput).val('11');
       $(yearInput).val('20 22');
@@ -616,12 +635,6 @@ describe('Date picker', () => {
     });
 
     it('should set focus on today when day input is an invalid number', () => {
-      datePicker(document.querySelector('.date-picker'), {});
-      const revealButton = document.querySelector('.date-picker__reveal');
-      const dayInput = document.querySelector('.date-picker-day');
-      const monthInput = document.querySelector('.date-picker-month');
-      const yearInput = document.querySelector('.date-picker-year');
-
       $(dayInput).val('1125');
       $(monthInput).val('11');
       $(yearInput).val('2022');
@@ -635,12 +648,6 @@ describe('Date picker', () => {
     });
 
     it('should set focus on today when month input is an invalid number', () => {
-      datePicker(document.querySelector('.date-picker'), {});
-      const revealButton = document.querySelector('.date-picker__reveal');
-      const dayInput = document.querySelector('.date-picker-day');
-      const monthInput = document.querySelector('.date-picker-month');
-      const yearInput = document.querySelector('.date-picker-year');
-
       $(dayInput).val('11');
       $(monthInput).val('13');
       $(yearInput).val('2022');
@@ -654,12 +661,6 @@ describe('Date picker', () => {
     });
 
     it('should set focus on today when year input is an invalid number', () => {
-      datePicker(document.querySelector('.date-picker'), {});
-      const revealButton = document.querySelector('.date-picker__reveal');
-      const dayInput = document.querySelector('.date-picker-day');
-      const monthInput = document.querySelector('.date-picker-month');
-      const yearInput = document.querySelector('.date-picker-year');
-
       $(dayInput).val('11');
       $(monthInput).val('11');
       $(yearInput).val('202220222022202220222022');
@@ -670,6 +671,102 @@ describe('Date picker', () => {
 
       expect(focusedDate === document.activeElement).toBeTruthy();
       expect(focusedDate.tabIndex).toEqual(0);
+    });
+  });
+
+  describe('Write to inputs', () => {
+    let revealButton;
+    let dayInput;
+    let monthInput;
+    let yearInput;
+
+    beforeEach(() => {
+      datePicker(document.querySelector('.date-picker'), {});
+      revealButton = document.querySelector('.date-picker__reveal');
+      dayInput = document.querySelector('.date-picker-day');
+      monthInput = document.querySelector('.date-picker-month');
+      yearInput = document.querySelector('.date-picker-year');
+    });
+
+    it('should insert selected date into date inputs', () => {
+      $(revealButton).trigger('click');
+
+      $(document.activeElement).trigger('click');
+
+      const expectedDate = now.toISODate().split('-');
+      expect($(dayInput).val()).toEqual(expectedDate[2]);
+      expect($(monthInput).val()).toEqual(expectedDate[1]);
+      expect($(yearInput).val()).toEqual(expectedDate[0]);
+    });
+
+    it('should pad the day value of the selected date when it is only 1 digit', () => {
+      $(dayInput).val('1');
+      $(monthInput).val('11');
+      $(yearInput).val('2021');
+
+      $(revealButton).trigger('click');
+
+      $(document.activeElement).trigger('click');
+
+      expect($(dayInput).val()).toEqual('01');
+      expect($(monthInput).val()).toEqual('11');
+      expect($(yearInput).val()).toEqual('2021');
+    });
+
+    it('should pad the month value of the selected date when it is only 1 digit', () => {
+      $(dayInput).val('11');
+      $(monthInput).val('1');
+      $(yearInput).val('2021');
+
+      $(revealButton).trigger('click');
+
+      $(document.activeElement).trigger('click');
+
+      expect($(dayInput).val()).toEqual('11');
+      expect($(monthInput).val()).toEqual('01');
+      expect($(yearInput).val()).toEqual('2021');
+    });
+
+    it('should pad the year value of the selected date when it is only 1 digit', () => {
+      $(dayInput).val('11');
+      $(monthInput).val('01');
+      $(yearInput).val('1');
+
+      $(revealButton).trigger('click');
+
+      $(document.activeElement).trigger('click');
+
+      expect($(dayInput).val()).toEqual('11');
+      expect($(monthInput).val()).toEqual('01');
+      expect($(yearInput).val()).toEqual('0001');
+    });
+
+    it('should pad the year value of the selected date when it is only 2 digit', () => {
+      $(dayInput).val('11');
+      $(monthInput).val('01');
+      $(yearInput).val('11');
+
+      $(revealButton).trigger('click');
+
+      $(document.activeElement).trigger('click');
+
+      expect($(dayInput).val()).toEqual('11');
+      expect($(monthInput).val()).toEqual('01');
+      expect($(yearInput).val()).toEqual('0011');
+    });
+
+    it('should pad the year value of the selected date when it is only 3 digit', () => {
+      $(dayInput).val('11');
+      $(monthInput).val('01');
+      $(yearInput).val('111');
+
+      $(revealButton).trigger('click');
+
+      $(document.activeElement).trigger('click');
+
+      expect($(dayInput).val()).toEqual('11');
+      expect($(monthInput).val()).toEqual('01');
+      expect($(yearInput).val()).toEqual('0111');
     });
   });
 
