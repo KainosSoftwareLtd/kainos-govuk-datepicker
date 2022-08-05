@@ -122,7 +122,7 @@ function datePicker(datePickerElement, options = {}) {
   }
 
   function getDateFromInputs() {
-    var inputDates = {
+    const inputDates = {
       day: elements.inputs.day.value,
       month: elements.inputs.month.value,
       year: elements.inputs.year.value,
@@ -134,9 +134,10 @@ function datePicker(datePickerElement, options = {}) {
     }
 
     function isValidDate(input) {
-      var date = new Date(input.year, input.month - 1, input.day);
-      // eslint-disable-next-line eqeqeq
-      return date && (date.getMonth() + 1) == input.month && date.getDate() == input.day;
+      const date = new Date(input.year, input.month - 1, input.day);
+      return date.getFullYear() === Number(input.year)
+        && date.getMonth() + 1 === Number(input.month)
+        && date.getDate() === Number(input.day);
     }
 
     if (!(isValidInput(inputDates.day)
