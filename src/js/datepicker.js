@@ -1,15 +1,9 @@
 function datePicker(datePickerElement, options = {}) {
-  var keyCodes;
-  var content;
-  var elements;
-  var state;
-  var theme;
-
   if (!datePickerElement) {
     throw new Error('Date picker not configured correctly');
   }
 
-  keyCodes = {
+  const keyCodes = {
     TAB: 9,
     ENTER: 13,
     ESC: 27,
@@ -19,12 +13,14 @@ function datePicker(datePickerElement, options = {}) {
     RIGHT: 39,
     DOWN: 40,
   };
-  content = {
+  const content = {
     en: {
       days: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
       dayAbbr: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
-      months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October',
-        'November', 'December'],
+      months: [
+        'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September',
+        'October', 'November', 'December',
+      ],
       buttons: {
         previous: 'Previous',
         next: 'Next',
@@ -39,10 +35,15 @@ function datePicker(datePickerElement, options = {}) {
       },
     },
     cy: {
-      days: ['Dydd Sul', 'Dydd Llun', 'Dydd Mawrth', 'Dydd Mercher', 'Dydd Iau', 'Dydd Gwener', 'Dydd Sadwrn'],
+      days: [
+        'Dydd Sul', 'Dydd Llun', 'Dydd Mawrth', 'Dydd Mercher', 'Dydd Iau', 'Dydd Gwener',
+        'Dydd Sadwrn',
+      ],
       dayAbbr: ['Su', 'Ll', 'Ma', 'Me', 'Ia', 'Gw', 'Sa'],
-      months: ['Ionawr', 'Chwefror', 'Mawrth', 'Ebrill', 'Mai', 'Mehefin', 'Gorffennaf', 'Awst', 'Medi', 'Hydref',
-        'Tachwedd', 'Rhagfyr'],
+      months: [
+        'Ionawr', 'Chwefror', 'Mawrth', 'Ebrill', 'Mai', 'Mehefin', 'Gorffennaf', 'Awst',
+        'Medi', 'Hydref', 'Tachwedd', 'Rhagfyr',
+      ],
       buttons: {
         previous: 'Blaenorol',
         next: 'Nesaf',
@@ -57,7 +58,7 @@ function datePicker(datePickerElement, options = {}) {
       },
     },
   };
-  elements = {
+  const elements = {
     container: datePickerElement,
     buttons: {},
     table: {},
@@ -70,7 +71,7 @@ function datePicker(datePickerElement, options = {}) {
     heading: {},
     dialog: {},
   };
-  state = {
+  const state = {
     isOpen: false,
     isPreviousEnabled: true,
     isNextEnabled: true,
@@ -80,8 +81,7 @@ function datePicker(datePickerElement, options = {}) {
     focusedDate: new Date(),
     days: [],
   };
-  theme = options.theme || '';
-
+  const theme = options.theme || '';
   content.ni = content.en;
 
   if (!elements.inputs.month || !elements.inputs.year || !elements.inputs.day || !options) {
@@ -151,7 +151,7 @@ function datePicker(datePickerElement, options = {}) {
   }
 
   function setInputDate(date) {
-    var formatDateInput = function (dateToFormat) {
+    const formatDateInput = function (dateToFormat) {
       if (dateToFormat <= 9) {
         return '0' + dateToFormat;
       }
@@ -184,7 +184,7 @@ function datePicker(datePickerElement, options = {}) {
   }
 
   function setAriaLiveMessage(message) {
-    var ariaLabel = document.createElement('p');
+    const ariaLabel = document.createElement('p');
     ariaLabel.setAttribute('class', 'aria-live-message sr-only');
     ariaLabel.setAttribute('aria-live', 'assertive');
     ariaLabel.innerText = message;
@@ -193,12 +193,9 @@ function datePicker(datePickerElement, options = {}) {
   }
 
   function removeAriaLiveMessage() {
-    var elms;
-    var x;
-
     if (elements.ariaLiveMessage) {
-      elms = elements.dialog.querySelectorAll('.aria-live-message');
-      for (x = 0; x < elms.length; x++) {
+      const elms = elements.dialog.querySelectorAll('.aria-live-message');
+      for (let x = 0; x < elms.length; x++) {
         elements.dialog.removeChild(elms[x]);
       }
     }
@@ -251,34 +248,30 @@ function datePicker(datePickerElement, options = {}) {
   }
 
   function setDays() {
-    var currentMonthLastDay = new Date(
+    const currentMonthLastDay = new Date(
       state.focusedDate.getFullYear(),
       state.focusedDate.getMonth() + 1,
       0,
     ).getDate();
 
-    var previousMonthLastDay = new Date(
+    const previousMonthLastDay = new Date(
       state.previousMonth.getFullYear(),
       state.previousMonth.getMonth() + 1,
       0,
     ).getDate();
 
-    var firstDayOfMonthIndex = new Date(new Date(state.focusedDate).setDate(1)).getDay() + 1;
-    var lastDayOfMonthIndex = new Date(
+    const firstDayOfMonthIndex = new Date(new Date(state.focusedDate).setDate(1)).getDay() + 1;
+    const lastDayOfMonthIndex = new Date(
       state.focusedDate.getFullYear(),
       state.focusedDate.getMonth() + 1,
       0,
     ).getDay();
 
-    var nextMonthDays = 7 - lastDayOfMonthIndex - 1;
-    var i;
-    var j;
-    var k;
-    var l;
+    const nextMonthDays = 7 - lastDayOfMonthIndex - 1;
 
     state.days = [];
 
-    for (i = firstDayOfMonthIndex; i > 0; i--) {
+    for (let i = firstDayOfMonthIndex; i > 0; i--) {
       state.days.push(createDay({
         day: previousMonthLastDay - i + 1,
         month: state.previousMonth.getMonth(),
@@ -286,7 +279,7 @@ function datePicker(datePickerElement, options = {}) {
       }));
     }
 
-    for (j = 1; j <= currentMonthLastDay; j++) {
+    for (let j = 1; j <= currentMonthLastDay; j++) {
       state.days.push(createDay({
         day: j,
         month: state.focusedDate.getMonth(),
@@ -294,7 +287,7 @@ function datePicker(datePickerElement, options = {}) {
       }));
     }
 
-    for (k = 1; k <= nextMonthDays; k++) {
+    for (let k = 1; k <= nextMonthDays; k++) {
       state.days.push(createDay({
         day: k,
         month: state.nextMonth.getMonth(),
@@ -302,7 +295,7 @@ function datePicker(datePickerElement, options = {}) {
       }));
     }
 
-    for (l = 0; l < state.days.length; l++) {
+    for (let l = 0; l < state.days.length; l++) {
       state.days[l].index = l;
     }
   }
@@ -335,7 +328,7 @@ function datePicker(datePickerElement, options = {}) {
   }
 
   function getContainerClass() {
-    var classes = 'date-picker__container';
+    let classes = 'date-picker__container';
 
     if (options.icon) {
       classes = `${classes} date-picker__container--icon`;
@@ -349,26 +342,10 @@ function datePicker(datePickerElement, options = {}) {
   }
 
   function buildUI() {
-    var closeButton;
-    var container;
-    var dialog;
-    var headerContainer;
-    var heading;
-    var headingRow;
-    var nextMonthButton;
-    var previousMonthButton;
-    var revealButton;
-    var revealButtonIcon;
-    var table;
-    var tbody;
-    var thead;
-    var th;
-    var i;
-    var j;
-    var labelId = 'date-picker-label-' + Math.floor((Math.random() * 100) + 1);
+    const labelId = 'date-picker-label-' + Math.floor((Math.random() * 100) + 1);
 
     function createElement(tag, attrs) {
-      var e = document.createElement(tag);
+      const e = document.createElement(tag);
       if (attrs) {
         Object.keys(attrs).forEach(function (key) {
           e.setAttribute(key, attrs[key]);
@@ -376,33 +353,45 @@ function datePicker(datePickerElement, options = {}) {
       }
       return e;
     }
-
-    dialog = createElement('div', {
-      class: 'date-picker__dialog date-picker__dialog--hidden', role: 'dialog', 'aria-modal': 'true', tabindex: '-1',
+    const dialog = createElement('div', {
+      class: 'date-picker__dialog date-picker__dialog--hidden',
+      role: 'dialog',
+      'aria-modal': 'true',
+      tabindex: '-1',
     });
 
-    closeButton = createElement('button', {
-      class: 'date-picker__button__close', type: 'button', value: 'close',
+    const closeButton = createElement('button', {
+      class: 'date-picker__button__close',
+      type: 'button',
+      value: 'close',
     });
+    const previousMonthButton = createElement('button', {
+      type: 'button',
+      class: 'date-picker__button__previous-month',
+    });
+    const container = createElement('div', { class: `${getContainerClass()}` });
+    const headerContainer = createElement('div', { class: 'date-picker__header govuk-clearfix' });
+    const nextMonthButton = createElement('button', {
+      type: 'button',
+      class: 'date-picker__button__next-month',
+    });
+    const heading = createElement('h2', {
+      id: labelId,
+      class: 'date-picker__heading',
+      'aria-live': 'assertive',
+      'aria-atomic': true,
+    });
+    const table = createElement('table', {
+      class: 'date-picker__date-table',
+      role: 'presentation',
+      'aria-labelledby': labelId,
+    });
+    const thead = createElement('thead');
+    const tbody = createElement('tbody');
+    const headingRow = createElement('tr');
 
-    previousMonthButton = createElement('button', {
-      type: 'button', class: 'date-picker__button__previous-month',
-    });
-    container = createElement('div', { class: `${getContainerClass()}` });
-    headerContainer = createElement('div', { class: 'date-picker__header govuk-clearfix' });
-    nextMonthButton = createElement('button', { type: 'button', class: 'date-picker__button__next-month' });
-    heading = createElement('h2', {
-      id: labelId, class: 'date-picker__heading', 'aria-live': 'assertive', 'aria-atomic': true,
-    });
-    table = createElement('table', {
-      class: 'date-picker__date-table', role: 'presentation', 'aria-labelledby': labelId,
-    });
-    thead = createElement('thead');
-    tbody = createElement('tbody');
-    headingRow = createElement('tr');
-
-    for (i = 0, j = content[state.language].days.length; i < j; i++) {
-      th = createElement('th');
+    for (let i = 0, j = content[state.language].days.length; i < j; i++) {
+      const th = createElement('th');
       th.setAttribute('scope', 'col');
       th.setAttribute('abbr', content[state.language].days[i]);
       th.setAttribute('aria-label', content[state.language].days[i]);
@@ -426,10 +415,11 @@ function datePicker(datePickerElement, options = {}) {
     dialog.appendChild(table);
     dialog.appendChild(closeButton);
 
+    let revealButton;
     if (options.icon) {
-      revealButtonIcon = createElement('button', { class: 'date-picker__reveal__icon', type: 'button' });
-      revealButtonIcon.innerHTML = getCalendarIconTemplate();
-      container.appendChild(revealButtonIcon);
+      revealButton = createElement('button', { class: 'date-picker__reveal__icon', type: 'button' });
+      revealButton.innerHTML = getCalendarIconTemplate();
+      container.appendChild(revealButton);
     } else {
       revealButton = createElement('button', { class: 'govuk-link date-picker__reveal', type: 'button' });
       revealButton.innerHTML = content[state.language].buttons.dialogTrigger;
@@ -441,12 +431,11 @@ function datePicker(datePickerElement, options = {}) {
     elements.container.appendChild(container);
 
     elements.buttons = {
+      revealButton: revealButton,
       previousMonthButton: previousMonthButton,
       nextMonthButton: nextMonthButton,
       closeButton: closeButton,
     };
-
-    elements.buttons.revealButton = options.icon ? revealButtonIcon : revealButton;
 
     elements.table = {
       container: table,
@@ -498,7 +487,7 @@ function datePicker(datePickerElement, options = {}) {
   }
 
   function handleCloseButtonInteraction(event) {
-    var preventDefault = false;
+    let preventDefault = false;
 
     switch (event.type) {
       case 'keydown':
@@ -528,7 +517,7 @@ function datePicker(datePickerElement, options = {}) {
   }
 
   function handleRevealButtonInteraction(event) {
-    var preventDefault = false;
+    let preventDefault = false;
 
     function displayCalendar() {
       setFocusDay(getDateFromInputs());
@@ -563,7 +552,7 @@ function datePicker(datePickerElement, options = {}) {
   }
 
   function handlePreviousButtonInteraction(event) {
-    var preventDefault = false;
+    let preventDefault = false;
 
     function decrementMonthIfEnabled() {
       if (state.isPreviousEnabled) {
@@ -604,7 +593,7 @@ function datePicker(datePickerElement, options = {}) {
   }
 
   function handleNextButtonInteraction(event) {
-    var preventDefault = false;
+    let preventDefault = false;
 
     function incrementMonthIfEnabled() {
       if (state.isNextEnabled) {
@@ -645,8 +634,8 @@ function datePicker(datePickerElement, options = {}) {
   }
 
   function handleDateButtonInteraction(event) {
-    var date = this;
-    var preventDefault = false;
+    const date = this;
+    let preventDefault = false;
 
     function selectDay() {
       if (!date.isDisabled) {
@@ -665,15 +654,14 @@ function datePicker(datePickerElement, options = {}) {
     }
 
     function resetFocusOnDays() {
-      var i = 0;
-      for (i; i < state.days.length; i++) {
+      for (let i = 0; i < state.days.length; i++) {
         state.days[i].element.setAttribute('tabindex', '-1');
       }
     }
 
     function moveToPreviousDay() {
-      var index = date.index - 1;
-      var previousDay = state.days[index];
+      const index = date.index - 1;
+      const previousDay = state.days[index];
 
       if (!previousDay) {
         decrementFocusMonth();
@@ -695,8 +683,8 @@ function datePicker(datePickerElement, options = {}) {
     }
 
     function moveToNextDay() {
-      var index = date.index + 1;
-      var nextDay = state.days[index];
+      const index = date.index + 1;
+      const nextDay = state.days[index];
 
       if (!nextDay) {
         incrementFocusMonth();
@@ -718,8 +706,8 @@ function datePicker(datePickerElement, options = {}) {
     }
 
     function moveToPreviousWeek() {
-      var index = date.index - 7;
-      var previousWeek = state.days[index];
+      const index = date.index - 7;
+      const previousWeek = state.days[index];
 
       if (!previousWeek) {
         decrementFocusMonth();
@@ -741,8 +729,8 @@ function datePicker(datePickerElement, options = {}) {
     }
 
     function moveToNextWeek() {
-      var index = date.index + 7;
-      var nextWeek = state.days[index];
+      const index = date.index + 7;
+      const nextWeek = state.days[index];
 
       if (!nextWeek) {
         incrementFocusMonth();
@@ -811,30 +799,22 @@ function datePicker(datePickerElement, options = {}) {
   }
 
   function renderDaysGrid() {
-    var row;
-    var cell;
-    var i = 1;
-    var j;
-    var k = 1;
-    var l;
-
     elements.table.body.innerHTML = '';
 
-    while (++i < 8) {
-      row = elements.table.body.insertRow(-1);
+    for (let i = 0, k = 1; i < 7; i++) {
+      const row = elements.table.body.insertRow(-1);
 
-      for (j = 0, k; j < 7; j++) {
-        cell = document.createElement('td');
+      for (let j = 0; j < 7; j++, k++) {
+        const cell = document.createElement('td');
         cell.classList.add('dateCell');
         if (state.days[k]) {
           cell.appendChild(state.days[k].element);
           row.appendChild(cell);
         }
-        k++;
       }
     }
 
-    for (l = 0; l < state.days.length; l++) {
+    for (let l = 0; l < state.days.length; l++) {
       state.days[l].element.setAttribute('tabindex', '-1');
 
       if (isDatesEqual(state.days[l].date, state.focusedDate)) {
@@ -844,7 +824,7 @@ function datePicker(datePickerElement, options = {}) {
   }
 
   function createDay(date) {
-    var props = {
+    const props = {
       element: document.createElement('button'),
       date: new Date(date.year, date.month, date.day),
       isDisabled: false,
@@ -861,7 +841,7 @@ function datePicker(datePickerElement, options = {}) {
     props.element.setAttribute('data-test-id', props.date.toLocaleDateString());
     props.element.setAttribute('aria-label', content[state.language].days[props.date.getDay()] + ', ' + getFormattedDate(props.date));
 
-    props.element.innerHTML = props.date.getDate();
+    props.element.innerHTML = String(props.date.getDate());
     props.element.classList.add('date__button');
 
     if (props.date.getMonth() === state.focusedDate.getMonth()
@@ -895,12 +875,12 @@ function datePicker(datePickerElement, options = {}) {
       } else {
         props.isDisabled = false;
         props.element.classList.remove('date__button--disabled');
-        props.element.removeAttribute('aria-disabled', 'true');
+        props.element.removeAttribute('aria-disabled');
       }
     } else {
       props.isDisabled = false;
       props.element.classList.remove('date__button--disabled');
-      props.element.removeAttribute('aria-disabled', 'true');
+      props.element.removeAttribute('aria-disabled');
     }
 
     if (isDatesEqual(props.date, new Date())) {
@@ -926,7 +906,7 @@ function datePicker(datePickerElement, options = {}) {
   }
 
   function getDateWithoutTime(date) {
-    var newDate = new Date(date);
+    const newDate = new Date(date);
     newDate.setHours(0, 0, 0, 0);
     return newDate;
   }
