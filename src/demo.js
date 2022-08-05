@@ -32,5 +32,5 @@ datePicker(document.querySelector('.date-picker-style-two'), {
 });
 
 datePicker(document.querySelector('.date-picker-icon'), {
-  icon: CalendarIcon,
+  icon: `${CalendarIcon}#calendar_today`,
 });
