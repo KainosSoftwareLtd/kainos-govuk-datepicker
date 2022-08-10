@@ -122,26 +122,32 @@ function datePicker(datePickerElement, options = {}) {
   }
 
   function getDateFromInputs() {
-    var tempDate;
-    var inputDates = {
+    const inputDates = {
       day: elements.inputs.day.value,
       month: elements.inputs.month.value,
       year: elements.inputs.year.value,
     };
 
-    if (parseInt(inputDates.day, 10) && parseInt(inputDates.month, 10)
-      && parseInt(inputDates.year, 10)) {
-      tempDate = new Date(inputDates.year, inputDates.month, 0);
-      if (inputDates.month > 12 && inputDates.day > tempDate.getDate()) {
-        return new Date(inputDates.year, 11, 31);
-      } else if (inputDates.month > 12) {
-        return new Date(inputDates.year, 11, inputDates.day);
-      } else if (inputDates.day > tempDate.getDate()) {
-        return tempDate;
-      }
-      return new Date(inputDates.year, inputDates.month - 1, inputDates.day);
+    function isValidInput(input) {
+      const expression = /^\d+$/;
+      return expression.test(input);
     }
-    return new Date();
+
+    function isValidDate(input) {
+      const date = new Date(input.year, input.month - 1, input.day);
+      return date.getFullYear() === Number(input.year)
+        && date.getMonth() + 1 === Number(input.month)
+        && date.getDate() === Number(input.day);
+    }
+
+    if (!(isValidInput(inputDates.day)
+      && isValidInput(inputDates.month)
+      && isValidInput(inputDates.year)
+      && isValidDate(inputDates))) {
+      return new Date();
+    }
+
+    return new Date(inputDates.year, inputDates.month - 1, inputDates.day);
   }
 
   function setInputDate(date) {
