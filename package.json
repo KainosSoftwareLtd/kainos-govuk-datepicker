@@ -52,7 +52,7 @@
     "webpack-merge": "^5.8.0"
   },
   "dependencies": {
-    "govuk-frontend": "^3.14.0"
+    "govuk-frontend": "^4.3.0"
   },
   "jest": {
     "testPathIgnorePatterns": [
