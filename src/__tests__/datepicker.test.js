@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import { DateTime, Settings } from 'luxon';
+import { DateTime } from 'luxon';
 
 import datePicker from '../js/datepicker';
 import dateFixtures from './fixtures/dateFixtures';
@@ -7,8 +7,8 @@ import dateFixtures from './fixtures/dateFixtures';
 const now = DateTime.now();
 const today = now.toJSDate();
 const nextMonth = now.plus({ months: 1 }).toJSDate();
-const yesterday = now.minus({ days: 1 }).toJSDate();
-const tomorrow = now.plus({ days: 1 }).toJSDate();
+const yesterday = now.minus({ days: 1 });
+const tomorrow = now.plus({ days: 1 });
 
 const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 const monthsEnglish = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -22,11 +22,6 @@ const getFormattedMonthAndYear = (date, months = monthsEnglish) => {
 };
 
 describe('Date picker', () => {
-  beforeAll(() => {
-    Settings.defaultZone = 'utc';
-    Settings.defaultLocale = 'en-gb';
-  });
-
   beforeEach(() => {
     document.body.innerHTML = `
    <div class="date-picker">
@@ -99,8 +94,8 @@ describe('Date picker', () => {
     it('should render with full configuration options', () => {
       datePicker(document.querySelector('.date-picker'), {
         language: 'cy',
-        minDate: yesterday,
-        maxDate: tomorrow,
+        minDate: yesterday.toJSDate(),
+        maxDate: tomorrow.toJSDate(),
         icon: 'location',
         theme: 'test-theme',
       });
@@ -143,8 +138,8 @@ describe('Date picker', () => {
     it('should throw an error when min date is greater than max date', () => {
       expect(() => {
         datePicker(document.querySelector('.date-picker'), {
-          minDate: tomorrow,
-          maxDate: yesterday,
+          minDate: tomorrow.toJSDate(),
+          maxDate: yesterday.toJSDate(),
         });
       }).toThrow('Date picker min date cannot be greater than max date');
     });
@@ -415,13 +410,13 @@ describe('Date picker', () => {
       const monthInput = document.querySelector('.date-picker-month');
       const yearInput = document.querySelector('.date-picker-year');
 
-      $(dayInput).val(tomorrow.getDate());
-      $(monthInput).val(tomorrow.getMonth() + 1);
-      $(yearInput).val(tomorrow.getFullYear());
+      $(dayInput).val(tomorrow.day);
+      $(monthInput).val(tomorrow.month);
+      $(yearInput).val(tomorrow.year);
 
       $(revealButton).trigger('click');
 
-      const tomorrowButton = document.querySelector(`[data-test-id="${tomorrow.toLocaleDateString()}"]`);
+      const tomorrowButton = document.querySelector(`[data-test-id="${tomorrow.toISODate()}"]`);
 
       expect(tomorrowButton === document.activeElement).toBeTruthy();
       expect(tomorrowButton.tabIndex).toEqual(0);
@@ -435,13 +430,13 @@ describe('Date picker', () => {
       const monthInput = document.querySelector('.date-picker-month');
       const yearInput = document.querySelector('.date-picker-year');
 
-      $(dayInput).val(yesterday.getDate());
-      $(monthInput).val(yesterday.getMonth() + 1);
-      $(yearInput).val(yesterday.getFullYear());
+      $(dayInput).val(yesterday.day);
+      $(monthInput).val(yesterday.month);
+      $(yearInput).val(yesterday.year);
 
       $(revealButton).trigger('click');
 
-      const yesterdayButton = document.querySelector(`[data-test-id="${yesterday.toLocaleDateString()}"]`);
+      const yesterdayButton = document.querySelector(`[data-test-id="${yesterday.toISODate()}"]`);
 
       expect(yesterdayButton === document.activeElement).toBeTruthy();
       expect(yesterdayButton.tabIndex).toEqual(0);
@@ -462,7 +457,7 @@ describe('Date picker', () => {
 
       $(revealButton).trigger('click');
 
-      const nextMonthButton = document.querySelector(`[data-test-id="${nextMonthWithSetDay.toLocaleString()}"]`);
+      const nextMonthButton = document.querySelector(`[data-test-id="${nextMonthWithSetDay.toISODate()}"]`);
 
       expect(nextMonthButton === document.activeElement).toBeTruthy();
       expect(nextMonthButton.tabIndex).toEqual(0);
@@ -483,7 +478,7 @@ describe('Date picker', () => {
 
       $(revealButton).trigger('click');
 
-      const previousMonthButton = document.querySelector(`[data-test-id="${previousMonthWithSetDay.toLocaleString()}"]`);
+      const previousMonthButton = document.querySelector(`[data-test-id="${previousMonthWithSetDay.toISODate()}"]`);
 
       expect(previousMonthButton === document.activeElement).toBeTruthy();
       expect(previousMonthButton.tabIndex).toEqual(0);
@@ -504,7 +499,7 @@ describe('Date picker', () => {
 
       $(revealButton).trigger('click');
 
-      const nextYearButton = document.querySelector(`[data-test-id="${nextYear.toLocaleString()}"]`);
+      const nextYearButton = document.querySelector(`[data-test-id="${nextYear.toISODate()}"]`);
 
       expect(nextYearButton === document.activeElement).toBeTruthy();
       expect(nextYearButton.tabIndex).toEqual(0);
@@ -525,7 +520,7 @@ describe('Date picker', () => {
 
       $(revealButton).trigger('click');
 
-      const previousYearButton = document.querySelector(`[data-test-id="${previousYear.toLocaleString()}"]`);
+      const previousYearButton = document.querySelector(`[data-test-id="${previousYear.toISODate()}"]`);
 
       expect(previousYearButton === document.activeElement).toBeTruthy();
       expect(previousYearButton.tabIndex).toEqual(0);
@@ -549,7 +544,7 @@ describe('Date picker', () => {
     it('should set focus on today when date inputs are empty', () => {
       $(revealButton).trigger('click');
 
-      const todayDateButton = document.querySelector(`[data-test-id="${today.toLocaleDateString()}"]`);
+      const todayDateButton = document.querySelector(`[data-test-id="${now.toISODate()}"]`);
 
       expect(todayDateButton.tabIndex).toEqual(0);
       expect(todayDateButton === document.activeElement).toBeTruthy();
@@ -563,8 +558,10 @@ describe('Date picker', () => {
 
       $(revealButton).trigger('click');
 
-      const expectedDate = DateTime.fromObject({ year: 2021, month: 11, day: 12 });
-      const focusedDate = document.querySelector(`[data-test-id="${expectedDate.toLocaleString()}"]`);
+      const focusedDate = document.querySelector('[data-test-id="2021-11-12"]');
+
+      // eslint-disable-next-line no-console
+      console.log(`iaetf 12/11/2021 == ${document.activeElement.getAttribute('data-test-id')}`);
 
       expect(focusedDate === document.activeElement).toBeTruthy();
     });
@@ -576,8 +573,10 @@ describe('Date picker', () => {
 
       $(revealButton).trigger('click');
 
-      const expectedDate = DateTime.fromObject({ year: 21, month: 11, day: 12 });
-      const focusedDate = document.querySelector(`[data-test-id="${expectedDate.toLocaleString()}"]`);
+      const focusedDate = document.querySelector('[data-test-id="0021-11-12"]');
+
+      // eslint-disable-next-line no-console
+      console.log(`iaetf 12/11/21 == ${document.activeElement.getAttribute('data-test-id')}`);
 
       expect(focusedDate === document.activeElement).toBeTruthy();
     });
@@ -589,8 +588,10 @@ describe('Date picker', () => {
 
       $(revealButton).trigger('click');
 
-      const expectedDate = DateTime.fromObject({ year: 1, month: 11, day: 12 });
-      const focusedDate = document.querySelector(`[data-test-id="${expectedDate.toLocaleString()}"]`);
+      const focusedDate = document.querySelector('[data-test-id="0001-11-12"]');
+
+      // eslint-disable-next-line no-console
+      console.log(`iaetf 12/11/1 == ${document.activeElement.getAttribute('data-test-id')}`);
 
       expect(focusedDate === document.activeElement).toBeTruthy();
     });
@@ -602,7 +603,7 @@ describe('Date picker', () => {
 
       $(revealButton).trigger('click');
 
-      const focusedDate = document.querySelector(`[data-test-id="${now.toLocaleString()}"]`);
+      const focusedDate = document.querySelector(`[data-test-id="${now.toISODate()}"]`);
 
       expect(focusedDate === document.activeElement).toBeTruthy();
       expect(focusedDate.tabIndex).toEqual(0);
@@ -615,7 +616,7 @@ describe('Date picker', () => {
 
       $(revealButton).trigger('click');
 
-      const focusedDate = document.querySelector(`[data-test-id="${now.toLocaleString()}"]`);
+      const focusedDate = document.querySelector(`[data-test-id="${now.toISODate()}"]`);
 
       expect(focusedDate === document.activeElement).toBeTruthy();
       expect(focusedDate.tabIndex).toEqual(0);
@@ -628,7 +629,7 @@ describe('Date picker', () => {
 
       $(revealButton).trigger('click');
 
-      const focusedDate = document.querySelector(`[data-test-id="${now.toLocaleString()}"]`);
+      const focusedDate = document.querySelector(`[data-test-id="${now.toISODate()}"]`);
 
       expect(focusedDate === document.activeElement).toBeTruthy();
       expect(focusedDate.tabIndex).toEqual(0);
@@ -641,7 +642,7 @@ describe('Date picker', () => {
 
       $(revealButton).trigger('click');
 
-      const focusedDate = document.querySelector(`[data-test-id="${now.toLocaleString()}"]`);
+      const focusedDate = document.querySelector(`[data-test-id="${now.toISODate()}"]`);
 
       expect(focusedDate === document.activeElement).toBeTruthy();
       expect(focusedDate.tabIndex).toEqual(0);
@@ -654,7 +655,7 @@ describe('Date picker', () => {
 
       $(revealButton).trigger('click');
 
-      const focusedDate = document.querySelector(`[data-test-id="${now.toLocaleString()}"]`);
+      const focusedDate = document.querySelector(`[data-test-id="${now.toISODate()}"]`);
 
       expect(focusedDate === document.activeElement).toBeTruthy();
       expect(focusedDate.tabIndex).toEqual(0);
@@ -667,7 +668,7 @@ describe('Date picker', () => {
 
       $(revealButton).trigger('click');
 
-      const focusedDate = document.querySelector(`[data-test-id="${now.toLocaleString()}"]`);
+      const focusedDate = document.querySelector(`[data-test-id="${now.toISODate()}"]`);
 
       expect(focusedDate === document.activeElement).toBeTruthy();
       expect(focusedDate.tabIndex).toEqual(0);
@@ -771,7 +772,7 @@ describe('Date picker', () => {
   });
 
   describe('Date ranges', () => {
-    const maxDate = now.set({ day: 10 }).plus({ months: 1 }).toJSDate();
+    const maxDate = now.set({ day: 10 }).plus({ months: 1 });
 
     it('should disable interaction with days before min date', () => {
       datePicker(document.querySelector('.date-picker'), {
@@ -785,7 +786,7 @@ describe('Date picker', () => {
 
       $(revealButton).trigger('click');
 
-      const yesterdayButton = document.querySelector(`[data-test-id="${yesterday.toLocaleDateString()}"]`);
+      const yesterdayButton = document.querySelector(`[data-test-id="${yesterday.toISODate()}"]`);
 
       expect(yesterdayButton.tabIndex).toEqual(-1);
       expect(yesterdayButton.getAttribute('aria-disabled')).toBeTruthy();
@@ -801,7 +802,7 @@ describe('Date picker', () => {
     it('should disable interaction with days after max date', () => {
       const maxDatePlusDay = now.set({ day: 11 }).plus({ months: 1 });
 
-      datePicker(document.querySelector('.date-picker'), { maxDate });
+      datePicker(document.querySelector('.date-picker'), { maxDate: maxDate.toJSDate() });
 
       const revealButton = document.querySelector('.date-picker__reveal');
       const dayInput = document.querySelector('.date-picker-day');
@@ -812,7 +813,7 @@ describe('Date picker', () => {
       $(revealButton).trigger('click');
       $(nextMonthButton).trigger('click');
 
-      const disabledButton = document.querySelector(`[data-test-id="${maxDatePlusDay.toLocaleString()}"]`);
+      const disabledButton = document.querySelector(`[data-test-id="${maxDatePlusDay.toISODate()}"]`);
 
       expect(disabledButton.tabIndex).toEqual(-1);
       expect(disabledButton.getAttribute('aria-disabled')).toBeTruthy();
@@ -829,7 +830,7 @@ describe('Date picker', () => {
       const yesterdayMinusOne = now.minus({ days: 1 });
 
       datePicker(document.querySelector('.date-picker'), {
-        minDate: yesterday,
+        minDate: yesterday.toJSDate(),
       });
 
       const revealButton = document.querySelector('.date-picker__reveal');
@@ -843,7 +844,7 @@ describe('Date picker', () => {
 
       $(revealButton).trigger('click');
 
-      const yesterdayButton = document.querySelector(`[data-test-id="${yesterday.toLocaleDateString()}"]`);
+      const yesterdayButton = document.querySelector(`[data-test-id="${yesterday.toISODate()}"]`);
 
       expect(yesterdayButton.tabIndex).toEqual(0);
       expect(yesterdayButton === document.activeElement).toBeTruthy();
@@ -855,7 +856,7 @@ describe('Date picker', () => {
       const maxDatePlusDay = now.set({ day: 11 }).plus({ months: 1 });
 
       datePicker(document.querySelector('.date-picker'), {
-        maxDate,
+        maxDate: maxDate.toJSDate(),
       });
 
       const revealButton = document.querySelector('.date-picker__reveal');
@@ -869,7 +870,7 @@ describe('Date picker', () => {
 
       $(revealButton).trigger('click');
 
-      const maxDateButton = document.querySelector(`[data-test-id="${maxDate.toLocaleDateString()}"]`);
+      const maxDateButton = document.querySelector(`[data-test-id="${maxDate.toISODate()}"]`);
 
       expect(maxDateButton.tabIndex).toEqual(0);
       expect(maxDateButton === document.activeElement).toBeTruthy();
@@ -898,11 +899,11 @@ describe('Date picker', () => {
 
       $(revealButton).trigger('click');
 
-      const oct312021Button = document.querySelector(`[data-test-id="${oct312021.toLocaleString()}"]`);
-      const dec012021Button = document.querySelector(`[data-test-id="${dec012021.toLocaleString()}"]`);
-      const dec022021Button = document.querySelector(`[data-test-id="${dec022021.toLocaleString()}"]`);
-      const dec032021Button = document.querySelector(`[data-test-id="${dec032021.toLocaleString()}"]`);
-      const dec042021Button = document.querySelector(`[data-test-id="${dec042021.toLocaleString()}"]`);
+      const oct312021Button = document.querySelector(`[data-test-id="${oct312021.toISODate()}"]`);
+      const dec012021Button = document.querySelector(`[data-test-id="${dec012021.toISODate()}"]`);
+      const dec022021Button = document.querySelector(`[data-test-id="${dec022021.toISODate()}"]`);
+      const dec032021Button = document.querySelector(`[data-test-id="${dec032021.toISODate()}"]`);
+      const dec042021Button = document.querySelector(`[data-test-id="${dec042021.toISODate()}"]`);
 
       const dateButtons = [
         oct312021Button, dec012021Button, dec022021Button, dec032021Button, dec042021Button,
@@ -930,7 +931,7 @@ describe('Date picker', () => {
       $(yearInput).val('2022');
 
       $(revealButton).trigger('click');
-      const nearestDateButton = document.querySelector(`[data-test-id="${max.toLocaleString()}"]`);
+      const nearestDateButton = document.querySelector(`[data-test-id="${max.toISODate()}"]`);
 
       expect(nearestDateButton === document.activeElement).toBeTruthy();
       expect(nearestDateButton.tabIndex).toEqual(0);
@@ -975,7 +976,7 @@ describe('Date picker', () => {
 
       $(revealButton).trigger('click');
 
-      const dateButton = document.querySelector(`[data-test-id="${tomorrow.toLocaleDateString()}"]`);
+      const dateButton = document.querySelector(`[data-test-id="${tomorrow.toISODate()}"]`);
 
       $(dateButton).trigger('click');
       const dialog = document.querySelector('.date-picker__dialog');
@@ -995,7 +996,7 @@ describe('Date picker', () => {
 
       $(revealButton).trigger('click');
 
-      const dateButton = document.querySelector(`[data-test-id="${tomorrow.toLocaleDateString()}"]`);
+      const dateButton = document.querySelector(`[data-test-id="${tomorrow.toISODate()}"]`);
 
       $(dateButton).trigger('click');
       const dialog = document.querySelector('.date-picker__dialog');
@@ -1097,7 +1098,7 @@ describe('Date picker', () => {
 
       fixture.dates.forEach((fixtureDate) => {
         const date = DateTime.fromFormat(fixtureDate, 'dd/MM/yyyy');
-        const button = document.querySelector(`[data-test-id="${date.toLocaleString()}"]`);
+        const button = document.querySelector(`[data-test-id="${date.toISODate()}"]`);
         expect(button).toBeTruthy();
         expect(button.getAttribute('aria-label'))
           .toContain(`${days[date.weekday - 1]}, ${date.day} ${monthsEnglish[date.month - 1]} ${date.year}`);

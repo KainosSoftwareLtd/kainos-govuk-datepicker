@@ -867,7 +867,7 @@ function datePicker(datePickerElement, options = {}) {
 
     props.element.setAttribute('type', 'button');
     props.element.setAttribute('tabindex', '-1');
-    props.element.setAttribute('data-test-id', props.date.toLocaleDateString());
+    props.element.setAttribute('data-test-id', props.date.toISOString().split('T')[0]);
     props.element.setAttribute('aria-label', content[state.language].days[props.date.getDay()] + ', ' + getFormattedDate(props.date));
 
     props.element.innerHTML = props.date.getDate();
