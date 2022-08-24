@@ -13,6 +13,7 @@ See a preview [here](https://still-headland-16463.herokuapp.com)
 * [Dependencies](#Dependencies)
 * [Basic Usage](#basic-usage)
 * [Configuration options](#options)
+* [Callbacks](#callbacks)
 * [Running locally](#running-locally)
 * [Testing](#testing)
 
@@ -92,13 +93,14 @@ Importing the styles into your project using Node:
 
 Using it in your code:
 ```javascript
-datePicker(selector, options);
+datePicker(selector, options, callbacks);
 ```
 
 datePicker takes 2 arguments:
 
 1. `selector` - DOM node, such as `document.querySelector('#my-id')`.
 2. `options` - (optional) - A configuration object (see below).
+3. `callbacks` - (optional) - An object of callbacks (see below)
 
 ## Options
 
@@ -169,6 +171,38 @@ datePicker(selector, {
 });
 ```
 
+## Callbacks
+
+The datepicker currently supports the following optional callbacks
+
+### parseInputs
+
+A callback that accepts 3 inputs: `day`, `month`, `year` which are taken from the input elements.
+You can then manipulate these inputs and return an object with the following structure:
+```javascript
+{
+  day,
+  month,
+  year
+}
+```
+This returned object is then validated and used to set the focused date upon opening the date picker.
+
+
+Using it in your code:
+```javascript
+datePicker(selector, options, {
+  parseInputs: function(day, month, year) {
+    // some minpulation logic
+    var manipulatedDay, manipulatedMonth, manipulatedYear;
+    return {
+      day: manipulatedDay,
+      month: manipulatedMonth,
+      year: manipulatedYear,
+    };
+  }
+});
+```
 ## Running locally
 
 Clone this repository to your local machine and install dependencies.
