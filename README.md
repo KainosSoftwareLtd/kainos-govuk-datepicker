@@ -156,11 +156,11 @@ datePicker(selector, {
 });
 ```
 
-### icon
+### icon (Experimental)
 
 Type: String
 
-The icon you wish to use in place of the default 'choose date' text.
+The icon you wish to use in place of the default 'choose date' text. Please note this feature is experimental and is not fully supported in Internet Explorer.
 
 Using it in your code:
 ```javascript
@@ -202,132 +202,3 @@ To run the e2e tests run -
 ```shell
 npm run test:e2e
 ```
-
-
-## Usage in Angular 8 Application (as a js file)
-
-These instructions cover the inclusion of the accessible-date-picker as a javascript code module (not an NPM component)
-
-The first step is to copy the datepicker.js file to your assets/js directory and declare it in the angular.json file as follows:
-```
-  "projects": {
-    ...
-    "architect": {
-        "build": {
-          "options": {
-            ...
-            "scripts": [
-              "src/assets/js/datepicker.js"
-            ]
-          },
-```
-
-After creating a date picker component in your angular application, you need to include the following line above the component annotation
-```
-  declare function datePicker(datePickerElement, callback, options?): any;
-
-  @Component({ ...
-```
-
-The HTML of this component should follow this pattern
-```
-<div style="white-space: nowrap">
-
-  <div class='govuk-date-input date-picker-default' #dpElement [id]="inputId" style="width: 100%;">
-    <div class='govuk-date-input__item'>
-      <div class='govuk-form-group'>
-        <label class='govuk-label govuk-date-input__label' [for]='dayInputId'>Day</label>
-        <input class='govuk-input govuk-date-input__input govuk-input--width-2 date-picker-day'
-               [(ngModel)]="dayField" (ngModelChange)="dateFieldChanged('day', $event)" [disabled]="inputDisabled"
-               [id]='dayInputId' [name]='dayInputId' type='text' pattern='[0-9]*' inputmode='numeric'/>
-      </div>
-    </div>
-    <div class='govuk-date-input__item'>
-      <div class='govuk-form-group'>
-        <label class='govuk-label govuk-date-input__label' [for]='monthInputId'>Month</label>
-        <input class='govuk-input govuk-date-input__input govuk-input--width-2 date-picker-month' [disabled]="inputDisabled"
-               [(ngModel)]="monthField" (ngModelChange)="dateFieldChanged('month', $event)"
-               [id]='monthInputId' [name]='monthInputId' type='text' pattern='[0-9]*' inputmode='numeric'/>
-      </div>
-    </div>
-    <div class='govuk-date-input__item'>
-      <div class='govuk-form-group'>
-        <label class='govuk-label govuk-date-input__label' [for]='yearInputId'>Year</label>
-        <input class='govuk-input govuk-date-input__input govuk-input--width-3 date-picker-year' [disabled]="inputDisabled"
-               [(ngModel)]="yearField" (ngModelChange)="dateFieldChanged('year', $event)"
-               [id]='yearInputId' [name]='yearInputId' type='text' pattern='[0-9]*' inputmode='numeric'/>
-      </div>
-    </div>
-  </div>
-</div>
-```
-
-A view child needs to be created for access to the html elements
-```
-  @ViewChild('dpElement', { static: false }) dpElement: ElementRef;
-```
-
-Within the ngAfterViewInit() function, the datepicker should be initialised as follows:
-```
-    const self = this;
-    const callback = function dateCallback(date) {
-      self.initDate(date);
-      self.setSelectedDate(false);
-    };
-    const tomorrow = moment().add(1, 'day').toDate();
-    const options = {chooseDateButtonBelow: true, maxDate: tomorrow};
-    datePicker(this.dpElement.nativeElement, callback, options);
-```
-Note: maxDate is optional here
-
-
-The dateFieldChanged function in the component ts should look something like this
-```
-  dateFieldChanged(field, value) {
-    switch (field) {
-      case 'day' : this.dayField = value; break;
-      case 'month' : this.monthField = value; break;
-      case 'year' : this.yearField = value; break;
-      default: return;
-    }
-    if (this.dayField && this.monthField && this.yearField) {
-      if (/^[0-9]{1,2}$/.test(this.dayField) &&
-        /^[0-9]{1,2}$/.test(this.monthField) &&
-        /^[0-9]{4}$/.test(this.yearField)) {
-        const date = new Date(Number(this.yearField), Number(this.monthField) - 1, Number(this.dayField));
-        this.initDate(date);
-        this.setSelectedDate(false);
-      }
-    }
-  }
-  
-    initDate(date) {
-    this.currentDate = date;
-    this.tempDate = {
-      isRange: false,
-      singleDate: {
-        jsDate: this.currentDate
-      }
-    };
-  }
-
-  setSelectedDate(updateFields = true) {
-    this.date = this.tempDate;
-    this.selectedDate = this.getSelectedDate();
-    this.dateString = format(this.date.singleDate.jsDate, 'dd/MM/yyyy');
-    if (updateFields) { this.updateFields(this.date.singleDate.jsDate); }
-    this.updatehandler.emit(this.date);
-  }
-
-  updateFields(date: Date) {
-    this.dayField = '' + date.getDate();
-    this.monthField = '' + (date.getMonth() + 1);
-    this.yearField = '' + date.getFullYear();
-  }
-
-  getSelectedDate() {
-    return format(this.date.singleDate.jsDate, 'yyyy-MM-dd');
-  }
-
-```
-
