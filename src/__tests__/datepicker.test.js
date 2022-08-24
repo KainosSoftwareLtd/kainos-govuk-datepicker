@@ -475,13 +475,11 @@ describe('Date picker', () => {
     });
 
     it('should allow for selection of a day with custom input parsing', () => {
-      datePicker(document.querySelector('.date-picker'), {
-        parseInputs: (day, month, year) => ({
-          day,
-          month,
-          year: `20${year}`,
-        }),
-      });
+      datePicker(
+        document.querySelector('.date-picker'),
+        {},
+        (day, month, year) => ({ day, month, year: `20${year}` }),
+      );
 
       const revealButton = document.querySelector('.date-picker__reveal');
       const dayInput = document.querySelector('.date-picker-day');

@@ -13,6 +13,7 @@ See a preview [here](https://still-headland-16463.herokuapp.com)
 * [Dependencies](#Dependencies)
 * [Basic Usage](#basic-usage)
 * [Configuration options](#options)
+* [Manipulation callback](#callback)
 * [Running locally](#running-locally)
 * [Testing](#testing)
 
@@ -92,13 +93,14 @@ Importing the styles into your project using Node:
 
 Using it in your code:
 ```javascript
-datePicker(selector, options);
+datePicker(selector, options, callback);
 ```
 
 datePicker takes 2 arguments:
 
 1. `selector` - DOM node, such as `document.querySelector('#my-id')`.
 2. `options` - (optional) - A configuration object (see below).
+3. `callback` - (optional) - A callback that allows manipulation of input values before they are validated and used to select a date
 
 ## Options
 
@@ -169,7 +171,7 @@ datePicker(selector, {
 });
 ```
 
-### parseInput
+## Callback
 
 Type: function
 
@@ -177,9 +179,9 @@ A function that accepts 3 inputs: `day`, `month`, `year` which are taken from th
 You can then manipulate these inputs and return an object with the following structure:
 ```javascript
 {
-  day: parsedDay
-  month: parsedMonth,
-  year: parsedYear
+  day,
+  month,
+  year
 }
 ```
 This returned object is then validated and used to set the focused date upon opening the date picker.
@@ -187,16 +189,14 @@ This returned object is then validated and used to set the focused date upon ope
 
 Using it in your code:
 ```javascript
-datePicker(selector, {
-  parseInputs: function (day, month, year) {
-    // some parsing logic
-    var parsedDay, parsedMonth, parsedYear
-    return {
-      day: parsedDay,
-      month: parsedMonth,
-      year: parsedYear,
-    };
-  }
+datePicker(selector, {}, function (day, month, year) {
+  // some minpulation logic
+  var manipulatedDay, manipulatedMonth, manipulatedYear
+  return {
+    day: manipulatedDay,
+    month: manipulatedMonth,
+    year: manipulatedYear,
+  };
 });
 ```
 ## Running locally
