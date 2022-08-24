@@ -560,9 +560,6 @@ describe('Date picker', () => {
 
       const focusedDate = document.querySelector('[data-test-id="2021-11-12"]');
 
-      // eslint-disable-next-line no-console
-      console.log(`iaetf 12/11/2021 == ${document.activeElement.getAttribute('data-test-id')}`);
-
       expect(focusedDate === document.activeElement).toBeTruthy();
     });
 
@@ -575,9 +572,6 @@ describe('Date picker', () => {
 
       const focusedDate = document.querySelector('[data-test-id="0021-11-12"]');
 
-      // eslint-disable-next-line no-console
-      console.log(`iaetf 12/11/21 == ${document.activeElement.getAttribute('data-test-id')}`);
-
       expect(focusedDate === document.activeElement).toBeTruthy();
     });
 
@@ -589,9 +583,6 @@ describe('Date picker', () => {
       $(revealButton).trigger('click');
 
       const focusedDate = document.querySelector('[data-test-id="0001-11-12"]');
-
-      // eslint-disable-next-line no-console
-      console.log(`iaetf 12/11/1 == ${document.activeElement.getAttribute('data-test-id')}`);
 
       expect(focusedDate === document.activeElement).toBeTruthy();
     });
