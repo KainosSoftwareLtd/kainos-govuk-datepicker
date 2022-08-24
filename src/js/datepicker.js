@@ -1,10 +1,4 @@
-function datePicker(
-  datePickerElement,
-  options = {},
-  inputManipulationCallback = function (day, month, year) {
-    return { day, month, year };
-  },
-) {
+function datePicker(datePickerElement, options = {}, externalCallbacks = {}) {
   var keyCodes;
   var content;
   var elements;
@@ -63,6 +57,11 @@ function datePicker(
       },
     },
   };
+  const defaultCallbacks = {
+    parseInputs: function (day, month, year) {
+      return { day, month, year };
+    },
+  };
   elements = {
     container: datePickerElement,
     buttons: {},
@@ -86,6 +85,7 @@ function datePicker(
     focusedDate: new Date(),
     days: [],
   };
+  const callbacks = { ...defaultCallbacks, ...externalCallbacks };
   theme = options.theme || '';
 
   content.ni = content.en;
@@ -134,7 +134,7 @@ function datePicker(
       year: elements.inputs.year.value,
     };
 
-    inputDates = inputManipulationCallback(inputDates.day, inputDates.month, inputDates.year);
+    inputDates = callbacks.parseInputs(inputDates.day, inputDates.month, inputDates.year);
 
     function isValidInput(input) {
       const expression = /^\d+$/;

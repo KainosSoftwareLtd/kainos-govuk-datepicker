@@ -13,7 +13,7 @@ See a preview [here](https://still-headland-16463.herokuapp.com)
 * [Dependencies](#Dependencies)
 * [Basic Usage](#basic-usage)
 * [Configuration options](#options)
-* [Manipulation callback](#callback)
+* [Callbacks](#callbacks)
 * [Running locally](#running-locally)
 * [Testing](#testing)
 
@@ -93,14 +93,14 @@ Importing the styles into your project using Node:
 
 Using it in your code:
 ```javascript
-datePicker(selector, options, callback);
+datePicker(selector, options, callbacks);
 ```
 
 datePicker takes 2 arguments:
 
 1. `selector` - DOM node, such as `document.querySelector('#my-id')`.
 2. `options` - (optional) - A configuration object (see below).
-3. `callback` - (optional) - A callback that allows manipulation of input values before they are validated and used to select a date
+3. `callbacks` - (optional) - An object of callbacks (see below)
 
 ## Options
 
@@ -171,11 +171,13 @@ datePicker(selector, {
 });
 ```
 
-## Callback
+## Callbacks
 
-Type: function
+The datepicker currently supports the following optional callbacks
 
-A function that accepts 3 inputs: `day`, `month`, `year` which are taken from the input elements.
+### parseInputs
+
+A callback that accepts 3 inputs: `day`, `month`, `year` which are taken from the input elements.
 You can then manipulate these inputs and return an object with the following structure:
 ```javascript
 {
@@ -189,14 +191,16 @@ This returned object is then validated and used to set the focused date upon ope
 
 Using it in your code:
 ```javascript
-datePicker(selector, {}, function (day, month, year) {
-  // some minpulation logic
-  var manipulatedDay, manipulatedMonth, manipulatedYear
-  return {
-    day: manipulatedDay,
-    month: manipulatedMonth,
-    year: manipulatedYear,
-  };
+datePicker(selector, options, {
+  parseInputs: function(day, month, year) {
+    // some minpulation logic
+    var manipulatedDay, manipulatedMonth, manipulatedYear;
+    return {
+      day: manipulatedDay,
+      month: manipulatedMonth,
+      year: manipulatedYear,
+    };
+  }
 });
 ```
 ## Running locally
