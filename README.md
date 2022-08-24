@@ -169,6 +169,36 @@ datePicker(selector, {
 });
 ```
 
+### parseInput
+
+Type: function
+
+A function that accepts 3 inputs: `day`, `month`, `year` which are taken from the input elements.
+You can then manipulate these inputs and return an object with the following structure:
+```javascript
+{
+  day: parsedDay
+  month: parsedMonth,
+  year: parsedYear
+}
+```
+This returned object is then validated and used to set the focused date upon opening the date picker.
+
+
+Using it in your code:
+```javascript
+datePicker(selector, {
+  parseInputs: function (day, month, year) {
+    // some parsing logic
+    var parsedDay, parsedMonth, parsedYear
+    return {
+      day: parsedDay,
+      month: parsedMonth,
+      year: parsedYear,
+    };
+  }
+});
+```
 ## Running locally
 
 Clone this repository to your local machine and install dependencies.

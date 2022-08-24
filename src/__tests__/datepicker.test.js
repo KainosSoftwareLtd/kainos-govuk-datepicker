@@ -474,6 +474,31 @@ describe('Date picker', () => {
       expect(yesterdayButton.tabIndex).toEqual(0);
     });
 
+    it('should allow for selection of a day with custom input parsing', () => {
+      datePicker(document.querySelector('.date-picker'), {
+        parseInputs: (day, month, year) => ({
+          day,
+          month,
+          year: `20${year}`,
+        }),
+      });
+
+      const revealButton = document.querySelector('.date-picker__reveal');
+      const dayInput = document.querySelector('.date-picker-day');
+      const monthInput = document.querySelector('.date-picker-month');
+      const yearInput = document.querySelector('.date-picker-year');
+
+      const parsedDate = DateTime.fromObject({ year: 2022, month: 2, day: 2 });
+      $(dayInput).val(parsedDate.day);
+      $(monthInput).val(parsedDate.month);
+      $(yearInput).val('22');
+
+      $(revealButton).trigger('click');
+      const highlighted = document.querySelector(`[data-test-id="${parsedDate.toLocaleString()}"]`);
+
+      expect(highlighted === document.activeElement).toBeTruthy();
+    });
+
     it('should allow for selection of a day next month', () => {
       const nextMonthWithSetDay = now.set({ day: 10 }).plus({ months: 1 });
 

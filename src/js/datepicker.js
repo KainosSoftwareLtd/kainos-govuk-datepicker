@@ -82,6 +82,10 @@ function datePicker(datePickerElement, options = {}) {
   };
   theme = options.theme || '';
 
+  const parseInputs = options.parseInputs || function (day, month, year) {
+    return { day, month, year };
+  };
+
   content.ni = content.en;
 
   if (!elements.inputs.month || !elements.inputs.year || !elements.inputs.day || !options) {
@@ -122,11 +126,13 @@ function datePicker(datePickerElement, options = {}) {
   }
 
   function getDateFromInputs() {
-    const inputDates = {
+    let inputDates = {
       day: elements.inputs.day.value,
       month: elements.inputs.month.value,
       year: elements.inputs.year.value,
     };
+
+    inputDates = parseInputs(inputDates.day, inputDates.month, inputDates.year);
 
     function isValidInput(input) {
       const expression = /^\d+$/;
