@@ -128,8 +128,8 @@ function datePicker(datePickerElement, options = {}, callbacks = {}) {
       year: elements.inputs.year.value,
     };
 
-    if (callbacks.parseInputs) {
-      inputDates = callbacks.parseInputs(inputDates.day, inputDates.month, inputDates.year);
+    if (callbacks.onParseInputs) {
+      inputDates = callbacks.onParseInputs(inputDates.day, inputDates.month, inputDates.year);
     }
 
     function isValidInput(input) {
