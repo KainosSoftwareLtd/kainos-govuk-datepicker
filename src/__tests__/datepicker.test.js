@@ -1040,7 +1040,7 @@ describe('Date picker', () => {
         document.querySelector('.date-picker'),
         {},
         {
-          parseInputs: (day, month, year) => ({ day, month, year: `20${year}` }),
+          onParseInputs: (day, month, year) => ({ day, month, year: `20${year}` }),
         },
       );
 

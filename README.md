@@ -175,7 +175,7 @@ datePicker(selector, {
 
 The datepicker currently supports the following optional callbacks
 
-### parseInputs
+### onParseInputs
 
 A callback that accepts 3 inputs: `day`, `month`, `year` which are taken from the input elements.
 You can then manipulate these inputs and return an object with the following structure:
@@ -192,7 +192,7 @@ This returned object is then validated and used to set the focused date upon ope
 Using it in your code:
 ```javascript
 datePicker(selector, options, {
-  parseInputs: function(day, month, year) {
+  onParseInputs: function(day, month, year) {
     // some minpulation logic
     var manipulatedDay, manipulatedMonth, manipulatedYear;
     return {
