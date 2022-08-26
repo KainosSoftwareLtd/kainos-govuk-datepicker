@@ -1,4 +1,4 @@
-function datePicker(datePickerElement, options = {}) {
+function datePicker(datePickerElement, options = {}, callbacks = {}) {
   var keyCodes;
   var content;
   var elements;
@@ -122,11 +122,15 @@ function datePicker(datePickerElement, options = {}) {
   }
 
   function getDateFromInputs() {
-    const inputDates = {
+    let inputDates = {
       day: elements.inputs.day.value,
       month: elements.inputs.month.value,
       year: elements.inputs.year.value,
     };
+
+    if (callbacks.onParseInputs) {
+      inputDates = callbacks.onParseInputs(inputDates.day, inputDates.month, inputDates.year);
+    }
 
     function isValidInput(input) {
       const expression = /^\d+$/;

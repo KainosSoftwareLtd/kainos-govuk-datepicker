@@ -495,7 +495,7 @@ describe('Date picker', () => {
       expect(nextMonthButton.tabIndex).toEqual(0);
     });
 
-    it('should allow for selection of a day next month', () => {
+    it('should allow for selection of a day last month', () => {
       const previousMonthWithSetDay = now.set({ day: 10 }).minus({ months: 1 });
 
       datePicker(document.querySelector('.date-picker'), {});
@@ -1031,6 +1031,33 @@ describe('Date picker', () => {
     // Check that dates render when there are exactly 4 weeks with no padding
     it('should render expected dates (Feb 2026)', () => {
       assertGrid(dateFixtures.feb2026);
+    });
+  });
+
+  describe('Callbacks', () => {
+    it('should alter input date parsing based off externally defined parse input callback', () => {
+      datePicker(
+        document.querySelector('.date-picker'),
+        {},
+        {
+          onParseInputs: (day, month, year) => ({ day, month, year: `20${year}` }),
+        },
+      );
+
+      const revealButton = document.querySelector('.date-picker__reveal');
+      const dayInput = document.querySelector('.date-picker-day');
+      const monthInput = document.querySelector('.date-picker-month');
+      const yearInput = document.querySelector('.date-picker-year');
+
+      const parsedDate = DateTime.fromObject({ year: 2022, month: 2, day: 2 });
+      $(dayInput).val(parsedDate.day);
+      $(monthInput).val(parsedDate.month);
+      $(yearInput).val('22');
+
+      $(revealButton).trigger('click');
+      const highlighted = document.querySelector(`[data-test-id="${parsedDate.toLocaleString()}"]`);
+
+      expect(highlighted === document.activeElement).toBeTruthy();
     });
   });
 });
