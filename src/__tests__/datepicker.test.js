@@ -1059,5 +1059,30 @@ describe('Date picker', () => {
 
       expect(highlighted === document.activeElement).toBeTruthy();
     });
+
+    it('should call the onDateSelect callback with the selected date', () => {
+      let expectedDate;
+
+      datePicker(
+        document.querySelector('.date-picker'),
+        {},
+        {
+          onDateSelect: (date) => {
+            expectedDate = date;
+          },
+        },
+      );
+
+      const revealButton = document.querySelector('.date-picker__reveal');
+
+      $(revealButton).trigger('click');
+
+      const todayButton = document.querySelector(`[data-test-id="${today.toLocaleDateString()}"]`);
+      $(todayButton).trigger('click');
+
+      expect(expectedDate.getDate()).toEqual(today.getDate());
+      expect(expectedDate.getMonth()).toEqual(today.getMonth());
+      expect(expectedDate.getFullYear()).toEqual(today.getFullYear());
+    });
   });
 });
