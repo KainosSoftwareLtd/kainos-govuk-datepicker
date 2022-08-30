@@ -206,7 +206,7 @@ datePicker(selector, options, {
 
 ### onDateSelect
 
-A callback that returns a Date object when a date is selected via the date picker.
+A callback that accepts a Date object when a date is selected via the date picker.
 
 Using it in your code:
 ```javascript
