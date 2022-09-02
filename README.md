@@ -203,6 +203,20 @@ datePicker(selector, options, {
   }
 });
 ```
+
+### onDateSelect
+
+A callback that accepts a Date object when a date is selected via the date picker.
+
+Using it in your code:
+```javascript
+datePicker(selector, options, {
+  onDateSelect: function(selectedDate) {
+    // do something with selected date
+  }
+});
+```
+
 ## Running locally
 
 Clone this repository to your local machine and install dependencies.

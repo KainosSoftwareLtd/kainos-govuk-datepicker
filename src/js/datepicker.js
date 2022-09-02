@@ -166,6 +166,10 @@ function datePicker(datePickerElement, options = {}, callbacks = {}) {
     elements.inputs.day.value = formatDateInput(date.getDate());
     elements.inputs.month.value = formatDateInput(date.getMonth() + 1);
     elements.inputs.year.value = date.getFullYear();
+
+    if (callbacks.onDateSelect) {
+      callbacks.onDateSelect(date);
+    }
   }
 
   function setIsPreviousEnabled() {
