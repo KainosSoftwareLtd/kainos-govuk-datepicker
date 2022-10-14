@@ -171,6 +171,19 @@ datePicker(selector, {
 });
 ```
 
+### autoScroll
+
+Type: boolean
+
+Can be set to `true` to let the window scroll automatically to show the calendar in full when opened. False by default.
+
+Using it in your code:
+```javascript
+datePicker(selector, {
+  autoScroll: true,
+});
+```
+
 ## Callbacks
 
 The datepicker currently supports the following optional callbacks

@@ -29,6 +29,7 @@ datePicker(document.querySelector('.date-picker-welsh'), {
 
 datePicker(document.querySelector('.date-picker-style-two'), {
   theme: 'digital-scotland',
+  autoScroll: true,
 });
 
 datePicker(document.querySelector('.date-picker-icon'), {

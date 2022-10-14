@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import $ from 'jquery';
 import { DateTime } from 'luxon';
 
@@ -52,6 +53,7 @@ describe('Date picker', () => {
 
   afterEach(() => {
     document.body.innerHTML = '';
+    window.innerHeight = 768;
   });
 
   describe('Initialisation', () => {
@@ -1084,5 +1086,44 @@ describe('Date picker', () => {
       expect(expectedDate.getMonth()).toEqual(today.getMonth());
       expect(expectedDate.getFullYear()).toEqual(today.getFullYear());
     });
+  });
+
+  describe('Auto scroll', () => {
+    it('should not attempt to scroll calendar into view if autoScroll is set to false and calendar is not in view', () => {
+      testScrollsCalendarIntoView(false, false, 0);
+    });
+
+    it('should not scroll calendar into view if autoScroll is set to true but calendar is already in view', () => {
+      testScrollsCalendarIntoView(true, true, 0);
+    });
+
+    it('should scroll calendar into view if autoScroll is set to true and calendar is not in view', () => {
+      testScrollsCalendarIntoView(true, false, 1);
+    });
+
+    const testScrollsCalendarIntoView = (isAutoScrollOn, isInView, expectedScrolls) => {
+      datePicker(document.querySelector('.date-picker'), {
+        autoScroll: isAutoScrollOn,
+      });
+
+      const revealButton = document.querySelector('.date-picker__reveal');
+      const calendar = document.querySelector('.date-picker__dialog');
+      calendar.scrollIntoView = jest.fn();
+      positionCalendarInViewport(calendar, isInView);
+
+      $(revealButton).trigger('click');
+
+      expect(calendar.scrollIntoView.mock.calls.length).toBe(expectedScrolls);
+    };
+
+    const positionCalendarInViewport = (calendar, isInView) => {
+      calendar.getBoundingClientRect = () => ({
+        bottom: 100,
+        top: 100,
+        left: 100,
+        right: 100,
+      });
+      window.innerHeight = (isInView === true) ? 110 : 90;
+    };
   });
 });

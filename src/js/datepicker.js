@@ -542,7 +542,26 @@ function datePicker(datePickerElement, options = {}, callbacks = {}) {
       setFocusDay(getDateFromInputs());
       showCalender();
       renderDOM();
+      scrollCalendarIntoView();
       preventDefault = true;
+    }
+
+    function scrollCalendarIntoView() {
+      if (options.autoScroll === true) {
+        const calendar = elements.dialog;
+        if (!elementInViewport(calendar)) {
+          calendar.scrollIntoView(false);
+        }
+      }
+    }
+
+    function elementInViewport(element) {
+      const bounding = element.getBoundingClientRect();
+
+      return bounding.top >= 0
+        && bounding.left >= 0
+        && bounding.right <= (window.innerWidth || document.documentElement.clientWidth)
+        && bounding.bottom <= (window.innerHeight || document.documentElement.clientHeight);
     }
 
     switch (event.type) {
