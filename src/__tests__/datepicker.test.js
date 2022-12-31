@@ -873,22 +873,28 @@ describe('Date picker', () => {
   describe('Aria message', () => {
     it('should inform the user they cannot select a day in the past', () => {
       datePicker(document.querySelector('.date-picker'), {
-        maxDate: today,
+        minDate: today,
       });
 
       const revealButton = document.querySelector('.date-picker__reveal');
+      const previousMonthButton = document.querySelector('.date-picker__button__previous-month');
 
       $(revealButton).trigger('click');
 
-      const dateButton = document.querySelector(`[data-test-id="${tomorrow.toLocaleDateString()}"]`);
+      let dateButton = document.querySelector(`[data-test-id="${yesterday.toLocaleDateString()}"]`);
+
+      if (!dateButton) {
+        $(previousMonthButton).trigger('click');
+        dateButton = document.querySelector(`[data-test-id="${tomorrow.toLocaleDateString()}"]`);
+      }
 
       $(dateButton).trigger('click');
-      const dialog = document.querySelector('.date-picker__dialog');
 
+      const dialog = document.querySelector('.date-picker__dialog');
       const ariaLiveMessage = dialog.querySelector('.aria-live-message');
 
       expect(ariaLiveMessage.getAttribute('aria-live')).toEqual('assertive');
-      expect(ariaLiveMessage.innerText).toContain('You cannot select a day after');
+      expect(ariaLiveMessage.innerText).toContain('You cannot select a day before');
     });
 
     it('should inform the user they cannot select a day in the future', () => {
@@ -897,14 +903,20 @@ describe('Date picker', () => {
       });
 
       const revealButton = document.querySelector('.date-picker__reveal');
+      const nextMonthButtonButton = document.querySelector('.date-picker__button__next-month');
 
       $(revealButton).trigger('click');
 
-      const dateButton = document.querySelector(`[data-test-id="${tomorrow.toLocaleDateString()}"]`);
+      let dateButton = document.querySelector(`[data-test-id="${tomorrow.toLocaleDateString()}"]`);
+
+      if (!dateButton) {
+        $(nextMonthButtonButton).trigger('click');
+        dateButton = document.querySelector(`[data-test-id="${tomorrow.toLocaleDateString()}"]`);
+      }
 
       $(dateButton).trigger('click');
-      const dialog = document.querySelector('.date-picker__dialog');
 
+      const dialog = document.querySelector('.date-picker__dialog');
       const ariaLiveMessage = dialog.querySelector('.aria-live-message');
 
       expect(ariaLiveMessage.getAttribute('aria-live')).toEqual('assertive');
