@@ -689,18 +689,33 @@ describe('Date picker', () => {
       const yearInput = document.querySelector('.date-picker-year');
 
       $(revealButton).trigger('click');
+      const previousMonthButton = document.querySelector('.date-picker__button__previous-month');
 
-      const yesterdayButton = document.querySelector(`[data-test-id="${yesterday.toLocaleDateString()}"]`);
+      let yesterdayButton = document.querySelector(`[data-test-id="${yesterday.toLocaleDateString()}"]`);
 
-      expect(yesterdayButton.tabIndex).toEqual(-1);
-      expect(yesterdayButton.getAttribute('aria-disabled')).toBeTruthy();
-      expect(yesterdayButton.classList.contains('date__button--disabled')).toBeTruthy();
+      if (!yesterdayButton) {
+        $(previousMonthButton).trigger('click');
+        yesterdayButton = document.querySelector(`[data-test-id="${yesterday.toLocaleDateString()}"]`);
+      }
 
-      $(yesterdayButton).trigger('click');
+      // TODO refactor test
+      // Fixes issue where date picker cannot navigate to previous month as it is the first of
+      // the month e.g 1st Jan 2023
+      if (!yesterdayButton) {
+        expect(previousMonthButton.tabIndex).toEqual(-1);
+        expect(previousMonthButton.getAttribute('aria-disabled')).toBeTruthy();
+        expect(previousMonthButton.classList.contains('date-picker__button--disabled')).toBeTruthy();
+      } else {
+        expect(yesterdayButton.tabIndex).toEqual(-1);
+        expect(yesterdayButton.getAttribute('aria-disabled')).toBeTruthy();
+        expect(yesterdayButton.classList.contains('date__button--disabled')).toBeTruthy();
 
-      expect($(dayInput).val()).toEqual('');
-      expect($(monthInput).val()).toEqual('');
-      expect($(yearInput).val()).toEqual('');
+        $(yesterdayButton).trigger('click');
+
+        expect($(dayInput).val()).toEqual('');
+        expect($(monthInput).val()).toEqual('');
+        expect($(yearInput).val()).toEqual('');
+      }
     });
 
     it('should disable interaction with days after max date', () => {
