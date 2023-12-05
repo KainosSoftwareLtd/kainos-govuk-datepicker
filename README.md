@@ -5,8 +5,6 @@
 
 A Date picker library designed and developed to be used within GOV.UK projects. Full support for 'keyboard only' users. Supports both English and Welsh.
 
-See a preview [here](https://still-headland-16463.herokuapp.com)
-
 ### Table of Contents
 
 * [Installation](#installation)
