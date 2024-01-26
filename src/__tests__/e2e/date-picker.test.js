@@ -160,6 +160,67 @@ Scenario('it should allow for navigation to the next month using down arrow key 
   });
 });
 
+Scenario('it should allow for navigation from the close button to the previous month button using tab key only', async ({ I }) => {
+  const currentMonth = DateTime.fromObject({ year: 2021, month: 11, day: 1 });
+  let focusedElement;
+  await within('.date-picker-default', async () => {
+    await I.seeElement('#example-1-day');
+    await I.fillField('#example-1-day', currentMonth.day.toString());
+    await I.fillField('#example-1-month', currentMonth.month.toString());
+    await I.fillField('#example-1-year', currentMonth.year.toString());
+
+    I.click('Choose date');
+    I.see(getFormattedMonthAndYear(currentMonth));
+
+    I.pressKey('Tab');
+    await I.usePuppeteerTo('Get the active element', async ({ page }) => {
+      const focusedElementHandle = await page.evaluateHandle(() => document.activeElement);
+      focusedElement = await page.evaluate((el) => el.innerText, focusedElementHandle);
+    });
+
+    I.assertEqual(focusedElement, 'Cancel');
+
+    I.pressKey('Tab');
+    await I.usePuppeteerTo('Get the active element', async ({ page }) => {
+      const focusedElementHandle = await page.evaluateHandle(() => document.activeElement);
+      focusedElement = await page.evaluate((el) => el.innerText, focusedElementHandle);
+    });
+
+    I.assertEqual(focusedElement, 'Previous month');
+  });
+});
+
+Scenario('it should allow for navigation from the previous month button to close button using shift tab keys only', async ({ I }) => {
+  const currentMonth = DateTime.fromObject({ year: 2021, month: 11, day: 1 });
+  let focusedElement;
+  await within('.date-picker-default', async () => {
+    await I.seeElement('#example-1-day');
+    await I.fillField('#example-1-day', currentMonth.day.toString());
+    await I.fillField('#example-1-month', currentMonth.month.toString());
+    await I.fillField('#example-1-year', currentMonth.year.toString());
+
+    I.click('Choose date');
+    I.see(getFormattedMonthAndYear(currentMonth));
+
+    I.pressKey(['Shift', 'Tab']);
+    I.pressKey(['Shift', 'Tab']);
+    await I.usePuppeteerTo('Get the active element', async ({ page }) => {
+      const focusedElementHandle = await page.evaluateHandle(() => document.activeElement);
+      focusedElement = await page.evaluate((el) => el.innerText, focusedElementHandle);
+    });
+
+    I.assertEqual(focusedElement, 'Previous month');
+
+    I.pressKey(['Shift', 'Tab']);
+    await I.usePuppeteerTo('Get the active element', async ({ page }) => {
+      const focusedElementHandle = await page.evaluateHandle(() => document.activeElement);
+      focusedElement = await page.evaluate((el) => el.innerText, focusedElementHandle);
+    });
+
+    I.assertEqual(focusedElement, 'Cancel');
+  });
+});
+
 Scenario('it should not change the value of another date picker when multiple present', async ({ I }) => {
   const today = DateTime.now();
   const baseDate = DateTime.fromObject({ year: 2021, month: 11, day: 15 });
