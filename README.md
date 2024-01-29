@@ -256,3 +256,11 @@ To run the e2e tests run -
 ```shell
 npm run test:e2e
 ```
+
+## Developing
+
+The CI workflows for this project currently depend upon a v1 package lockfile. When generating a new package-lock.json ensure you generate a v1 lockfile -
+
+```shell
+npm install --lockfile-version 1
+```
