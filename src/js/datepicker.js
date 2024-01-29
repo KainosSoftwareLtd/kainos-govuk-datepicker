@@ -487,7 +487,11 @@ function datePicker(datePickerElement, options = {}, callbacks = {}) {
     if (state.isOpen && event.target !== elements.dialog
       && !elements.dialog.contains(event.target)) {
       event.stopPropagation();
-      elements.dialog.focus();
+      if (event.relatedTarget === elements.buttons.closeButton) {
+        elements.buttons.previousMonthButton.focus();
+      } else {
+        elements.buttons.closeButton.focus();
+      }
     }
   }
 

@@ -9,6 +9,9 @@ exports.config = {
   tests: './src/__tests__/e2e/*.test.js',
   output: './output',
   helpers: {
+    ChaiWrapper: {
+      require: 'codeceptjs-chai',
+    },
     Puppeteer: {
       url: 'http://localhost:8080/',
       show: true,
