@@ -2,6 +2,7 @@
 
 ![Latest merge to main](https://github.com/KainosSoftwareLtd/accessible-date-picker/actions/workflows/main-ci.yml/badge.svg)
 ![Nightly CI](https://github.com/KainosSoftwareLtd/accessible-date-picker/actions/workflows/nightly-ci.yml/badge.svg)
+[![Npm package version](https://badgen.net/npm/v/kainos-govuk-datepicker)](https://www.npmjs.com/package/kainos-govuk-datepicker)
 
 A Date picker library designed and developed to be used within GOV.UK projects. Full support for 'keyboard only' users. Supports both English and Welsh.
 
