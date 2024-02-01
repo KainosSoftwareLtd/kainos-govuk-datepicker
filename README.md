@@ -9,7 +9,6 @@ A Date picker library designed and developed to be used within GOV.UK projects. 
 ### Table of Contents
 
 * [Installation](#installation)
-* [Dependencies](#Dependencies)
 * [Basic Usage](#basic-usage)
 * [Configuration options](#options)
 * [Callbacks](#callbacks)
@@ -31,10 +30,6 @@ Files & locations:
 | datepicker.min.js  | node_modules/kainos-govuk-datepicker/dist     | production build - (ES5, 14kb) |
 | datepicker.min.css | node_modules/kainos-govuk-datepicker/dist     | production stylesheet          |
 | datepicker.scss    | node_modules/kainos-govuk-datepicker/src/scss | SCSS file for use in builds    |
-
-## Dependencies
-
-The date picker has only one dependency i.e. [govuk-frontend](https://www.npmjs.com/package/govuk-frontend) ^3.14.0
 
 ## Basic Usage
 
