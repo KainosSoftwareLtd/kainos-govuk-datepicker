@@ -1,13 +1,14 @@
 $govuk-font-family: 'Arial', sans-serif;
 
-@import '~govuk-frontend/govuk/core/typography';
+@import "~govuk-frontend/dist/govuk/base";
+@import '~govuk-frontend/dist/govuk/core/typography';
 
-@import '~govuk-frontend/govuk/objects/width-container';
-@import '~govuk-frontend/govuk/objects/main-wrapper';
+@import '~govuk-frontend/dist/govuk/objects/width-container';
+@import '~govuk-frontend/dist/govuk/objects/main-wrapper';
 
-@import '~govuk-frontend/govuk/components/fieldset/_fieldset';
-@import '~govuk-frontend/govuk/components/date-input/_date-input';
-@import '~govuk-frontend/govuk/components/date-input/_index';
+@import '~govuk-frontend/dist/govuk/components/fieldset/_fieldset';
+@import '~govuk-frontend/dist/govuk/components/date-input/_date-input';
+@import '~govuk-frontend/dist/govuk/components/date-input/_index';
 
 @import 'helpers/utilities/_utilities';
 @import "helpers/box-shadow/box-shadow";
