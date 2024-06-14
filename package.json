@@ -17,7 +17,7 @@
     "test:e2e": "npm run build && npx codeceptjs run",
     "test:e2e:ci": "npm run build && HEADLESS=true npx codeceptjs run",
     "lint": "eslint .",
-    "prepare": "husky || true"
+    "prepare": "husky install"
   },
   "author": "James Nelson, Michael Jones",
   "license": "MIT",
