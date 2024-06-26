@@ -254,7 +254,7 @@ $dp-tablet: 641px;
 
     svg {
       position: absolute;
-      top: -7px;
+      top: 10px;
       left: 0;
       height: 100%;
       width: 100%;
@@ -349,11 +349,11 @@ $dp-tablet: 641px;
 }
 
 .sr-only {
-  clip: rect(0 0 0 0); 
+  clip: rect(0 0 0 0);
   clip-path: inset(50%);
   height: 1px;
   overflow: hidden;
   position: absolute;
-  white-space: nowrap; 
+  white-space: nowrap;
   width: 1px;
 }
