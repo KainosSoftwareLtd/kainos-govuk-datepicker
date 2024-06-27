@@ -24,7 +24,7 @@ $dp-tablet: 641px;
 
     &--icon {
       display: inline-block;
-      bottom: 0;
+      top: 8px;
 
       .date-picker__dialog {
         @media screen and (max-width: $dp-tablet) {
@@ -97,7 +97,7 @@ $dp-tablet: 641px;
     vertical-align: top;
     cursor: pointer;
     -webkit-appearance: none;
-    @media screen and (min-width: $dp-tablet){
+    @media screen and (min-width: $dp-tablet) {
       font-size: 19px;
     }
 
@@ -113,11 +113,11 @@ $dp-tablet: 641px;
     }
 
     &:hover {
-        background-color: $dp-close-button-hover;
+      background-color: $dp-close-button-hover;
     }
 
     &:active {
-        top: 2px;
+      top: 2px;
     }
 
     &:focus {
@@ -242,29 +242,17 @@ $dp-tablet: 641px;
   }
 
   &__reveal__icon {
-    height: 32px;
-    width: 32px;
-    color: white;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     border: none;
+    padding: 0;
     background-color: transparent;
 
     svg {
-      position: absolute;
-      top: 6px;
-      left: 0;
-      height: 100%;
-      width: 100%;
+      height: 32px;
+      width: 32px;
       fill: $dp-black;
-
-      // Safari
-      @supports (-webkit-hyphens:none) {
-        top: -6px
-      }
-
-      // Firefox
-      @-moz-document url-prefix() {
-        top: -6px;
-      }
     }
 
     &:focus {
@@ -275,11 +263,10 @@ $dp-tablet: 641px;
       cursor: pointer;
     }
 
-    &:focus svg,
-    &:hover svg {
-      text-decoration: none;
+    &:focus,
+    &:hover {
       background: $dp-yellow;
-      border-bottom: 4px solid $dp-black;
+      box-shadow: 0 4px 0 $dp-black;
     }
   }
 }
