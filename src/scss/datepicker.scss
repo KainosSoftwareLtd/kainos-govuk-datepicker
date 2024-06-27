@@ -250,15 +250,20 @@ $dp-tablet: 641px;
 
     svg {
       position: absolute;
-      top: 10px;
+      top: 6px;
       left: 0;
       height: 100%;
       width: 100%;
       fill: $dp-black;
 
-      /* IE10-11 */
-      @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-        top: 6px;
+      // Safari
+      @supports (-webkit-hyphens:none) {
+        top: -6px
+      }
+
+      // Firefox
+      @-moz-document url-prefix() {
+        top: -6px;
       }
     }
 
