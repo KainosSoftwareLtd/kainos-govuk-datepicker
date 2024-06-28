@@ -24,7 +24,7 @@ $dp-tablet: 641px;
 
     &--icon {
       display: inline-block;
-      bottom: 0;
+      top: 8px;
 
       .date-picker__dialog {
         @media screen and (max-width: $dp-tablet) {
@@ -81,16 +81,12 @@ $dp-tablet: 641px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 400;
-    font-size: 16px;
     font-size: 1rem;
     line-height: 1.1875;
     box-sizing: border-box;
     display: inline-block;
     position: relative;
-    margin-top: 0;
-    margin-right: 0;
-    margin-left: 0;
-    margin-bottom: 0;
+    margin: 0;
     padding: 8px 10px 7px;
     border: 2px solid transparent;
     border-radius: 0;
@@ -101,7 +97,7 @@ $dp-tablet: 641px;
     vertical-align: top;
     cursor: pointer;
     -webkit-appearance: none;
-    @media screen and (min-width: $dp-tablet){
+    @media screen and (min-width: $dp-tablet) {
       font-size: 19px;
     }
 
@@ -117,11 +113,11 @@ $dp-tablet: 641px;
     }
 
     &:hover {
-        background-color: $dp-close-button-hover;
+      background-color: $dp-close-button-hover;
     }
 
     &:active {
-        top: 2px;
+      top: 2px;
     }
 
     &:focus {
@@ -246,24 +242,17 @@ $dp-tablet: 641px;
   }
 
   &__reveal__icon {
-    height: 32px;
-    width: 32px;
-    color: white;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     border: none;
+    padding: 0;
     background-color: transparent;
 
     svg {
-      position: absolute;
-      top: -7px;
-      left: 0;
-      height: 100%;
-      width: 100%;
+      height: 32px;
+      width: 32px;
       fill: $dp-black;
-
-      /* IE10-11 */
-      @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-        top: 6px;
-      }
     }
 
     &:focus {
@@ -274,11 +263,10 @@ $dp-tablet: 641px;
       cursor: pointer;
     }
 
-    &:focus svg,
-    &:hover svg {
-      text-decoration: none;
+    &:focus,
+    &:hover {
       background: $dp-yellow;
-      border-bottom: 4px solid $dp-black;
+      box-shadow: 0 4px 0 $dp-black;
     }
   }
 }
@@ -349,11 +337,11 @@ $dp-tablet: 641px;
 }
 
 .sr-only {
-  clip: rect(0 0 0 0); 
+  clip: rect(0 0 0 0);
   clip-path: inset(50%);
   height: 1px;
   overflow: hidden;
   position: absolute;
-  white-space: nowrap; 
+  white-space: nowrap;
   width: 1px;
 }
