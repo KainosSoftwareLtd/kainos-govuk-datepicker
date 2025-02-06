@@ -5,6 +5,18 @@ const server = require('./server');
 // export HEADLESS=true && npx codeceptjs run
 setHeadlessWhen(process.env.HEADLESS);
 
+const puppeteer = {
+  url: 'http://localhost:8080/',
+  show: true,
+  windowSize: '1200x900',
+};
+
+if (process.env.CI) {
+  puppeteer.chrome = {
+    args: ['--no-sandbox', '--disable-setuid-sandbox'],
+  };
+}
+
 exports.config = {
   tests: './src/__tests__/e2e/*.test.js',
   output: './output',
@@ -12,11 +24,7 @@ exports.config = {
     ChaiWrapper: {
       require: 'codeceptjs-chai',
     },
-    Puppeteer: {
-      url: 'http://localhost:8080/',
-      show: true,
-      windowSize: '1200x900',
-    },
+    Puppeteer: puppeteer,
   },
   async bootstrap() {
     await server;
